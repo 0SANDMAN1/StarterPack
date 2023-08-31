@@ -14,4 +14,13 @@ typedef struct SimpleDb {
     uint32 Course3_grade;
 } student;
 
+Bool SDB_IsFull();
+uint8 SDB_GetUsedSize();
+Bool SDB_AddEntry();
+void SDB_DeleteEntry(uint32 id);
+Bool SDB_ReadEntry(uint32 id);
+void SDB_GetList(uint8 *count, uint32 *list);
+Bool SDB_IsIdExist(uint32 id);
+void SDB_action(uint8 choice);
+
 #endif

@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "SDB.h"
 
-static student database[MAX_STUDENTS];
+static student database[Students];
 static uint8 num_students = 0; // I used uint8 for the memory efficient
 
 Bool SDB_IsFull() { // this function returns true if the database is full and false if not.
-    return num_students >= MAX_STUDENTS;
+    return num_students >= Students;
 }
 
 uint8 SDB_GetUsedSize() { // this function returns the size of the database.

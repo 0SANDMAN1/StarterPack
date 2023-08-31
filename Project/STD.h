@@ -1,6 +1,6 @@
 #ifndef STD_H
 #define STD_H
-#define MAX_STUDENTS 10
+#define Students 10
 
 typedef unsigned char uint8; // byte: 1 range: 0 to 255 format specifier %c
 typedef char Int8; // byte: 1 range: -128 to 127 format specifier %c
