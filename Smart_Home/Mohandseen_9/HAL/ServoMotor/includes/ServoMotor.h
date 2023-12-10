@@ -17,6 +17,7 @@
 #define miniCount 250
 #define maxCount 500
 
-void ServoMotor(u16 angle);
+void ServoMotor(float angle);
+//void servo_rotate(int angle);
 
 #endif /* SERVOMOTOR_H_ */

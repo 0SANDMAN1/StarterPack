@@ -1,9 +1,9 @@
 /*
- * Cinfig_home.h
- *
- * Created: 04/12/2023 3:00:44 pm
- *  Author: amost
- */ 
+* Cinfig_home.h
+*
+* Created: 04/12/2023 3:00:44 pm
+*  Author: amost
+*/
 
 
 #ifndef CINFIG HOME_H_
@@ -20,9 +20,9 @@
 #define AIR_CONDTIONING_OFF			(u8)0x00
 
 
- #define BLOCK_MODE_TIME  (u32)20000
- #define CHARACTER_PREVIEW_TIME (u16)300
- #define DEGREES_SYMBOL		   (u8)0xDF
+#define BLOCK_MODE_TIME  (u32)20000
+#define CHARACTER_PREVIEW_TIME (u16)300
+#define DEGREES_SYMBOL		   (u8)0xDF
 
 /*********************************** PIN Configuration ***********************************/
 #define PASS_SIZE       (u8)4
@@ -63,19 +63,15 @@
 #define SELECT_ROOM4_ADMIN      (u8)'1'
 #define SELECT_TV               (u8)'2'
 #define SELECT_AIR_CONDITIONING (u8)'3'
-#define ADMIN_LAST_OPTION        (u8)'4'//
+#define ADMIN_LAST_OPTION        (u8)'4'
 
-#define SELECT_DIMMERLED		(u8)'1'//
-#define ADMIN_RET_OPTION        (u8)'2'//	
-//#define ADMIN_RETe_OPTION		(u8)'5'					   
+#define SELECT_DIMMERLED		(u8)'1'
+#define ADMIN_RET_OPTION        (u8)'2'
 #define SELECT_SET_TEMPERATURE  (u8)'1'
 #define SELECT_AIR_COND_CTRL    (u8)'2'
 #define SELECT_AIR_COND_RET     (u8)'3'
+#define DOOR_OPT                (u8)'3'
 
-/****************************   number of ticks to run timeout ***************************/
-// #define ADMIN_TIMEOUT (u16)3000
-// #define GUEST_TIMEOUT (u16)2000
-/*****************************************************************************************/
 
 /****************************   Show menu codes  *****************************************/
 #define MAIN_MENU            (u8)1
@@ -89,7 +85,8 @@
 #define AIRCOND_CTRL_MENU    (u8)9
 #define TEMPERATURE_MENU     (u8)10
 #define DimmerLED_MENU       (u8)11
-#define LAST_MENU			 (u8)12								   
+#define LAST_MENU			 (u8)12
+#define DOOR_MENU			 (u8)13
 /*****************************************************************************************/
 
 /*****************************  Ports and pins of input and output pins ******************/
@@ -101,30 +98,7 @@
 #define GUEST_LED_PIN  (u8)1
 #define BLOCK_LED_PIN  (u8)2
 /*****************************************************************************************/
-// /* keypad Macros */
-// #define KEYPAD_PORT			(u8)'D'
-// #define KEYPAD_FIRST_PIN	(u8)0
-// #define KEYPAD_SECOND_PIN	(u8)1
-// #define KEYPAD_THIRD_PIN	(u8)2
-// #define KEYPAD_FOURTH_PIN	(u8)3
-// #define KEYPAD_FIFTH_PIN	(u8)4
-// #define KEYPAD_SIXTH_PIN	(u8)5
-// #define KEYPAD_SEVENTH_PIN	(u8)6
-// #define KEYPAD_EIGHTH_PIN	(u8)7
-// /* LCD Macros */
-// #define LCD_PORT			(u8)'A'
-// #define LCD_FIRST_PIN		(u8)0
-// #define LCD_SECOND_PIN		(u8)1
-// #define LCD_THIRD_PIN		(u8)2
-// #define LCD_FOURTH_PIN		(u8)3
-// #define LCD_FIFTH_PIN		(u8)4
-// #define LCD_SIXTH_PIN		(u8)5
-// #define LCD_SEVENTH_PIN		(u8)6
-// #define LCD_EIGHTH_PIN		(u8)7
-// #define LCD_CONTROL_PORT	(u8)'B'
-// #define LCD_EN_PIN			(u8)0
-// #define LCD_RS_PIN			(u8)1
-// #define LCD_RW_PIN			(u8)2
+
 
 
 #endif /* CINFIG HOME_H_ */

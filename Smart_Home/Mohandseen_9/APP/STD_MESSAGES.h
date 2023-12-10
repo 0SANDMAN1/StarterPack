@@ -30,13 +30,10 @@
 #define TV_TURN_OFF 	  0x35
 #define AIR_COND_TURN_OFF 0x36
 
-#define DIMMER_TURN_ON	  0x37//
-#define DIMMER_TURN_OFF	  0x36//
-#define DIMMER_STATUS	  0x38//
-#define SET_TEMPERATURE 0x40
-
-#define DEFAULT_ACK    0xFF
-#define DEMAND_RESPONSE 0xFF
+#define DIMMER_TURN_ON	  0x37
+#define DIMMER_TURN_OFF	  0x36
+#define DIMMER_STATUS	  0x38
+#define SET_TEMPERATURE   0x40
 
 #define ON_STATUS   0x01
 #define OFF_STATUS  0x00

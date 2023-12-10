@@ -6,16 +6,17 @@
 */
 #include "menu.h"
 extern UART_ConfigTypes option;
-void InitPWM();
-void SetPWMOutPut (u8 duty);
-volatile u16 temp_sensor_reading=0;
-volatile u8 last_air_conditioning_value=AIR_CONDTIONING_OFF;
 extern u8 temperature;
-//extern s8 adcstring;
 extern u8 advvalue;
 extern u16 required_temperature;
 extern u8 login_mode;
 extern u8 rxdata;
+
+volatile u16 temp_sensor_reading=0;
+volatile u8 last_air_conditioning_value=AIR_CONDTIONING_OFF;
+
+void InitPWM();
+void SetPWMOutPut (u8 duty);
 
 u8 ui8ComparePass(const u8* pass1, const u8* pass2, const u8 size)
 {
@@ -45,8 +46,8 @@ u8 u8GetKeyPressed(const u8 u8LoginMode)
 	u8 key_pressed = NOT_PRESSED;
 	while (key_pressed == NOT_PRESSED)//repeat till the user press any key
 	{
-		key_pressed = GetKey();
-		_delay_ms(20);//if the user pressed any button in keypad save the value in key_pressed
+		key_pressed = GetKey();//if the user pressed any button in keypad save the value in key_pressed
+		_delay_ms(20);
 	}
 	return key_pressed;
 }
@@ -124,72 +125,72 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 		switch(u8SelectedRoom)
 		{
 			case ROOM1_MENU:
-			if(DIO_ReadChannel(DIO_ChannelA1) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelA1) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 1;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 1;
 			}break;
 			
 			case ROOM2_MENU:
-			if(DIO_ReadChannel(DIO_ChannelB4) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelB4) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 12;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 12;
 			}break;
 			
 			case ROOM3_MENU:
-			if(DIO_ReadChannel(DIO_ChannelB5) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelB5) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 13;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 13;
 			}break;
 			
 			case ROOM4_MENU:
-			if(DIO_ReadChannel(DIO_ChannelB6) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelB6) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 14;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 14;
 			}break;
 			
 			case TV_MENU:
-			if(DIO_ReadChannel(DIO_ChannelD7) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelD7) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 31;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 31;
 			}break;
 			
 			case AIRCOND_CTRL_MENU:
-			if(DIO_ReadChannel(DIO_ChannelB7) == 1)//if the response from the slave was on status
+			if(DIO_ReadChannel(DIO_ChannelB7) == 1)
 			{
 				LCD_String("ON");//print the status on
 				Statues = 15;
 			}
-			else//if the response from the slave was off status
+			else
 			{
 				LCD_String("OFF");//print the status off
 				Statues= 15;
@@ -232,10 +233,10 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			
 			else if( (key_pressed != NOT_PRESSED) && (key_pressed != '0') )//show wrong input message if the user entered non numeric value
 			{
-				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+				LCD_Clear();//remove all previously printed characters on the LCD 
 				LCD_String("Wrong input");//print error message
 				_delay_ms(500);//Halt the system for the given time in (ms)
-				//value = 0;
+				
 			}
 		}
 		else if (login_mode == ADMIN)
@@ -265,7 +266,7 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			
 			else if( (rxdata != NOT_PRESSED) && (rxdata != '0') )//show wrong input message if the user entered non numeric value
 			{
-				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+				LCD_Clear();//remove all previously printed characters on the LCD 
 				LCD_String("Wrong input");//print error message
 				_delay_ms(500);//Halt the system for the given time in (ms)
 				//value = 0;
@@ -285,5 +286,6 @@ void SetPWMOutPut (u8 duty)
 {
 	OCR0 = duty;
 }
+
 
 

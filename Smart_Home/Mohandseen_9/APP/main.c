@@ -29,16 +29,22 @@
 
 void ExtInt0Fun(void);
 //void ExtInt1Fun(void);
+
 UART_ConfigTypes option = {BaudRate_9600,DoupleSpeed_Disable,CharacterSize_8,Stop_1Bit,Parity_Disable,TX_Enable,RX_Enable};
-u8 pass_tries_count;
 ADC_InitTypes options={ADC_Vref_Internal,ADC_Prescaler128};
-u16 advvalue =0;
-s8 adcstring [10];
-u8 temperature = 0;
-u16 required_temperature=24;
-extern u8 last_air_conditioning_value;
+
+u8 pass_tries_count;
 u8 login_mode = NO_MODE; //Store the current user mode admin or guest or not logged in
 u8 rxdata = 0;
+extern u8 last_air_conditioning_value;
+
+//u8 overflowFlag=0;
+s8 adcstring [10];
+u8 temperature = 0;
+u16 advvalue =0;
+u16 required_temperature=24;
+
+
 
 int main(void)
 {
@@ -46,8 +52,8 @@ int main(void)
 
 	//The average temperature of the room
 	u8 brightness =0;
-	u8 temp_ones = NOT_SELECTED;//The entered right number of the temperature
-	u8 temp_tens = NOT_SELECTED;//The entered left number of the temperature
+	u8 temp_ones = NOT_SELECTED;
+	u8 temp_tens = NOT_SELECTED;
 	u8 Dimmer_ones = NOT_SELECTED;
 	u8 Dimmer_tens = NOT_SELECTED;
 	u8 Dimmer_hundreds = NOT_SELECTED;
@@ -197,9 +203,9 @@ int main(void)
 				LCD_String("wait 20 seconds");
 				Bluetooth_TransmaitString("wait 20 seconds");
 				DIO_WriteChannel(DIO_ChannelD4,STD_High);//Turn on the led of Blocked
-				DIO_WriteChannel(DIO_ChannelA3,STD_High);
+				DIO_WriteChannel(DIO_ChannelA3,STD_High);//turn on alarm 
 				_delay_ms(BLOCK_MODE_TIME);//Halt the system for the given time in (ms)
-				DIO_WriteChannel(DIO_ChannelA3,STD_Low);
+				DIO_WriteChannel(DIO_ChannelA3,STD_Low);//turn off alarm 
 				pass_tries_count = 0; //Clear the count on number of wrong tries
 				block_mode_flag = FALSE;//Disable block of runtime
 				DIO_WriteChannel(DIO_ChannelD4,STD_Low);//Turn off the led of Blocked
@@ -208,7 +214,7 @@ int main(void)
 			
 			
 			
-			LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+			L:LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 			LCD_String("Select mode :");
 			LCD_SetPos(2,1);
 			LCD_String("0:Admin 1:Guest");
@@ -223,10 +229,8 @@ int main(void)
 				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 				LCD_String("Wrong input.");//Prints error message on the LCD
 				key_pressed = NOT_PRESSED;//return the variable that holds the pressed key from keypad to its initial value
-				//Bluetooth_TransmaitString("Wrong input");
-				//rxdata=NOT_PRESSED;
 				_delay_ms(1000);//Halt the system for the given time in (ms)
-				continue;//return to the loop of login #while (login_mode==NO_MODE)# line 128
+				continue;//return to the loop of login #while (login_mode==NO_MODE) 
 			}
 
 			u8 pass_counter=0;//counts the entered key of the password from the keypad
@@ -242,7 +246,7 @@ int main(void)
 					key_pressed = NOT_PRESSED;//return the variable that holds the pressed key from keypad to its initial value
 					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 					LCD_String("Admin mode");
-					Bluetooth_TransmaitString("Admin mode");
+					Bluetooth_TransmaitString("Admin mode");//print meesage in terminal for login
 					LCD_SetPos(2,1);
 					LCD_String("Enter Pass:");
 					Bluetooth_TransmaitString("Enter Pass:");
@@ -282,10 +286,12 @@ int main(void)
 						LCD_SetPos(1,0);
 						LCD_String("Door opening");
 						Bluetooth_TransmaitString("Door opening");
-						ServoMotor(90);
+						
+						ServoMotor(90);//door open 			
 						_delay_ms(500);
 						
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						
 					}
 					else//in case of wrong password
 					{
@@ -309,6 +315,7 @@ int main(void)
 					}
 				}
 				break;//bREAK SWITCH case
+				
 				
 				
 				/********************************* Guest login **********************************************/
@@ -343,14 +350,37 @@ int main(void)
 					if (ui8ComparePass2(pass,stored_pass,PASS_SIZE)==TRUE)//in case of right password
 					{
 						login_mode = GUEST;
-						pass_tries_count=0;//clear the counter of wrong tries
+						LCD_Clear();
+						LCD_String("Wait for approve");//wait for approve from admin 
+						LCD_SetPos(1,0);
+						Bluetooth_TransmaitString("Req from guest: 1.OPEN 2.CLOSED");
+						_delay_ms(200);
+						
+						rxdata = u8GetTX();//wait untill admin approv or reject 
+						if (rxdata == '1')
+						{
+							pass_tries_count=0;//clear the counter of wrong tries
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 						LCD_String("Right pass");
 						LCD_SetPos(2,1);
 						LCD_String("Guest mode");
+						ServoMotor(90);//door open
+						
+						
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						DIO_WriteChannel(DIO_ChannelD3,STD_High);//turn the led of gust mode that is connected to the master micro controller on
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						}else if (rxdata =='2')
+						{
+							LCD_String("req has been rejected");
+							_delay_ms(500);
+							pass[pass_counter]=0;//reast all inputs to try again 
+							pass_counter=0;
+							rxdata = NOT_PRESSED;
+							key_pressed = NOT_PRESSED;
+							login_mode =NO_MODE;//reset login mode flag 
+							goto L;
+						}
 					}
 					else//in case of wrong password
 					{
@@ -382,7 +412,7 @@ int main(void)
 		while(block_mode_flag!=TRUE)
 		{
 			key_pressed = 0;//Set the key pressed by the user to its default value
-			u8 Value = 0;
+			u8 Value = 0;//save value on another value to connect admin and guest mode together
 			switch (show_menu)
 			{
 				case MAIN_MENU:
@@ -409,7 +439,7 @@ int main(void)
 					if (login_mode == GUEST)
 					{
 						key_pressed = u8GetKeyPressed(login_mode);//wait for the user till key is pressed
-						_delay_ms(100);//to avoid the duplication of the pressed key
+						_delay_ms(100);//to avoid the duplication of the pressed key(deboncy)
 						if (key_pressed == SELECT_ROOM1)//If key pressed is 1
 						{
 							show_menu = ROOM1_MENU;//Set the next menu to be shown to room1 menu
@@ -432,7 +462,7 @@ int main(void)
 						}
 						else if(key_pressed != NOT_PRESSED)//show wrong input message if the user pressed wrong key
 						{
-							LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+							LCD_Clear();//remove all previously printed characters on the LCD 
 							LCD_String("Wrong input");//print error message
 							_delay_ms(500);//Halt the system for the given time in (ms)
 							Value = 0;
@@ -440,7 +470,7 @@ int main(void)
 					}
 					else if (login_mode == ADMIN)
 					{
-						rxdata = u8GetTX(login_mode);
+						rxdata = u8GetTX(login_mode);//wait till receive value from bluetooth 
 						_delay_ms(20);
 						if (rxdata == SELECT_ROOM1)//If key pressed is 1
 						{
@@ -464,13 +494,13 @@ int main(void)
 						}
 						else if(rxdata != NOT_PRESSED)//show wrong input message if the user pressed wrong key
 						{
-							LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+							LCD_Clear();//remove all previously printed characters on the LCD 
 							LCD_String("Wrong input");//print error message
 							_delay_ms(500);//Halt the system for the given time in (ms)
 							Value = 0;
 						}
 					}
-
+					
 				} while ( ((Value < '1') || (Value > '4')) );//break the loop in case of valid key
 				
 				break;//End of main menu case
@@ -479,7 +509,7 @@ int main(void)
 				do
 				{
 					/******************** print more Menu ******************/
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					Bluetooth_TransmaitString("1:Room4    2:TV ");
 					_delay_ms(20);
 					Bluetooth_TransmaitString("3:AirCond 4:MORE");
@@ -508,7 +538,7 @@ int main(void)
 
 					else if(rxdata != NOT_PRESSED)//show wrong input message if the user pressed wrong key
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
 					}
@@ -521,32 +551,39 @@ int main(void)
 				{
 					/******************** print more Menu ******************/
 					Bluetooth_TransmaitString("1:DimLED 2:RET");
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					Bluetooth_TransmaitString("3:DOOR ");
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					LCD_String("1:DimLED 2:RET");
+					LCD_SetPos(2,1);
+					LCD_String("3:DOOR ");
 					rxdata = u8GetTX(login_mode);
 					
 					if (rxdata == SELECT_DIMMERLED)//If key pressed is 1
 					{
 						show_menu = DimmerLED_MENU;//Set the next menu to be shown to Air conditioning menu
 					}
-					else if (rxdata == ADMIN_RET_OPTION)//If key pressed is 4 (RET)
+					else if (rxdata == DOOR_OPT)//If key pressed is 3
+					{
+						show_menu=DOOR_MENU;//Set the next menu to be shown to DOOR_MENU
+					}
+					else if (rxdata == ADMIN_RET_OPTION)//If key pressed is 2(RET)
 					{
 						show_menu = MAIN_MENU;//Set the next menu to be shown to main menu
 					}
 					else if(rxdata != NOT_PRESSED)//show wrong input message if the user pressed wrong key
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
 					}
-				} while (( (rxdata < '1') || (rxdata > '2') ));//break the loop in case of valid key or time is out
+				} while (( (rxdata < '1') || (rxdata > '3') ));//break the loop in case of valid key
 				break; //End of Last Menu case
 				
 				case AIRCONDITIONING_MENU:
 				do
 				{
 					/******************** print more Menu ******************/
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					Bluetooth_TransmaitString("1:Set temperature");
 					Bluetooth_TransmaitString("2:Control  3:RET");
 					LCD_String("1:Set temperature ");
@@ -569,11 +606,11 @@ int main(void)
 					}
 					else if(rxdata != NOT_PRESSED)//show wrong input message if the user pressed wrong key
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
 					}
-				} while (( (rxdata < '1') || (rxdata > '3') ));//break the loop in case of valid key or time is out
+				} while (( (rxdata < '1') || (rxdata > '3') ));//break the loop in case of valid key 
 				break;//End of air conditioning menu case
 				
 				case ROOM1_MENU:
@@ -603,13 +640,13 @@ int main(void)
 				}
 				break;//End of room4 menu case
 				
-				case DimmerLED_MENU://
+				case DimmerLED_MENU:
 				brightness = 0;
 				while (brightness==0 )//start the loop that asks for the temperature from the user
 				{
-					InitPWM();
+					InitPWM();//Iint pwm 
 					rxdata = NOT_PRESSED;//set the key pressed to the default value
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					Bluetooth_TransmaitString("Set Brightness:%");
 					LCD_String("Set Brightness:%");//print the format of inserting temperature
 					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
@@ -619,10 +656,10 @@ int main(void)
 
 					if (rxdata > '9')//show wrong input message if the user entered non numeric value
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
-						continue;//return to #while (temperature==0)# line 672
+						continue;//return to #while (temperature==0)
 					}
 					else//if the value is valid
 					{
@@ -632,10 +669,11 @@ int main(void)
 					}
 					/*******************************************************************************/
 					rxdata = u8GetTX(login_mode);
+					
 
 					if ((rxdata <'0' || rxdata >'9'))//show wrong input message if the user entered non numeric value
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						continue;//repeat the loop that ask for the temperature
@@ -647,11 +685,11 @@ int main(void)
 						rxdata = NOT_PRESSED;//set the key pressed to the default value
 					}
 					
-					rxdata = u8GetTX(login_mode);//wait for the user till key is pressed or the time is out
+					rxdata = u8GetTX(login_mode);//wait for the user till key is pressed 
 					
 					if ((rxdata <'0' || rxdata >'9'))//show wrong input message if the user entered non numeric value
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						continue;//repeat the loop that ask for the temperature
@@ -666,11 +704,11 @@ int main(void)
 
 					brightness = ((Dimmer_hundreds*100) + (Dimmer_tens*10) + (Dimmer_ones));//set the value of the temperature from the given separated values
 					
-					if (brightness >255){
+					if (brightness >255){//where 255 max value of 8 bit
 						LCD_Clear();
 						LCD_String("Invalid Input");
 						_delay_ms(500);
-						show_menu = DimmerLED_MENU;
+						show_menu = DimmerLED_MENU;//set next menu to DimmerLED_MENU
 
 					}else
 					{
@@ -685,6 +723,59 @@ int main(void)
 					}
 
 				}break;
+				
+				case DOOR_MENU:
+				
+				do{
+					//rxdata = NOT_PRESSED;//set the key pressed to the default value
+					key_pressed =NOT_PRESSED;
+					LCD_Clear();//remove all previously printed characters on the LCD 
+					Bluetooth_TransmaitString("1:open 2:colse");
+					LCD_String("1:open 2:colse");//print the format of inserting temperature
+					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
+					
+					/*******************************************************************************/
+					rxdata = u8GetTX(login_mode);
+					
+					/*u8 data = rxdata;*/
+					if (rxdata > '2')//show wrong input message if the user entered non numeric value
+					{
+						LCD_Clear();//remove all previously printed characters on the LCD
+						LCD_String("Wrong input");//print error message
+						_delay_ms(500);//Halt the system for the given time in (ms)
+						continue;//return to #while (temperature==0)
+					}
+					else if (rxdata == '1')//if the value is valid
+					{
+						
+						LCD_Char(rxdata);
+						ServoMotor(0);
+						_delay_ms(500);
+						ServoMotor(180);
+						/*ServoMotor(90);*/
+						//LCD_Char("door opened");//print the  on the lcd
+						//Bluetooth_TransmaitString("door opened");
+						_delay_ms(500);
+						rxdata = NOT_PRESSED;//set the key pressed to the default value
+						show_menu = LAST_MENU;
+						
+					}else if(rxdata == '2')
+					{
+						LCD_Char(rxdata);
+						ServoMotor(0);
+						_delay_ms(500);
+						ServoMotor(180);
+						//LCD_Char("door closed");//print the value on the lcd
+						//Bluetooth_TransmaitString("door closed");
+						_delay_ms(500);
+						rxdata = NOT_PRESSED;//set the key pressed to the default value
+						show_menu = LAST_MENU;
+						
+					}
+				}while (rxdata >0 && rxdata<3);
+				break;
+				
+				
 				
 				case TV_MENU:
 				vMenuOption(TV_MENU,login_mode);//call the function that show the menu of tv
@@ -703,7 +794,7 @@ int main(void)
 				while (temperature==0 )//start the loop that asks for the temperature from the user
 				{
 					key_pressed = NOT_PRESSED;//set the key pressed to the default value
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					LCD_String("Set temp.:__");//print the format of inserting temperature
 					LCD_Char(DEGREES_SYMBOL); // print the symbol of degree
 					LCD_Char('C'); // print the C character
@@ -712,15 +803,17 @@ int main(void)
 					LCD_SetPos(1,10);
 					
 					/*******************************************************************************/
-					rxdata = u8GetTX();//wait for the user till key is pressed or the time is out
+					rxdata = u8GetTX();//wait for the user till key is pressed 
+					_delay_ms(20);//to avoid the duplication of the pressed key
+					
 
 					if (rxdata <'0' || rxdata >'9')//show wrong input message if the user entered non numeric value
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						Bluetooth_TransmaitString("Wrong input");
 						_delay_ms(500);//Halt the system for the given time in (ms)
-						continue;//return to #while (temperature==0)# line 672
+						continue;//return to #while (temperature==0)
 					}
 					else//if the value is valid
 					{
@@ -729,11 +822,14 @@ int main(void)
 						rxdata = NOT_PRESSED;//set the key pressed to the default value
 					}
 					/*******************************************************************************/
-					rxdata = u8GetTX();//wait for the user till key is pressed or the time is out					
+					rxdata = u8GetTX();//wait for the user till key is pressed 
+					_delay_ms(20);//to avoid the duplication of the pressed key
+					
+					
 
 					if ((rxdata <'0' || rxdata >'9'))//show wrong input message if the user entered non numeric value
 					{
-						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
 						Bluetooth_TransmaitString("Wrong input");
 						_delay_ms(500);//Halt the system for the given time in (ms)
@@ -747,19 +843,19 @@ int main(void)
 					}
 					temperature = temp_tens*10 + temp_ones;//set the value of the temperature from the given separated values
 					_delay_ms(200);
-					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
+					LCD_Clear();//remove all previously printed characters on the LCD 
 					LCD_String("Temperature Set");//show the message
 					Bluetooth_TransmaitString("Temperature Set");
 					_delay_ms(500);//Halt the system for the given time in (ms)
-					if (advvalue >temperature)
+					if (advvalue >temperature)//check for req temp and current temp to take action
 					{
-						DIO_WriteChannel(DIO_ChannelB7,STD_High);
+						DIO_WriteChannel(DIO_ChannelB7,STD_High);//turn on air cond
 					}else
 					{
-						DIO_WriteChannel(DIO_ChannelB7,STD_Low);
+						DIO_WriteChannel(DIO_ChannelB7,STD_Low);//turn off air cond
 					}
-					advvalue=LM35_Read(ADC_Channel0);
-					itoa (advvalue,adcstring,10);
+					advvalue=LM35_Read(ADC_Channel0);//init lm35 to display current temp 
+					itoa (advvalue,adcstring,10);//fun to convert int to array to display on lcd
 					LCD_SetPos(2,0);
 					LCD_String("TEMP NOW");
 					LCD_SetPos(2,9);
@@ -773,7 +869,7 @@ int main(void)
 	}// end of the main while(1)
 }//end of main function
 
-void ExtInt0Fun(void) {
+void ExtInt0Fun(void) {//INterupt function to handle Temp when system on 
 	advvalue = LM35_Read(ADC_Channel0);
 	if (advvalue >= required_temperature ) {
 		DIO_WriteChannel(DIO_ChannelB7, STD_High);
@@ -795,7 +891,7 @@ void ExtInt0Fun(void) {
 	}
 }
 
-// void ExtInt1Fun(void)
+// void ExtInt1Fun(void) //interrupt Function to handle overflow of dimmer led
 // {
 // 	overflowFlag = 1;
 // }
