@@ -241,7 +241,7 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 		}
 		else if (login_mode == ADMIN)
 		{
-			Bluetooth_TransmaitString("1-On 2-Off 0-RET");
+			Bluetooth_TransmaitString("1-On 2-Off 0-RET\n\r");
 			rxdata = u8GetTX(login_mode);
 
 			if (rxdata == '1')

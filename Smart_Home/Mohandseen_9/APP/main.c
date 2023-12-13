@@ -85,10 +85,10 @@ int main(void)
 	/* Printing Welcome screen */
 	LCD_SetPos(1, 0);
 	LCD_String("Welcome to smart");
-	Bluetooth_TransmaitString("Welcome to smart");
+	Bluetooth_TransmaitString("Welcome to smart\n\r");
 	LCD_SetPos(2, 0);
 	LCD_String("home system");
-	Bluetooth_TransmaitString("home system");
+	Bluetooth_TransmaitString("home system\n\r");
 	_delay_ms(1000);
 	LCD_Clear();
 	
@@ -198,10 +198,10 @@ int main(void)
 			{
 				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 				LCD_String("Login blocked");
-				Bluetooth_TransmaitString("Login blocked");
+				Bluetooth_TransmaitString("Login blocked\n\r");
 				LCD_SetPos(2,1);
 				LCD_String("wait 20 seconds");
-				Bluetooth_TransmaitString("wait 20 seconds");
+				Bluetooth_TransmaitString("wait 20 seconds\n\r");
 				DIO_WriteChannel(DIO_ChannelD4,STD_High);//Turn on the led of Blocked
 				DIO_WriteChannel(DIO_ChannelA3,STD_High);//turn on alarm 
 				_delay_ms(BLOCK_MODE_TIME);//Halt the system for the given time in (ms)
@@ -215,9 +215,9 @@ int main(void)
 			
 			
 			L:LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
-			LCD_String("Select mode :");
+			LCD_String("Select mode :\n\r");
 			LCD_SetPos(2,1);
-			LCD_String("0:Admin 1:Guest");
+			LCD_String("0:Admin 1:Guest\n\r");
 			/*Bluetooth_TransmaitString("Select mode : 0:Admin 1:Guest");*/
 			while(key_pressed==NOT_PRESSED)//wait for the selection of the mode
 			{
@@ -246,10 +246,10 @@ int main(void)
 					key_pressed = NOT_PRESSED;//return the variable that holds the pressed key from keypad to its initial value
 					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 					LCD_String("Admin mode");
-					Bluetooth_TransmaitString("Admin mode");//print meesage in terminal for login
+					Bluetooth_TransmaitString("Admin mode\n\r");//print meesage in terminal for login
 					LCD_SetPos(2,1);
 					LCD_String("Enter Pass:");
-					Bluetooth_TransmaitString("Enter Pass:");
+					Bluetooth_TransmaitString("Enter Pass:\n\r");
 					_delay_ms(200);//Halt the system for the given time in (ms)
 					pass_counter=0;//counts the number of entered characters
 					while(pass_counter<PASS_SIZE)
@@ -277,15 +277,15 @@ int main(void)
 						pass_tries_count=0;//clear the counter of wrong tries
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 						LCD_String("Right pass");
-						Bluetooth_TransmaitString("Right pass");
+						Bluetooth_TransmaitString("Right pass\n\r");
 						LCD_SetPos(2,1);
 						LCD_String("Admin mode");
-						Bluetooth_TransmaitString("Admin mode");
+						Bluetooth_TransmaitString("Admin mode\n\r");
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						DIO_WriteChannel(DIO_ChannelD6,STD_High);//turn on the led of admin
 						LCD_SetPos(1,0);
 						LCD_String("Door opening");
-						Bluetooth_TransmaitString("Door opening");
+						Bluetooth_TransmaitString("Door opening\n\r");
 						
 						ServoMotor(90);//door open 			
 						_delay_ms(500);
@@ -299,10 +299,10 @@ int main(void)
 						login_mode = NO_MODE;//set the mode as not logged in
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
 						LCD_String("Wrong Pass");
-						Bluetooth_TransmaitString("Wrong Pass");
+						Bluetooth_TransmaitString("Wrong Pass\n\r");
 						LCD_SetPos(2,1);
 						LCD_String("Tries left:");
-						Bluetooth_TransmaitString("Tries left:");
+						Bluetooth_TransmaitString("Tries left:\n\r");
 						LCD_Char(TRIES_ALLOWED-pass_tries_count+ASCII_ZERO);//print the number of tries left before block mode to be activated
 						_delay_ms(1000);//Halt the system for the given time in (ms)
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
@@ -353,7 +353,7 @@ int main(void)
 						LCD_Clear();
 						LCD_String("Wait for approve");//wait for approve from admin 
 						LCD_SetPos(1,0);
-						Bluetooth_TransmaitString("Req from guest: 1.OPEN 2.CLOSED");
+						Bluetooth_TransmaitString("Req from guest: 1.OPEN 2.CLOSED\n\r");
 						_delay_ms(200);
 						
 						rxdata = u8GetTX();//wait untill admin approv or reject 
@@ -423,9 +423,9 @@ int main(void)
 					LCD_String("1:Room1 2:Room2");
 					if(login_mode==ADMIN)//check login mode
 					{
-						Bluetooth_TransmaitString("1:Room1 2:Room2");
+						Bluetooth_TransmaitString("1:Room1 2:Room2\n\r");
 						_delay_ms(100);
-						Bluetooth_TransmaitString("3:Room3 4:More");
+						Bluetooth_TransmaitString("3:Room3 4:More\n\r");
 						LCD_SetPos(2,1);
 						LCD_String("3:Room3 4:More");//this menu options only printed if the logged in user is an admin
 					}
@@ -510,9 +510,9 @@ int main(void)
 				{
 					/******************** print more Menu ******************/
 					LCD_Clear();//remove all previously printed characters on the LCD 
-					Bluetooth_TransmaitString("1:Room4    2:TV ");
+					Bluetooth_TransmaitString("1:Room4    2:TV\n\r");
 					_delay_ms(20);
-					Bluetooth_TransmaitString("3:AirCond 4:MORE");
+					Bluetooth_TransmaitString("3:AirCond 4:MORE\n\r");
 					LCD_String("1:Room4    2:TV ");
 					LCD_SetPos(2,1);
 					LCD_String("3:AirCond.4:MORE");
@@ -550,8 +550,8 @@ int main(void)
 				do
 				{
 					/******************** print more Menu ******************/
-					Bluetooth_TransmaitString("1:DimLED 2:RET");
-					Bluetooth_TransmaitString("3:DOOR ");
+					Bluetooth_TransmaitString("1:DimLED 2:RET\n\r");
+					Bluetooth_TransmaitString("3:DOOR\n\r");
 					LCD_Clear();//remove all previously printed characters on the LCD 
 					LCD_String("1:DimLED 2:RET");
 					LCD_SetPos(2,1);
@@ -584,8 +584,8 @@ int main(void)
 				{
 					/******************** print more Menu ******************/
 					LCD_Clear();//remove all previously printed characters on the LCD 
-					Bluetooth_TransmaitString("1:Set temperature");
-					Bluetooth_TransmaitString("2:Control  3:RET");
+					Bluetooth_TransmaitString("1:Set temperature\n\r");
+					Bluetooth_TransmaitString("2:Control  3:RET\n\r");
 					LCD_String("1:Set temperature ");
 					LCD_SetPos(2,1);
 					LCD_String("2:Control  3:RET");
@@ -647,7 +647,7 @@ int main(void)
 					InitPWM();//Iint pwm 
 					rxdata = NOT_PRESSED;//set the key pressed to the default value
 					LCD_Clear();//remove all previously printed characters on the LCD 
-					Bluetooth_TransmaitString("Set Brightness:%");
+					Bluetooth_TransmaitString("Set Brightness:%\n\r");
 					LCD_String("Set Brightness:%");//print the format of inserting temperature
 					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
 					
@@ -730,7 +730,7 @@ int main(void)
 					//rxdata = NOT_PRESSED;//set the key pressed to the default value
 					key_pressed =NOT_PRESSED;
 					LCD_Clear();//remove all previously printed characters on the LCD 
-					Bluetooth_TransmaitString("1:open 2:colse");
+					Bluetooth_TransmaitString("1:open 2:colse\n\r");
 					LCD_String("1:open 2:colse");//print the format of inserting temperature
 					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
 					
@@ -811,7 +811,7 @@ int main(void)
 					{
 						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
-						Bluetooth_TransmaitString("Wrong input");
+						Bluetooth_TransmaitString("Wrong input\n\r");
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						continue;//return to #while (temperature==0)
 					}
@@ -831,7 +831,7 @@ int main(void)
 					{
 						LCD_Clear();//remove all previously printed characters on the LCD 
 						LCD_String("Wrong input");//print error message
-						Bluetooth_TransmaitString("Wrong input");
+						Bluetooth_TransmaitString("Wrong input\n\r");
 						_delay_ms(500);//Halt the system for the given time in (ms)
 						continue;//repeat the loop that ask for the temperature
 					}
@@ -845,7 +845,7 @@ int main(void)
 					_delay_ms(200);
 					LCD_Clear();//remove all previously printed characters on the LCD 
 					LCD_String("Temperature Set");//show the message
-					Bluetooth_TransmaitString("Temperature Set");
+					Bluetooth_TransmaitString("Temperature Set\n\r");
 					_delay_ms(500);//Halt the system for the given time in (ms)
 					if (advvalue >temperature)//check for req temp and current temp to take action
 					{

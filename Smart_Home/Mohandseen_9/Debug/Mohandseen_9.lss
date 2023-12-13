@@ -5,29 +5,29 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .text         000026f2  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000336  00800060  000026f2  00002786  2**0
+  1 .data         0000048e  00800060  000026f2  00002786  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000051  00800396  00800396  00002abc  2**0
+  2 .bss          00000051  008004ee  008004ee  00002c14  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00002abc  2**0
+  3 .comment      00000030  00000000  00000000  00002c14  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00002aec  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00002c44  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000004c0  00000000  00000000  00002b28  2**0
+  5 .debug_aranges 000004c0  00000000  00000000  00002c80  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000086e6  00000000  00000000  00002fe8  2**0
+  6 .debug_info   000086e6  00000000  00000000  00003140  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001ad5  00000000  00000000  0000b6ce  2**0
+  7 .debug_abbrev 00001ad5  00000000  00000000  0000b826  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000391d  00000000  00000000  0000d1a3  2**0
+  8 .debug_line   0000391d  00000000  00000000  0000d2fb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000c74  00000000  00000000  00010ac0  2**2
+  9 .debug_frame  00000c74  00000000  00000000  00010c18  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000023a2  00000000  00000000  00011734  2**0
+ 10 .debug_str    000023fa  00000000  00000000  0001188c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00005764  00000000  00000000  00013ad6  2**0
+ 11 .debug_loc    00005764  00000000  00000000  00013c86  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000580  00000000  00000000  0001923a  2**0
+ 12 .debug_ranges 00000580  00000000  00000000  000193ea  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -139,7 +139,7 @@ Disassembly of section .text:
       f4:	cd bf       	out	0x3d, r28	; 61
 
 000000f6 <__do_copy_data>:
-      f6:	13 e0       	ldi	r17, 0x03	; 3
+      f6:	14 e0       	ldi	r17, 0x04	; 4
       f8:	a0 e6       	ldi	r26, 0x60	; 96
       fa:	b0 e0       	ldi	r27, 0x00	; 0
       fc:	e2 ef       	ldi	r30, 0xF2	; 242
@@ -147,21 +147,21 @@ Disassembly of section .text:
      100:	02 c0       	rjmp	.+4      	; 0x106 <__do_copy_data+0x10>
      102:	05 90       	lpm	r0, Z+
      104:	0d 92       	st	X+, r0
-     106:	a6 39       	cpi	r26, 0x96	; 150
+     106:	ae 3e       	cpi	r26, 0xEE	; 238
      108:	b1 07       	cpc	r27, r17
      10a:	d9 f7       	brne	.-10     	; 0x102 <__do_copy_data+0xc>
 
 0000010c <__do_clear_bss>:
-     10c:	23 e0       	ldi	r18, 0x03	; 3
-     10e:	a6 e9       	ldi	r26, 0x96	; 150
-     110:	b3 e0       	ldi	r27, 0x03	; 3
+     10c:	25 e0       	ldi	r18, 0x05	; 5
+     10e:	ae ee       	ldi	r26, 0xEE	; 238
+     110:	b4 e0       	ldi	r27, 0x04	; 4
      112:	01 c0       	rjmp	.+2      	; 0x116 <.do_clear_bss_start>
 
 00000114 <.do_clear_bss_loop>:
      114:	1d 92       	st	X+, r1
 
 00000116 <.do_clear_bss_start>:
-     116:	a7 3e       	cpi	r26, 0xE7	; 231
+     116:	af 33       	cpi	r26, 0x3F	; 63
      118:	b2 07       	cpc	r27, r18
      11a:	e1 f7       	brne	.-8      	; 0x114 <.do_clear_bss_loop>
      11c:	0e 94 b1 00 	call	0x162	; 0x162 <main>
@@ -179,8 +179,8 @@ void ExtInt0Fun(void) {//INterupt function to handle Temp when system on
 	advvalue = LM35_Read(ADC_Channel0);
      128:	80 e0       	ldi	r24, 0x00	; 0
      12a:	0e 94 56 0b 	call	0x16ac	; 0x16ac <LM35_Read>
-     12e:	90 93 97 03 	sts	0x0397, r25	; 0x800397 <__data_end+0x1>
-     132:	80 93 96 03 	sts	0x0396, r24	; 0x800396 <__data_end>
+     12e:	90 93 ef 04 	sts	0x04EF, r25	; 0x8004ef <__data_end+0x1>
+     132:	80 93 ee 04 	sts	0x04EE, r24	; 0x8004ee <__data_end>
 	if (advvalue >= required_temperature ) {
      136:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
      13a:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
@@ -193,7 +193,7 @@ void ExtInt0Fun(void) {//INterupt function to handle Temp when system on
      148:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
 		last_air_conditioning_value = AIR_CONDTIONING_ON;
      14c:	81 e0       	ldi	r24, 0x01	; 1
-     14e:	80 93 9b 03 	sts	0x039B, r24	; 0x80039b <last_air_conditioning_value>
+     14e:	80 93 f3 04 	sts	0x04F3, r24	; 0x8004f3 <last_air_conditioning_value>
      152:	08 95       	ret
 	} else if(advvalue <= required_temperature)
 	{
@@ -202,7 +202,7 @@ void ExtInt0Fun(void) {//INterupt function to handle Temp when system on
      156:	8f e0       	ldi	r24, 0x0F	; 15
      158:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
 		last_air_conditioning_value = AIR_CONDTIONING_OFF;
-     15c:	10 92 9b 03 	sts	0x039B, r1	; 0x80039b <last_air_conditioning_value>
+     15c:	10 92 f3 04 	sts	0x04F3, r1	; 0x8004f3 <last_air_conditioning_value>
      160:	08 95       	ret
 
 00000162 <main>:
@@ -280,8 +280,8 @@ int main(void)
      1c6:	8c ec       	ldi	r24, 0xCC	; 204
      1c8:	90 e0       	ldi	r25, 0x00	; 0
      1ca:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-	Bluetooth_TransmaitString("Welcome to smart");
-     1ce:	8c ec       	ldi	r24, 0xCC	; 204
+	Bluetooth_TransmaitString("Welcome to smart\n\r");
+     1ce:	8d ed       	ldi	r24, 0xDD	; 221
      1d0:	90 e0       	ldi	r25, 0x00	; 0
      1d2:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 	LCD_SetPos(2, 0);
@@ -289,11 +289,11 @@ int main(void)
      1d8:	82 e0       	ldi	r24, 0x02	; 2
      1da:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 	LCD_String("home system");
-     1de:	8d ed       	ldi	r24, 0xDD	; 221
+     1de:	80 ef       	ldi	r24, 0xF0	; 240
      1e0:	90 e0       	ldi	r25, 0x00	; 0
      1e2:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-	Bluetooth_TransmaitString("home system");
-     1e6:	8d ed       	ldi	r24, 0xDD	; 221
+	Bluetooth_TransmaitString("home system\n\r");
+     1e6:	8c ef       	ldi	r24, 0xFC	; 252
      1e8:	90 e0       	ldi	r25, 0x00	; 0
      1ea:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 	#else
@@ -321,8 +321,8 @@ int main(void)
 	advvalue = LM35_Read(ADC_Channel0);
      204:	80 e0       	ldi	r24, 0x00	; 0
      206:	0e 94 56 0b 	call	0x16ac	; 0x16ac <LM35_Read>
-     20a:	90 93 97 03 	sts	0x0397, r25	; 0x800397 <__data_end+0x1>
-     20e:	80 93 96 03 	sts	0x0396, r24	; 0x800396 <__data_end>
+     20a:	90 93 ef 04 	sts	0x04EF, r25	; 0x8004ef <__data_end+0x1>
+     20e:	80 93 ee 04 	sts	0x04EE, r24	; 0x8004ee <__data_end>
 	if (advvalue >required_temperature)
      212:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
      216:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
@@ -350,16 +350,16 @@ int main(void)
      240:	dc c0       	rjmp	.+440    	; 0x3fa <main+0x298>
 	{
 		LCD_String("Login for");//printing login menu
-     242:	89 ee       	ldi	r24, 0xE9	; 233
-     244:	90 e0       	ldi	r25, 0x00	; 0
+     242:	8a e0       	ldi	r24, 0x0A	; 10
+     244:	91 e0       	ldi	r25, 0x01	; 1
      246:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 		LCD_SetPos(2,1);//move the cursor to the second line
      24a:	61 e0       	ldi	r22, 0x01	; 1
      24c:	82 e0       	ldi	r24, 0x02	; 2
      24e:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 		LCD_String("first time");
-     252:	83 ef       	ldi	r24, 0xF3	; 243
-     254:	90 e0       	ldi	r25, 0x00	; 0
+     252:	84 e1       	ldi	r24, 0x14	; 20
+     254:	91 e0       	ldi	r25, 0x01	; 1
      256:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      25a:	9f ef       	ldi	r25, 0xFF	; 255
      25c:	e3 ed       	ldi	r30, 0xD3	; 211
@@ -374,15 +374,15 @@ int main(void)
 		LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      26c:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 		LCD_String("Set Admin pass");//printing the set admin password menu
-     270:	8e ef       	ldi	r24, 0xFE	; 254
-     272:	90 e0       	ldi	r25, 0x00	; 0
+     270:	8f e1       	ldi	r24, 0x1F	; 31
+     272:	91 e0       	ldi	r25, 0x01	; 1
      274:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 		LCD_SetPos(2,1);
      278:	61 e0       	ldi	r22, 0x01	; 1
      27a:	82 e0       	ldi	r24, 0x02	; 2
      27c:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 		LCD_String("Admin pass:");
-     280:	8d e0       	ldi	r24, 0x0D	; 13
+     280:	8e e2       	ldi	r24, 0x2E	; 46
      282:	91 e0       	ldi	r25, 0x01	; 1
      284:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 		
@@ -490,7 +490,7 @@ int main(void)
 		LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      316:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 		LCD_String("Pass Saved");// show pass saved message
-     31a:	89 e1       	ldi	r24, 0x19	; 25
+     31a:	8a e3       	ldi	r24, 0x3A	; 58
      31c:	91 e0       	ldi	r25, 0x01	; 1
      31e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      322:	ff ef       	ldi	r31, 0xFF	; 255
@@ -509,7 +509,7 @@ int main(void)
 		/********************************* setting guest password **********************************************/
 		pass_counter=0;//reset password counter which count the characters of the pass
 		LCD_String("Set Guest Pass");//printing the set admin password menu
-     338:	84 e2       	ldi	r24, 0x24	; 36
+     338:	85 e4       	ldi	r24, 0x45	; 69
      33a:	91 e0       	ldi	r25, 0x01	; 1
      33c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 		LCD_SetPos(2,1);
@@ -517,7 +517,7 @@ int main(void)
      342:	82 e0       	ldi	r24, 0x02	; 2
      344:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 		LCD_String("Guest Pass:");
-     348:	83 e3       	ldi	r24, 0x33	; 51
+     348:	84 e5       	ldi	r24, 0x54	; 84
      34a:	91 e0       	ldi	r25, 0x01	; 1
      34c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      350:	1c e0       	ldi	r17, 0x0C	; 12
@@ -613,7 +613,7 @@ int main(void)
 		LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      3ca:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 		LCD_String("Pass Saved");//move the lcd cursor to the previous location
-     3ce:	89 e1       	ldi	r24, 0x19	; 25
+     3ce:	8a e3       	ldi	r24, 0x3A	; 58
      3d0:	91 e0       	ldi	r25, 0x01	; 1
      3d2:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      3d6:	ff ef       	ldi	r31, 0xFF	; 255
@@ -715,7 +715,7 @@ int main(void)
 		u8 pass_tries_count=0;//stores how many times the user tried to log in to the system and failed
 		if ( pass_tries_count!=3 ){
 			login_mode=NO_MODE;//log the user out
-     428:	10 92 9a 03 	sts	0x039A, r1	; 0x80039a <login_mode>
+     428:	10 92 f2 04 	sts	0x04F2, r1	; 0x8004f2 <login_mode>
 			key_pressed = 0;//clear the key_pressed to avoid unwanted selection in the menu switch
 			DIO_WriteChannel(DIO_ChannelD6,STD_Low);//turnoff the led of the admin
      42c:	60 e0       	ldi	r22, 0x00	; 0
@@ -746,7 +746,7 @@ int main(void)
 			key_pressed = 0;//clear the key_pressed to avoid unwanted selection in the menu switch
      450:	91 2c       	mov	r9, r1
 				LCD_String("wait 20 seconds");
-				Bluetooth_TransmaitString("wait 20 seconds");
+				Bluetooth_TransmaitString("wait 20 seconds\n\r");
 				DIO_WriteChannel(DIO_ChannelD4,STD_High);//Turn on the led of Blocked
 				DIO_WriteChannel(DIO_ChannelA3,STD_High);//turn on alarm 
 				_delay_ms(BLOCK_MODE_TIME);//Halt the system for the given time in (ms)
@@ -773,11 +773,11 @@ int main(void)
 				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      45e:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 				LCD_String("Login blocked");
-     462:	8f e3       	ldi	r24, 0x3F	; 63
+     462:	80 e6       	ldi	r24, 0x60	; 96
      464:	91 e0       	ldi	r25, 0x01	; 1
      466:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-				Bluetooth_TransmaitString("Login blocked");
-     46a:	8f e3       	ldi	r24, 0x3F	; 63
+				Bluetooth_TransmaitString("Login blocked\n\r");
+     46a:	8e e6       	ldi	r24, 0x6E	; 110
      46c:	91 e0       	ldi	r25, 0x01	; 1
      46e:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 				LCD_SetPos(2,1);
@@ -785,11 +785,11 @@ int main(void)
      474:	82 e0       	ldi	r24, 0x02	; 2
      476:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 				LCD_String("wait 20 seconds");
-     47a:	8d e4       	ldi	r24, 0x4D	; 77
+     47a:	8e e7       	ldi	r24, 0x7E	; 126
      47c:	91 e0       	ldi	r25, 0x01	; 1
      47e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-				Bluetooth_TransmaitString("wait 20 seconds");
-     482:	8d e4       	ldi	r24, 0x4D	; 77
+				Bluetooth_TransmaitString("wait 20 seconds\n\r");
+     482:	8e e8       	ldi	r24, 0x8E	; 142
      484:	91 e0       	ldi	r25, 0x01	; 1
      486:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 				DIO_WriteChannel(DIO_ChannelD4,STD_High);//Turn on the led of Blocked
@@ -828,7 +828,7 @@ int main(void)
      4c4:	8a e0       	ldi	r24, 0x0A	; 10
      4c6:	91 e0       	ldi	r25, 0x01	; 1
      4c8:	0e 94 d2 09 	call	0x13a4	; 0x13a4 <EEPROM_vWriteByteToAddress>
-				Bluetooth_TransmaitString("wait 20 seconds");
+				Bluetooth_TransmaitString("wait 20 seconds\n\r");
 				DIO_WriteChannel(DIO_ChannelD4,STD_High);//Turn on the led of Blocked
 				DIO_WriteChannel(DIO_ChannelA3,STD_High);//turn on alarm 
 				_delay_ms(BLOCK_MODE_TIME);//Halt the system for the given time in (ms)
@@ -844,16 +844,16 @@ int main(void)
 			
 			L:LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      4d0:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
-			LCD_String("Select mode :");
-     4d4:	8d e5       	ldi	r24, 0x5D	; 93
+			LCD_String("Select mode :\n\r");
+     4d4:	80 ea       	ldi	r24, 0xA0	; 160
      4d6:	91 e0       	ldi	r25, 0x01	; 1
      4d8:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 			LCD_SetPos(2,1);
      4dc:	61 e0       	ldi	r22, 0x01	; 1
      4de:	82 e0       	ldi	r24, 0x02	; 2
      4e0:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
-			LCD_String("0:Admin 1:Guest");
-     4e4:	8b e6       	ldi	r24, 0x6B	; 107
+			LCD_String("0:Admin 1:Guest\n\r");
+     4e4:	80 eb       	ldi	r24, 0xB0	; 176
      4e6:	91 e0       	ldi	r25, 0x01	; 1
      4e8:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 			/*Bluetooth_TransmaitString("Select mode : 0:Admin 1:Guest");*/
@@ -874,9 +874,9 @@ int main(void)
      504:	00 c0       	rjmp	.+0      	; 0x506 <__LOCK_REGION_LENGTH__+0x106>
      506:	00 00       	nop
 			L:LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
-			LCD_String("Select mode :");
+			LCD_String("Select mode :\n\r");
 			LCD_SetPos(2,1);
-			LCD_String("0:Admin 1:Guest");
+			LCD_String("0:Admin 1:Guest\n\r");
 			/*Bluetooth_TransmaitString("Select mode : 0:Admin 1:Guest");*/
 			while(key_pressed==NOT_PRESSED)//wait for the selection of the mode
      508:	99 20       	and	r9, r9
@@ -894,7 +894,7 @@ int main(void)
 				LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      514:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 				LCD_String("Wrong input.");//Prints error message on the LCD
-     518:	8b e7       	ldi	r24, 0x7B	; 123
+     518:	82 ec       	ldi	r24, 0xC2	; 194
      51a:	91 e0       	ldi	r25, 0x01	; 1
      51c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      520:	ef ef       	ldi	r30, 0xFF	; 255
@@ -943,11 +943,11 @@ int main(void)
 					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      558:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("Admin mode");
-     55c:	88 e8       	ldi	r24, 0x88	; 136
+     55c:	8f ec       	ldi	r24, 0xCF	; 207
      55e:	91 e0       	ldi	r25, 0x01	; 1
      560:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-					Bluetooth_TransmaitString("Admin mode");//print meesage in terminal for login
-     564:	88 e8       	ldi	r24, 0x88	; 136
+					Bluetooth_TransmaitString("Admin mode\n\r");//print meesage in terminal for login
+     564:	8a ed       	ldi	r24, 0xDA	; 218
      566:	91 e0       	ldi	r25, 0x01	; 1
      568:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_SetPos(2,1);
@@ -955,11 +955,11 @@ int main(void)
      56e:	82 e0       	ldi	r24, 0x02	; 2
      570:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("Enter Pass:");
-     574:	83 e9       	ldi	r24, 0x93	; 147
+     574:	87 ee       	ldi	r24, 0xE7	; 231
      576:	91 e0       	ldi	r25, 0x01	; 1
      578:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-					Bluetooth_TransmaitString("Enter Pass:");
-     57c:	83 e9       	ldi	r24, 0x93	; 147
+					Bluetooth_TransmaitString("Enter Pass:\n\r");
+     57c:	83 ef       	ldi	r24, 0xF3	; 243
      57e:	91 e0       	ldi	r25, 0x01	; 1
      580:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      584:	9f ef       	ldi	r25, 0xFF	; 255
@@ -997,7 +997,7 @@ int main(void)
      5ba:	e1 f7       	brne	.-8      	; 0x5b4 <__LOCK_REGION_LENGTH__+0x1b4>
      5bc:	00 c0       	rjmp	.+0      	; 0x5be <__LOCK_REGION_LENGTH__+0x1be>
      5be:	00 00       	nop
-					Bluetooth_TransmaitString("Enter Pass:");
+					Bluetooth_TransmaitString("Enter Pass:\n\r");
 					_delay_ms(200);//Halt the system for the given time in (ms)
 					pass_counter=0;//counts the number of entered characters
 					while(pass_counter<PASS_SIZE)
@@ -1049,7 +1049,7 @@ int main(void)
      604:	1f 2d       	mov	r17, r15
 					LCD_SetPos(2,1);
 					LCD_String("Enter Pass:");
-					Bluetooth_TransmaitString("Enter Pass:");
+					Bluetooth_TransmaitString("Enter Pass:\n\r");
 					_delay_ms(200);//Halt the system for the given time in (ms)
 					pass_counter=0;//counts the number of entered characters
 					while(pass_counter<PASS_SIZE)
@@ -1088,28 +1088,28 @@ int main(void)
 					{
 						login_mode = ADMIN;//set the login mode to admin mode
      634:	81 e0       	ldi	r24, 0x01	; 1
-     636:	80 93 9a 03 	sts	0x039A, r24	; 0x80039a <login_mode>
+     636:	80 93 f2 04 	sts	0x04F2, r24	; 0x8004f2 <login_mode>
 						pass_tries_count=0;//clear the counter of wrong tries
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      63a:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Right pass");
-     63e:	8f e9       	ldi	r24, 0x9F	; 159
-     640:	91 e0       	ldi	r25, 0x01	; 1
+     63e:	81 e0       	ldi	r24, 0x01	; 1
+     640:	92 e0       	ldi	r25, 0x02	; 2
      642:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Right pass");
-     646:	8f e9       	ldi	r24, 0x9F	; 159
-     648:	91 e0       	ldi	r25, 0x01	; 1
+						Bluetooth_TransmaitString("Right pass\n\r");
+     646:	8c e0       	ldi	r24, 0x0C	; 12
+     648:	92 e0       	ldi	r25, 0x02	; 2
      64a:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 						LCD_SetPos(2,1);
      64e:	61 e0       	ldi	r22, 0x01	; 1
      650:	82 e0       	ldi	r24, 0x02	; 2
      652:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("Admin mode");
-     656:	88 e8       	ldi	r24, 0x88	; 136
+     656:	8f ec       	ldi	r24, 0xCF	; 207
      658:	91 e0       	ldi	r25, 0x01	; 1
      65a:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Admin mode");
-     65e:	88 e8       	ldi	r24, 0x88	; 136
+						Bluetooth_TransmaitString("Admin mode\n\r");
+     65e:	8a ed       	ldi	r24, 0xDA	; 218
      660:	91 e0       	ldi	r25, 0x01	; 1
      662:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      666:	2f ef       	ldi	r18, 0xFF	; 255
@@ -1131,12 +1131,12 @@ int main(void)
      682:	81 e0       	ldi	r24, 0x01	; 1
      684:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("Door opening");
-     688:	8a ea       	ldi	r24, 0xAA	; 170
-     68a:	91 e0       	ldi	r25, 0x01	; 1
+     688:	89 e1       	ldi	r24, 0x19	; 25
+     68a:	92 e0       	ldi	r25, 0x02	; 2
      68c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Door opening");
-     690:	8a ea       	ldi	r24, 0xAA	; 170
-     692:	91 e0       	ldi	r25, 0x01	; 1
+						Bluetooth_TransmaitString("Door opening\n\r");
+     690:	86 e2       	ldi	r24, 0x26	; 38
+     692:	92 e0       	ldi	r25, 0x02	; 2
      694:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 						
 						ServoMotor(90);//door open 			
@@ -1174,28 +1174,28 @@ int main(void)
 						pass_tries_count++;//increase the number of wrong tries to block login if it exceeds the allowed tries
      6be:	0f 5f       	subi	r16, 0xFF	; 255
 						login_mode = NO_MODE;//set the mode as not logged in
-     6c0:	f0 92 9a 03 	sts	0x039A, r15	; 0x80039a <login_mode>
+     6c0:	f0 92 f2 04 	sts	0x04F2, r15	; 0x8004f2 <login_mode>
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      6c4:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong Pass");
-     6c8:	87 eb       	ldi	r24, 0xB7	; 183
-     6ca:	91 e0       	ldi	r25, 0x01	; 1
+     6c8:	85 e3       	ldi	r24, 0x35	; 53
+     6ca:	92 e0       	ldi	r25, 0x02	; 2
      6cc:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Wrong Pass");
-     6d0:	87 eb       	ldi	r24, 0xB7	; 183
-     6d2:	91 e0       	ldi	r25, 0x01	; 1
+						Bluetooth_TransmaitString("Wrong Pass\n\r");
+     6d0:	80 e4       	ldi	r24, 0x40	; 64
+     6d2:	92 e0       	ldi	r25, 0x02	; 2
      6d4:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 						LCD_SetPos(2,1);
      6d8:	61 e0       	ldi	r22, 0x01	; 1
      6da:	82 e0       	ldi	r24, 0x02	; 2
      6dc:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("Tries left:");
-     6e0:	82 ec       	ldi	r24, 0xC2	; 194
-     6e2:	91 e0       	ldi	r25, 0x01	; 1
+     6e0:	8d e4       	ldi	r24, 0x4D	; 77
+     6e2:	92 e0       	ldi	r25, 0x02	; 2
      6e4:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Tries left:");
-     6e8:	82 ec       	ldi	r24, 0xC2	; 194
-     6ea:	91 e0       	ldi	r25, 0x01	; 1
+						Bluetooth_TransmaitString("Tries left:\n\r");
+     6e8:	89 e5       	ldi	r24, 0x59	; 89
+     6ea:	92 e0       	ldi	r25, 0x02	; 2
      6ec:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 						LCD_Char(TRIES_ALLOWED-pass_tries_count+ASCII_ZERO);//print the number of tries left before block mode to be activated
      6f0:	8a 2d       	mov	r24, r10
@@ -1250,7 +1250,7 @@ int main(void)
 				/********************************* Admin login **********************************************/
 				case CHECK_ADMIN_MODE:
 				while(login_mode!=ADMIN)//this loop is to repeat the login for admin in case of wrong password
-     72a:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     72a:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      72e:	81 30       	cpi	r24, 0x01	; 1
      730:	09 f0       	breq	.+2      	; 0x734 <__LOCK_REGION_LENGTH__+0x334>
      732:	12 cf       	rjmp	.-476    	; 0x558 <__LOCK_REGION_LENGTH__+0x158>
@@ -1263,16 +1263,16 @@ int main(void)
 					LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      736:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("Guest mode");
-     73a:	8e ec       	ldi	r24, 0xCE	; 206
-     73c:	91 e0       	ldi	r25, 0x01	; 1
+     73a:	87 e6       	ldi	r24, 0x67	; 103
+     73c:	92 e0       	ldi	r25, 0x02	; 2
      73e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,1);
      742:	61 e0       	ldi	r22, 0x01	; 1
      744:	82 e0       	ldi	r24, 0x02	; 2
      746:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("Enter pass:");
-     74a:	89 ed       	ldi	r24, 0xD9	; 217
-     74c:	91 e0       	ldi	r25, 0x01	; 1
+     74a:	82 e7       	ldi	r24, 0x72	; 114
+     74c:	92 e0       	ldi	r25, 0x02	; 2
      74e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      752:	ef ef       	ldi	r30, 0xFF	; 255
      754:	f3 ec       	ldi	r31, 0xC3	; 195
@@ -1389,20 +1389,20 @@ int main(void)
 					{
 						login_mode = GUEST;
      7f8:	82 e0       	ldi	r24, 0x02	; 2
-     7fa:	80 93 9a 03 	sts	0x039A, r24	; 0x80039a <login_mode>
+     7fa:	80 93 f2 04 	sts	0x04F2, r24	; 0x8004f2 <login_mode>
 						LCD_Clear();
      7fe:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wait for approve");//wait for approve from admin 
-     802:	85 ee       	ldi	r24, 0xE5	; 229
-     804:	91 e0       	ldi	r25, 0x01	; 1
+     802:	8e e7       	ldi	r24, 0x7E	; 126
+     804:	92 e0       	ldi	r25, 0x02	; 2
      806:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 						LCD_SetPos(1,0);
      80a:	6f 2d       	mov	r22, r15
      80c:	81 e0       	ldi	r24, 0x01	; 1
      80e:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
-						Bluetooth_TransmaitString("Req from guest: 1.OPEN 2.CLOSED");
-     812:	86 ef       	ldi	r24, 0xF6	; 246
-     814:	91 e0       	ldi	r25, 0x01	; 1
+						Bluetooth_TransmaitString("Req from guest: 1.OPEN 2.CLOSED\n\r");
+     812:	8f e8       	ldi	r24, 0x8F	; 143
+     814:	92 e0       	ldi	r25, 0x02	; 2
      816:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      81a:	2f ef       	ldi	r18, 0xFF	; 255
      81c:	33 ec       	ldi	r19, 0xC3	; 195
@@ -1426,16 +1426,16 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      836:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Right pass");
-     83a:	8f e9       	ldi	r24, 0x9F	; 159
-     83c:	91 e0       	ldi	r25, 0x01	; 1
+     83a:	81 e0       	ldi	r24, 0x01	; 1
+     83c:	92 e0       	ldi	r25, 0x02	; 2
      83e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 						LCD_SetPos(2,1);
      842:	61 e0       	ldi	r22, 0x01	; 1
      844:	82 e0       	ldi	r24, 0x02	; 2
      846:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("Guest mode");
-     84a:	8e ec       	ldi	r24, 0xCE	; 206
-     84c:	91 e0       	ldi	r25, 0x01	; 1
+     84a:	87 e6       	ldi	r24, 0x67	; 103
+     84c:	92 e0       	ldi	r25, 0x02	; 2
      84e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 						ServoMotor(90);//door open
      852:	60 e0       	ldi	r22, 0x00	; 0
@@ -1479,7 +1479,7 @@ int main(void)
      882:	f1 f5       	brne	.+124    	; 0x900 <__stack+0xa1>
 						{
 							LCD_String("req has been rejected");
-     884:	86 e1       	ldi	r24, 0x16	; 22
+     884:	81 eb       	ldi	r24, 0xB1	; 177
      886:	92 e0       	ldi	r25, 0x02	; 2
      888:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      88c:	2f ef       	ldi	r18, 0xFF	; 255
@@ -1498,7 +1498,7 @@ int main(void)
 							rxdata = NOT_PRESSED;
 							key_pressed = NOT_PRESSED;
 							login_mode =NO_MODE;//reset login mode flag 
-     8a0:	f0 92 9a 03 	sts	0x039A, r15	; 0x80039a <login_mode>
+     8a0:	f0 92 f2 04 	sts	0x04F2, r15	; 0x8004f2 <login_mode>
 							LCD_String("req has been rejected");
 							_delay_ms(500);
 							pass[pass_counter]=0;//reast all inputs to try again 
@@ -1524,11 +1524,11 @@ int main(void)
 						pass_tries_count++;//increase the number of wrong tries to block login if it exceeds the allowed tries
      8aa:	0f 5f       	subi	r16, 0xFF	; 255
 						login_mode = NO_MODE;//set the mode as not logged in
-     8ac:	f0 92 9a 03 	sts	0x039A, r15	; 0x80039a <login_mode>
+     8ac:	f0 92 f2 04 	sts	0x04F2, r15	; 0x8004f2 <login_mode>
 						LCD_Clear();//remove all previously printed characters on the LCD and move the cursor to the first column of the first row
      8b0:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong pass");
-     8b4:	8c e2       	ldi	r24, 0x2C	; 44
+     8b4:	87 ec       	ldi	r24, 0xC7	; 199
      8b6:	92 e0       	ldi	r25, 0x02	; 2
      8b8:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 						LCD_SetPos(2,1);
@@ -1536,8 +1536,8 @@ int main(void)
      8be:	82 e0       	ldi	r24, 0x02	; 2
      8c0:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("Tries left:");
-     8c4:	82 ec       	ldi	r24, 0xC2	; 194
-     8c6:	91 e0       	ldi	r25, 0x01	; 1
+     8c4:	8d e4       	ldi	r24, 0x4D	; 77
+     8c6:	92 e0       	ldi	r25, 0x02	; 2
      8c8:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 						LCD_Char(TRIES_ALLOWED-pass_tries_count+ASCII_ZERO);//print the number of tries left before block mode to be activated
      8cc:	8a 2d       	mov	r24, r10
@@ -1584,7 +1584,7 @@ int main(void)
 				/********************************* Guest login **********************************************/
 				case  CHECK_GUEST_MODE:
 				while(login_mode != GUEST)
-     902:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     902:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      906:	82 30       	cpi	r24, 0x02	; 2
      908:	09 f0       	breq	.+2      	; 0x90c <__stack+0xad>
      90a:	15 cf       	rjmp	.-470    	; 0x736 <__LOCK_REGION_LENGTH__+0x336>
@@ -1594,7 +1594,7 @@ int main(void)
 		
 		
 		while (login_mode==NO_MODE)//The user can only leave the loop only in case of he was logged in as guest or admin
-     90c:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     90c:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      910:	88 23       	and	r24, r24
      912:	09 f4       	brne	.+2      	; 0x916 <__stack+0xb7>
      914:	a1 cd       	rjmp	.-1214   	; 0x458 <__LOCK_REGION_LENGTH__+0x58>
@@ -1675,16 +1675,16 @@ int main(void)
 					LCD_Clear();
      95a:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("1:Room1 2:Room2");
-     95e:	87 e3       	ldi	r24, 0x37	; 55
+     95e:	82 ed       	ldi	r24, 0xD2	; 210
      960:	92 e0       	ldi	r25, 0x02	; 2
      962:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					if(login_mode==ADMIN)//check login mode
-     966:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     966:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      96a:	81 30       	cpi	r24, 0x01	; 1
      96c:	d1 f4       	brne	.+52     	; 0x9a2 <__stack+0x143>
 					{
-						Bluetooth_TransmaitString("1:Room1 2:Room2");
-     96e:	87 e3       	ldi	r24, 0x37	; 55
+						Bluetooth_TransmaitString("1:Room1 2:Room2\n\r");
+     96e:	82 ee       	ldi	r24, 0xE2	; 226
      970:	92 e0       	ldi	r25, 0x02	; 2
      972:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      976:	3f ef       	ldi	r19, 0xFF	; 255
@@ -1697,8 +1697,8 @@ int main(void)
      984:	00 c0       	rjmp	.+0      	; 0x986 <__stack+0x127>
      986:	00 00       	nop
 						_delay_ms(100);
-						Bluetooth_TransmaitString("3:Room3 4:More");
-     988:	87 e4       	ldi	r24, 0x47	; 71
+						Bluetooth_TransmaitString("3:Room3 4:More\n\r");
+     988:	84 ef       	ldi	r24, 0xF4	; 244
      98a:	92 e0       	ldi	r25, 0x02	; 2
      98c:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 						LCD_SetPos(2,1);
@@ -1706,8 +1706,8 @@ int main(void)
      992:	82 e0       	ldi	r24, 0x02	; 2
      994:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("3:Room3 4:More");//this menu options only printed if the logged in user is an admin
-     998:	87 e4       	ldi	r24, 0x47	; 71
-     99a:	92 e0       	ldi	r25, 0x02	; 2
+     998:	85 e0       	ldi	r24, 0x05	; 5
+     99a:	93 e0       	ldi	r25, 0x03	; 3
      99c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      9a0:	09 c0       	rjmp	.+18     	; 0x9b4 <__stack+0x155>
 					}
@@ -1719,14 +1719,14 @@ int main(void)
      9a6:	61 e0       	ldi	r22, 0x01	; 1
      9a8:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 						LCD_String("3:Room3 4:Room4");//this menu options only printed if the logged in user is a guest
-     9ac:	86 e5       	ldi	r24, 0x56	; 86
-     9ae:	92 e0       	ldi	r25, 0x02	; 2
+     9ac:	84 e1       	ldi	r24, 0x14	; 20
+     9ae:	93 e0       	ldi	r25, 0x03	; 3
      9b0:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					}
 					/*******************************************************/
 					
 					if (login_mode == GUEST)
-     9b4:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     9b4:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      9b8:	82 30       	cpi	r24, 0x02	; 2
      9ba:	61 f5       	brne	.+88     	; 0xa14 <__stack+0x1b5>
 					{
@@ -1784,8 +1784,8 @@ int main(void)
 							LCD_Clear();//remove all previously printed characters on the LCD 
      9f4:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 							LCD_String("Wrong input");//print error message
-     9f8:	86 e6       	ldi	r24, 0x66	; 102
-     9fa:	92 e0       	ldi	r25, 0x02	; 2
+     9f8:	84 e2       	ldi	r24, 0x24	; 36
+     9fa:	93 e0       	ldi	r25, 0x03	; 3
      9fc:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      a00:	3f ef       	ldi	r19, 0xFF	; 255
      a02:	89 e6       	ldi	r24, 0x69	; 105
@@ -1861,8 +1861,8 @@ int main(void)
 							LCD_Clear();//remove all previously printed characters on the LCD 
      a54:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 							LCD_String("Wrong input");//print error message
-     a58:	86 e6       	ldi	r24, 0x66	; 102
-     a5a:	92 e0       	ldi	r25, 0x02	; 2
+     a58:	84 e2       	ldi	r24, 0x24	; 36
+     a5a:	93 e0       	ldi	r25, 0x03	; 3
      a5c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      a60:	3f ef       	ldi	r19, 0xFF	; 255
      a62:	89 e6       	ldi	r24, 0x69	; 105
@@ -1881,9 +1881,9 @@ int main(void)
 					/******************** print more Menu ******************/
 					LCD_Clear();//remove all previously printed characters on the LCD 
      a74:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
-					Bluetooth_TransmaitString("1:Room4    2:TV ");
-     a78:	82 e7       	ldi	r24, 0x72	; 114
-     a7a:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("1:Room4    2:TV\n\r");
+     a78:	80 e3       	ldi	r24, 0x30	; 48
+     a7a:	93 e0       	ldi	r25, 0x03	; 3
      a7c:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      a80:	ef ef       	ldi	r30, 0xFF	; 255
      a82:	f9 ef       	ldi	r31, 0xF9	; 249
@@ -1895,25 +1895,25 @@ int main(void)
      a8e:	00 c0       	rjmp	.+0      	; 0xa90 <__stack+0x231>
      a90:	00 00       	nop
 					_delay_ms(20);
-					Bluetooth_TransmaitString("3:AirCond 4:MORE");
-     a92:	83 e8       	ldi	r24, 0x83	; 131
-     a94:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("3:AirCond 4:MORE\n\r");
+     a92:	82 e4       	ldi	r24, 0x42	; 66
+     a94:	93 e0       	ldi	r25, 0x03	; 3
      a96:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_String("1:Room4    2:TV ");
-     a9a:	82 e7       	ldi	r24, 0x72	; 114
-     a9c:	92 e0       	ldi	r25, 0x02	; 2
+     a9a:	85 e5       	ldi	r24, 0x55	; 85
+     a9c:	93 e0       	ldi	r25, 0x03	; 3
      a9e:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,1);
      aa2:	61 e0       	ldi	r22, 0x01	; 1
      aa4:	82 e0       	ldi	r24, 0x02	; 2
      aa6:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("3:AirCond.4:MORE");
-     aaa:	84 e9       	ldi	r24, 0x94	; 148
-     aac:	92 e0       	ldi	r25, 0x02	; 2
+     aaa:	86 e6       	ldi	r24, 0x66	; 102
+     aac:	93 e0       	ldi	r25, 0x03	; 3
      aae:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					/*******************************************************/
 					rxdata = u8GetTX(login_mode);
-     ab2:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     ab2:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      ab6:	90 e0       	ldi	r25, 0x00	; 0
      ab8:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      abc:	18 2f       	mov	r17, r24
@@ -1954,8 +1954,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      ada:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     ade:	86 e6       	ldi	r24, 0x66	; 102
-     ae0:	92 e0       	ldi	r25, 0x02	; 2
+     ade:	84 e2       	ldi	r24, 0x24	; 36
+     ae0:	93 e0       	ldi	r25, 0x03	; 3
      ae2:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      ae6:	3f ef       	ldi	r19, 0xFF	; 255
      ae8:	89 e6       	ldi	r24, 0x69	; 105
@@ -1980,30 +1980,30 @@ int main(void)
 				do
 				{
 					/******************** print more Menu ******************/
-					Bluetooth_TransmaitString("1:DimLED 2:RET");
-     b04:	85 ea       	ldi	r24, 0xA5	; 165
-     b06:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("1:DimLED 2:RET\n\r");
+     b04:	87 e7       	ldi	r24, 0x77	; 119
+     b06:	93 e0       	ldi	r25, 0x03	; 3
      b08:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
-					Bluetooth_TransmaitString("3:DOOR ");
-     b0c:	84 eb       	ldi	r24, 0xB4	; 180
-     b0e:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("3:DOOR\n\r");
+     b0c:	88 e8       	ldi	r24, 0x88	; 136
+     b0e:	93 e0       	ldi	r25, 0x03	; 3
      b10:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_Clear();//remove all previously printed characters on the LCD 
      b14:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("1:DimLED 2:RET");
-     b18:	85 ea       	ldi	r24, 0xA5	; 165
-     b1a:	92 e0       	ldi	r25, 0x02	; 2
+     b18:	81 e9       	ldi	r24, 0x91	; 145
+     b1a:	93 e0       	ldi	r25, 0x03	; 3
      b1c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,1);
      b20:	61 e0       	ldi	r22, 0x01	; 1
      b22:	82 e0       	ldi	r24, 0x02	; 2
      b24:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("3:DOOR ");
-     b28:	84 eb       	ldi	r24, 0xB4	; 180
-     b2a:	92 e0       	ldi	r25, 0x02	; 2
+     b28:	80 ea       	ldi	r24, 0xA0	; 160
+     b2a:	93 e0       	ldi	r25, 0x03	; 3
      b2c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					rxdata = u8GetTX(login_mode);
-     b30:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     b30:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      b34:	90 e0       	ldi	r25, 0x00	; 0
      b36:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      b3a:	18 2f       	mov	r17, r24
@@ -2036,8 +2036,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      b52:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     b56:	86 e6       	ldi	r24, 0x66	; 102
-     b58:	92 e0       	ldi	r25, 0x02	; 2
+     b56:	84 e2       	ldi	r24, 0x24	; 36
+     b58:	93 e0       	ldi	r25, 0x03	; 3
      b5a:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      b5e:	ef ef       	ldi	r30, 0xFF	; 255
      b60:	f9 e6       	ldi	r31, 0x69	; 105
@@ -2063,29 +2063,29 @@ int main(void)
 					/******************** print more Menu ******************/
 					LCD_Clear();//remove all previously printed characters on the LCD 
      b7a:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
-					Bluetooth_TransmaitString("1:Set temperature");
-     b7e:	8c eb       	ldi	r24, 0xBC	; 188
-     b80:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("1:Set temperature\n\r");
+     b7e:	88 ea       	ldi	r24, 0xA8	; 168
+     b80:	93 e0       	ldi	r25, 0x03	; 3
      b82:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
-					Bluetooth_TransmaitString("2:Control  3:RET");
-     b86:	8e ec       	ldi	r24, 0xCE	; 206
-     b88:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("2:Control  3:RET\n\r");
+     b86:	8c eb       	ldi	r24, 0xBC	; 188
+     b88:	93 e0       	ldi	r25, 0x03	; 3
      b8a:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_String("1:Set temperature ");
-     b8e:	8f ed       	ldi	r24, 0xDF	; 223
-     b90:	92 e0       	ldi	r25, 0x02	; 2
+     b8e:	8f ec       	ldi	r24, 0xCF	; 207
+     b90:	93 e0       	ldi	r25, 0x03	; 3
      b92:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,1);
      b96:	61 e0       	ldi	r22, 0x01	; 1
      b98:	82 e0       	ldi	r24, 0x02	; 2
      b9a:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("2:Control  3:RET");
-     b9e:	8e ec       	ldi	r24, 0xCE	; 206
-     ba0:	92 e0       	ldi	r25, 0x02	; 2
+     b9e:	82 ee       	ldi	r24, 0xE2	; 226
+     ba0:	93 e0       	ldi	r25, 0x03	; 3
      ba2:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					/*******************************************************/
 					rxdata = u8GetTX(login_mode);
-     ba6:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     ba6:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      baa:	90 e0       	ldi	r25, 0x00	; 0
      bac:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      bb0:	18 2f       	mov	r17, r24
@@ -2118,8 +2118,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      bc8:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     bcc:	86 e6       	ldi	r24, 0x66	; 102
-     bce:	92 e0       	ldi	r25, 0x02	; 2
+     bcc:	84 e2       	ldi	r24, 0x24	; 36
+     bce:	93 e0       	ldi	r25, 0x03	; 3
      bd0:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      bd4:	3f ef       	ldi	r19, 0xFF	; 255
      bd6:	89 e6       	ldi	r24, 0x69	; 105
@@ -2142,7 +2142,7 @@ int main(void)
 				
 				case ROOM1_MENU:
 				vMenuOption(ROOM1_MENU,login_mode);//call the function that show the menu of room 1
-     bf0:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     bf0:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      bf4:	70 e0       	ldi	r23, 0x00	; 0
      bf6:	83 e0       	ldi	r24, 0x03	; 3
      bf8:	90 e0       	ldi	r25, 0x00	; 0
@@ -2154,7 +2154,7 @@ int main(void)
 				
 				case ROOM2_MENU:
 				vMenuOption(ROOM2_MENU,login_mode);//call the function that show the menu of room 2
-     c02:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     c02:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      c06:	70 e0       	ldi	r23, 0x00	; 0
      c08:	84 e0       	ldi	r24, 0x04	; 4
      c0a:	90 e0       	ldi	r25, 0x00	; 0
@@ -2166,7 +2166,7 @@ int main(void)
 				
 				case ROOM3_MENU:
 				vMenuOption(ROOM3_MENU,login_mode);//call the function that show the menu of room 3
-     c14:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     c14:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      c18:	70 e0       	ldi	r23, 0x00	; 0
      c1a:	85 e0       	ldi	r24, 0x05	; 5
      c1c:	90 e0       	ldi	r25, 0x00	; 0
@@ -2178,13 +2178,13 @@ int main(void)
 				
 				case ROOM4_MENU:
 				vMenuOption(ROOM4_MENU,login_mode);//call the function that show the menu of room 4
-     c26:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     c26:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      c2a:	70 e0       	ldi	r23, 0x00	; 0
      c2c:	86 e0       	ldi	r24, 0x06	; 6
      c2e:	90 e0       	ldi	r25, 0x00	; 0
      c30:	0e 94 55 08 	call	0x10aa	; 0x10aa <vMenuOption>
 				if (login_mode == GUEST)//in case of guest is logged in
-     c34:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     c34:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      c38:	82 30       	cpi	r24, 0x02	; 2
      c3a:	09 f4       	brne	.+2      	; 0xc3e <__stack+0x3df>
      c3c:	e4 c1       	rjmp	.+968    	; 0x1006 <__stack+0x7a7>
@@ -2206,13 +2206,13 @@ int main(void)
 					rxdata = NOT_PRESSED;//set the key pressed to the default value
 					LCD_Clear();//remove all previously printed characters on the LCD 
      c46:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
-					Bluetooth_TransmaitString("Set Brightness:%");
-     c4a:	82 ef       	ldi	r24, 0xF2	; 242
-     c4c:	92 e0       	ldi	r25, 0x02	; 2
+					Bluetooth_TransmaitString("Set Brightness:%\n\r");
+     c4a:	83 ef       	ldi	r24, 0xF3	; 243
+     c4c:	93 e0       	ldi	r25, 0x03	; 3
      c4e:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_String("Set Brightness:%");//print the format of inserting temperature
-     c52:	82 ef       	ldi	r24, 0xF2	; 242
-     c54:	92 e0       	ldi	r25, 0x02	; 2
+     c52:	86 e0       	ldi	r24, 0x06	; 6
+     c54:	94 e0       	ldi	r25, 0x04	; 4
      c56:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
      c5a:	60 e0       	ldi	r22, 0x00	; 0
@@ -2221,7 +2221,7 @@ int main(void)
 					
 					/*******************************************************************************/
 					rxdata = u8GetTX(login_mode);
-     c62:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     c62:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      c66:	90 e0       	ldi	r25, 0x00	; 0
      c68:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      c6c:	18 2f       	mov	r17, r24
@@ -2233,8 +2233,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      c72:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     c76:	86 e6       	ldi	r24, 0x66	; 102
-     c78:	92 e0       	ldi	r25, 0x02	; 2
+     c76:	84 e2       	ldi	r24, 0x24	; 36
+     c78:	93 e0       	ldi	r25, 0x03	; 3
      c7a:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      c7e:	ef ef       	ldi	r30, 0xFF	; 255
      c80:	f9 e6       	ldi	r31, 0x69	; 105
@@ -2258,7 +2258,7 @@ int main(void)
 					}
 					/*******************************************************************************/
 					rxdata = u8GetTX(login_mode);
-     c96:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     c96:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      c9a:	90 e0       	ldi	r25, 0x00	; 0
      c9c:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      ca0:	08 2f       	mov	r16, r24
@@ -2273,8 +2273,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      caa:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     cae:	86 e6       	ldi	r24, 0x66	; 102
-     cb0:	92 e0       	ldi	r25, 0x02	; 2
+     cae:	84 e2       	ldi	r24, 0x24	; 36
+     cb0:	93 e0       	ldi	r25, 0x03	; 3
      cb2:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      cb6:	3f ef       	ldi	r19, 0xFF	; 255
      cb8:	89 e6       	ldi	r24, 0x69	; 105
@@ -2299,7 +2299,7 @@ int main(void)
 					}
 					
 					rxdata = u8GetTX(login_mode);//wait for the user till key is pressed 
-     cd0:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     cd0:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      cd4:	90 e0       	ldi	r25, 0x00	; 0
      cd6:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      cda:	f8 2e       	mov	r15, r24
@@ -2313,8 +2313,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      ce4:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     ce8:	86 e6       	ldi	r24, 0x66	; 102
-     cea:	92 e0       	ldi	r25, 0x02	; 2
+     ce8:	84 e2       	ldi	r24, 0x24	; 36
+     cea:	93 e0       	ldi	r25, 0x03	; 3
      cec:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      cf0:	ef ef       	ldi	r30, 0xFF	; 255
      cf2:	f9 e6       	ldi	r31, 0x69	; 105
@@ -2366,8 +2366,8 @@ int main(void)
      d2c:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						//show the message
 						LCD_String("Brightness Set");
-     d30:	83 e0       	ldi	r24, 0x03	; 3
-     d32:	93 e0       	ldi	r25, 0x03	; 3
+     d30:	87 e1       	ldi	r24, 0x17	; 23
+     d32:	94 e0       	ldi	r25, 0x04	; 4
      d34:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      d38:	8f ef       	ldi	r24, 0xFF	; 255
      d3a:	99 e6       	ldi	r25, 0x69	; 105
@@ -2409,13 +2409,13 @@ int main(void)
 					key_pressed =NOT_PRESSED;
 					LCD_Clear();//remove all previously printed characters on the LCD 
      d56:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
-					Bluetooth_TransmaitString("1:open 2:colse");
-     d5a:	82 e1       	ldi	r24, 0x12	; 18
-     d5c:	93 e0       	ldi	r25, 0x03	; 3
+					Bluetooth_TransmaitString("1:open 2:colse\n\r");
+     d5a:	86 e2       	ldi	r24, 0x26	; 38
+     d5c:	94 e0       	ldi	r25, 0x04	; 4
      d5e:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 					LCD_String("1:open 2:colse");//print the format of inserting temperature
-     d62:	82 e1       	ldi	r24, 0x12	; 18
-     d64:	93 e0       	ldi	r25, 0x03	; 3
+     d62:	87 e3       	ldi	r24, 0x37	; 55
+     d64:	94 e0       	ldi	r25, 0x04	; 4
      d66:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,0);//move the cursor to the place to write the entered temperature
      d6a:	60 e0       	ldi	r22, 0x00	; 0
@@ -2424,7 +2424,7 @@ int main(void)
 					
 					/*******************************************************************************/
 					rxdata = u8GetTX(login_mode);
-     d72:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+     d72:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
      d76:	90 e0       	ldi	r25, 0x00	; 0
      d78:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
      d7c:	18 2f       	mov	r17, r24
@@ -2437,8 +2437,8 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD
      d82:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     d86:	86 e6       	ldi	r24, 0x66	; 102
-     d88:	92 e0       	ldi	r25, 0x02	; 2
+     d86:	84 e2       	ldi	r24, 0x24	; 36
+     d88:	93 e0       	ldi	r25, 0x03	; 3
      d8a:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      d8e:	ff ef       	ldi	r31, 0xFF	; 255
      d90:	29 e6       	ldi	r18, 0x69	; 105
@@ -2553,7 +2553,7 @@ int main(void)
 				
 				case TV_MENU:
 				vMenuOption(TV_MENU,login_mode);//call the function that show the menu of tv
-     e3a:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     e3a:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      e3e:	70 e0       	ldi	r23, 0x00	; 0
      e40:	87 e0       	ldi	r24, 0x07	; 7
      e42:	90 e0       	ldi	r25, 0x00	; 0
@@ -2566,7 +2566,7 @@ int main(void)
 				
 				case AIRCOND_CTRL_MENU:
 				vMenuOption(AIRCOND_CTRL_MENU,login_mode);//call the function that show the menu of Air conditioning control
-     e4c:	60 91 9a 03 	lds	r22, 0x039A	; 0x80039a <login_mode>
+     e4c:	60 91 f2 04 	lds	r22, 0x04F2	; 0x8004f2 <login_mode>
      e50:	70 e0       	ldi	r23, 0x00	; 0
      e52:	89 e0       	ldi	r24, 0x09	; 9
      e54:	90 e0       	ldi	r25, 0x00	; 0
@@ -2579,15 +2579,15 @@ int main(void)
 				
 				case TEMPERATURE_MENU:
 				temperature = 0;//clear the value of temperature
-     e5e:	10 92 98 03 	sts	0x0398, r1	; 0x800398 <temperature>
+     e5e:	10 92 f0 04 	sts	0x04F0, r1	; 0x8004f0 <temperature>
 				while (temperature==0 )//start the loop that asks for the temperature from the user
 				{
 					key_pressed = NOT_PRESSED;//set the key pressed to the default value
 					LCD_Clear();//remove all previously printed characters on the LCD 
      e62:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("Set temp.:__");//print the format of inserting temperature
-     e66:	81 e2       	ldi	r24, 0x21	; 33
-     e68:	93 e0       	ldi	r25, 0x03	; 3
+     e66:	86 e4       	ldi	r24, 0x46	; 70
+     e68:	94 e0       	ldi	r25, 0x04	; 4
      e6a:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_Char(DEGREES_SYMBOL); // print the symbol of degree
      e6e:	8f ed       	ldi	r24, 0xDF	; 223
@@ -2639,12 +2639,12 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      ebc:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     ec0:	86 e6       	ldi	r24, 0x66	; 102
-     ec2:	92 e0       	ldi	r25, 0x02	; 2
+     ec0:	84 e2       	ldi	r24, 0x24	; 36
+     ec2:	93 e0       	ldi	r25, 0x03	; 3
      ec4:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Wrong input");
-     ec8:	86 e6       	ldi	r24, 0x66	; 102
-     eca:	92 e0       	ldi	r25, 0x02	; 2
+						Bluetooth_TransmaitString("Wrong input\n\r");
+     ec8:	83 e5       	ldi	r24, 0x53	; 83
+     eca:	94 e0       	ldi	r25, 0x04	; 4
      ecc:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      ed0:	8f ef       	ldi	r24, 0xFF	; 255
      ed2:	99 e6       	ldi	r25, 0x69	; 105
@@ -2696,12 +2696,12 @@ int main(void)
 						LCD_Clear();//remove all previously printed characters on the LCD 
      f10:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 						LCD_String("Wrong input");//print error message
-     f14:	86 e6       	ldi	r24, 0x66	; 102
-     f16:	92 e0       	ldi	r25, 0x02	; 2
+     f14:	84 e2       	ldi	r24, 0x24	; 36
+     f16:	93 e0       	ldi	r25, 0x03	; 3
      f18:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-						Bluetooth_TransmaitString("Wrong input");
-     f1c:	86 e6       	ldi	r24, 0x66	; 102
-     f1e:	92 e0       	ldi	r25, 0x02	; 2
+						Bluetooth_TransmaitString("Wrong input\n\r");
+     f1c:	83 e5       	ldi	r24, 0x53	; 83
+     f1e:	94 e0       	ldi	r25, 0x04	; 4
      f20:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      f24:	9f ef       	ldi	r25, 0xFF	; 255
      f26:	e9 e6       	ldi	r30, 0x69	; 105
@@ -2731,7 +2731,7 @@ int main(void)
      f44:	88 0f       	add	r24, r24
      f46:	08 0f       	add	r16, r24
      f48:	f0 0e       	add	r15, r16
-     f4a:	f0 92 98 03 	sts	0x0398, r15	; 0x800398 <temperature>
+     f4a:	f0 92 f0 04 	sts	0x04F0, r15	; 0x8004f0 <temperature>
      f4e:	2f ef       	ldi	r18, 0xFF	; 255
      f50:	33 ec       	ldi	r19, 0xC3	; 195
      f52:	89 e0       	ldi	r24, 0x09	; 9
@@ -2745,12 +2745,12 @@ int main(void)
 					LCD_Clear();//remove all previously printed characters on the LCD 
      f60:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 					LCD_String("Temperature Set");//show the message
-     f64:	8e e2       	ldi	r24, 0x2E	; 46
-     f66:	93 e0       	ldi	r25, 0x03	; 3
+     f64:	81 e6       	ldi	r24, 0x61	; 97
+     f66:	94 e0       	ldi	r25, 0x04	; 4
      f68:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
-					Bluetooth_TransmaitString("Temperature Set");
-     f6c:	8e e2       	ldi	r24, 0x2E	; 46
-     f6e:	93 e0       	ldi	r25, 0x03	; 3
+					Bluetooth_TransmaitString("Temperature Set\n\r");
+     f6c:	81 e7       	ldi	r24, 0x71	; 113
+     f6e:	94 e0       	ldi	r25, 0x04	; 4
      f70:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
      f74:	9f ef       	ldi	r25, 0xFF	; 255
      f76:	e9 e6       	ldi	r30, 0x69	; 105
@@ -2763,10 +2763,10 @@ int main(void)
      f84:	00 00       	nop
 					_delay_ms(500);//Halt the system for the given time in (ms)
 					if (advvalue >temperature)//check for req temp and current temp to take action
-     f86:	80 91 98 03 	lds	r24, 0x0398	; 0x800398 <temperature>
+     f86:	80 91 f0 04 	lds	r24, 0x04F0	; 0x8004f0 <temperature>
      f8a:	90 e0       	ldi	r25, 0x00	; 0
-     f8c:	20 91 96 03 	lds	r18, 0x0396	; 0x800396 <__data_end>
-     f90:	30 91 97 03 	lds	r19, 0x0397	; 0x800397 <__data_end+0x1>
+     f8c:	20 91 ee 04 	lds	r18, 0x04EE	; 0x8004ee <__data_end>
+     f90:	30 91 ef 04 	lds	r19, 0x04EF	; 0x8004ef <__data_end+0x1>
      f94:	82 17       	cp	r24, r18
      f96:	93 07       	cpc	r25, r19
      f98:	28 f4       	brcc	.+10     	; 0xfa4 <__stack+0x745>
@@ -2786,8 +2786,8 @@ int main(void)
 					advvalue=LM35_Read(ADC_Channel0);//init lm35 to display current temp 
      fac:	80 e0       	ldi	r24, 0x00	; 0
      fae:	0e 94 56 0b 	call	0x16ac	; 0x16ac <LM35_Read>
-     fb2:	90 93 97 03 	sts	0x0397, r25	; 0x800397 <__data_end+0x1>
-     fb6:	80 93 96 03 	sts	0x0396, r24	; 0x800396 <__data_end>
+     fb2:	90 93 ef 04 	sts	0x04EF, r25	; 0x8004ef <__data_end+0x1>
+     fb6:	80 93 ee 04 	sts	0x04EE, r24	; 0x8004ee <__data_end>
     } else if (__radix < 2 || __radix > 36) {
 	*__s = 0;
 	return __s;
@@ -2795,8 +2795,8 @@ int main(void)
 	extern char *__itoa_ncheck (int, char *, unsigned char);
 	return __itoa_ncheck (__val, __s, __radix);
      fba:	48 2d       	mov	r20, r8
-     fbc:	6c ed       	ldi	r22, 0xDC	; 220
-     fbe:	73 e0       	ldi	r23, 0x03	; 3
+     fbc:	64 e3       	ldi	r22, 0x34	; 52
+     fbe:	75 e0       	ldi	r23, 0x05	; 5
      fc0:	0e 94 42 13 	call	0x2684	; 0x2684 <__itoa_ncheck>
 					itoa (advvalue,adcstring,10);//fun to convert int to array to display on lcd
 					LCD_SetPos(2,0);
@@ -2804,16 +2804,16 @@ int main(void)
      fc6:	82 e0       	ldi	r24, 0x02	; 2
      fc8:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String("TEMP NOW");
-     fcc:	8e e3       	ldi	r24, 0x3E	; 62
-     fce:	93 e0       	ldi	r25, 0x03	; 3
+     fcc:	83 e8       	ldi	r24, 0x83	; 131
+     fce:	94 e0       	ldi	r25, 0x04	; 4
      fd0:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 					LCD_SetPos(2,9);
      fd4:	66 2d       	mov	r22, r6
      fd6:	82 e0       	ldi	r24, 0x02	; 2
      fd8:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 					LCD_String(adcstring);
-     fdc:	8c ed       	ldi	r24, 0xDC	; 220
-     fde:	93 e0       	ldi	r25, 0x03	; 3
+     fdc:	84 e3       	ldi	r24, 0x34	; 52
+     fde:	95 e0       	ldi	r25, 0x05	; 5
      fe0:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
      fe4:	2f ef       	ldi	r18, 0xFF	; 255
      fe6:	39 e6       	ldi	r19, 0x69	; 105
@@ -2837,7 +2837,7 @@ int main(void)
 				case TEMPERATURE_MENU:
 				temperature = 0;//clear the value of temperature
 				while (temperature==0 )//start the loop that asks for the temperature from the user
-     ff8:	80 91 98 03 	lds	r24, 0x0398	; 0x800398 <temperature>
+     ff8:	80 91 f0 04 	lds	r24, 0x04F0	; 0x8004f0 <temperature>
      ffc:	88 23       	and	r24, r24
      ffe:	09 f4       	brne	.+2      	; 0x1002 <__stack+0x7a3>
     1000:	30 cf       	rjmp	.-416    	; 0xe62 <__stack+0x603>
@@ -3150,8 +3150,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = ROOM1_TURN_ON;
 			u8TurnOffCode = ROOM1_TURN_OFF;
 			LCD_String("Room1 S:");
-    10e6:	87 e4       	ldi	r24, 0x47	; 71
-    10e8:	93 e0       	ldi	r25, 0x03	; 3
+    10e6:	8c e8       	ldi	r24, 0x8C	; 140
+    10e8:	94 e0       	ldi	r25, 0x04	; 4
     10ea:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     10ee:	23 c0       	rjmp	.+70     	; 0x1136 <vMenuOption+0x8c>
 			
@@ -3160,8 +3160,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = ROOM2_TURN_ON;
 			u8TurnOffCode = ROOM2_TURN_OFF;
 			LCD_String("Room2 S:");
-    10f0:	80 e5       	ldi	r24, 0x50	; 80
-    10f2:	93 e0       	ldi	r25, 0x03	; 3
+    10f0:	85 e9       	ldi	r24, 0x95	; 149
+    10f2:	94 e0       	ldi	r25, 0x04	; 4
     10f4:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     10f8:	2f c0       	rjmp	.+94     	; 0x1158 <vMenuOption+0xae>
 			
@@ -3170,8 +3170,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = ROOM3_TURN_ON;
 			u8TurnOffCode = ROOM3_TURN_OFF;
 			LCD_String("Room3 S:");
-    10fa:	89 e5       	ldi	r24, 0x59	; 89
-    10fc:	93 e0       	ldi	r25, 0x03	; 3
+    10fa:	8e e9       	ldi	r24, 0x9E	; 158
+    10fc:	94 e0       	ldi	r25, 0x04	; 4
     10fe:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     1102:	3b c0       	rjmp	.+118    	; 0x117a <vMenuOption+0xd0>
 			
@@ -3180,8 +3180,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = ROOM4_TURN_ON;
 			u8TurnOffCode = ROOM4_TURN_OFF;
 			LCD_String("Room4 S:");
-    1104:	82 e6       	ldi	r24, 0x62	; 98
-    1106:	93 e0       	ldi	r25, 0x03	; 3
+    1104:	87 ea       	ldi	r24, 0xA7	; 167
+    1106:	94 e0       	ldi	r25, 0x04	; 4
     1108:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     110c:	47 c0       	rjmp	.+142    	; 0x119c <vMenuOption+0xf2>
 			
@@ -3190,8 +3190,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = TV_TURN_ON;
 			u8TurnOffCode = TV_TURN_OFF;
 			LCD_String("TV S:");
-    110e:	8b e6       	ldi	r24, 0x6B	; 107
-    1110:	93 e0       	ldi	r25, 0x03	; 3
+    110e:	80 eb       	ldi	r24, 0xB0	; 176
+    1110:	94 e0       	ldi	r25, 0x04	; 4
     1112:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     1116:	53 c0       	rjmp	.+166    	; 0x11be <vMenuOption+0x114>
 			
@@ -3200,8 +3200,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			u8TurnOnCode = AIR_COND_TURN_ON;
 			u8TurnOffCode = AIR_COND_TURN_OFF;
 			LCD_String("Air Cond. S:");
-    1118:	81 e7       	ldi	r24, 0x71	; 113
-    111a:	93 e0       	ldi	r25, 0x03	; 3
+    1118:	86 eb       	ldi	r24, 0xB6	; 182
+    111a:	94 e0       	ldi	r25, 0x04	; 4
     111c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     1120:	5f c0       	rjmp	.+190    	; 0x11e0 <vMenuOption+0x136>
 			break;
@@ -3227,8 +3227,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     113e:	31 f4       	brne	.+12     	; 0x114c <vMenuOption+0xa2>
 			{
 				LCD_String("ON");//print the status on
-    1140:	8e e7       	ldi	r24, 0x7E	; 126
-    1142:	93 e0       	ldi	r25, 0x03	; 3
+    1140:	83 ec       	ldi	r24, 0xC3	; 195
+    1142:	94 e0       	ldi	r25, 0x04	; 4
     1144:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 1;
     1148:	11 e0       	ldi	r17, 0x01	; 1
@@ -3237,8 +3237,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    114c:	81 e8       	ldi	r24, 0x81	; 129
-    114e:	93 e0       	ldi	r25, 0x03	; 3
+    114c:	86 ec       	ldi	r24, 0xC6	; 198
+    114e:	94 e0       	ldi	r25, 0x04	; 4
     1150:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 1;
     1154:	11 e0       	ldi	r17, 0x01	; 1
@@ -3253,8 +3253,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     1160:	31 f4       	brne	.+12     	; 0x116e <vMenuOption+0xc4>
 			{
 				LCD_String("ON");//print the status on
-    1162:	8e e7       	ldi	r24, 0x7E	; 126
-    1164:	93 e0       	ldi	r25, 0x03	; 3
+    1162:	83 ec       	ldi	r24, 0xC3	; 195
+    1164:	94 e0       	ldi	r25, 0x04	; 4
     1166:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 12;
     116a:	1c e0       	ldi	r17, 0x0C	; 12
@@ -3263,8 +3263,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    116e:	81 e8       	ldi	r24, 0x81	; 129
-    1170:	93 e0       	ldi	r25, 0x03	; 3
+    116e:	86 ec       	ldi	r24, 0xC6	; 198
+    1170:	94 e0       	ldi	r25, 0x04	; 4
     1172:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 12;
     1176:	1c e0       	ldi	r17, 0x0C	; 12
@@ -3279,8 +3279,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     1182:	31 f4       	brne	.+12     	; 0x1190 <vMenuOption+0xe6>
 			{
 				LCD_String("ON");//print the status on
-    1184:	8e e7       	ldi	r24, 0x7E	; 126
-    1186:	93 e0       	ldi	r25, 0x03	; 3
+    1184:	83 ec       	ldi	r24, 0xC3	; 195
+    1186:	94 e0       	ldi	r25, 0x04	; 4
     1188:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 13;
     118c:	1d e0       	ldi	r17, 0x0D	; 13
@@ -3289,8 +3289,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    1190:	81 e8       	ldi	r24, 0x81	; 129
-    1192:	93 e0       	ldi	r25, 0x03	; 3
+    1190:	86 ec       	ldi	r24, 0xC6	; 198
+    1192:	94 e0       	ldi	r25, 0x04	; 4
     1194:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 13;
     1198:	1d e0       	ldi	r17, 0x0D	; 13
@@ -3305,8 +3305,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     11a4:	31 f4       	brne	.+12     	; 0x11b2 <vMenuOption+0x108>
 			{
 				LCD_String("ON");//print the status on
-    11a6:	8e e7       	ldi	r24, 0x7E	; 126
-    11a8:	93 e0       	ldi	r25, 0x03	; 3
+    11a6:	83 ec       	ldi	r24, 0xC3	; 195
+    11a8:	94 e0       	ldi	r25, 0x04	; 4
     11aa:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 14;
     11ae:	1e e0       	ldi	r17, 0x0E	; 14
@@ -3315,8 +3315,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    11b2:	81 e8       	ldi	r24, 0x81	; 129
-    11b4:	93 e0       	ldi	r25, 0x03	; 3
+    11b2:	86 ec       	ldi	r24, 0xC6	; 198
+    11b4:	94 e0       	ldi	r25, 0x04	; 4
     11b6:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 14;
     11ba:	1e e0       	ldi	r17, 0x0E	; 14
@@ -3331,8 +3331,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     11c6:	31 f4       	brne	.+12     	; 0x11d4 <vMenuOption+0x12a>
 			{
 				LCD_String("ON");//print the status on
-    11c8:	8e e7       	ldi	r24, 0x7E	; 126
-    11ca:	93 e0       	ldi	r25, 0x03	; 3
+    11c8:	83 ec       	ldi	r24, 0xC3	; 195
+    11ca:	94 e0       	ldi	r25, 0x04	; 4
     11cc:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 31;
     11d0:	1f e1       	ldi	r17, 0x1F	; 31
@@ -3341,8 +3341,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    11d4:	81 e8       	ldi	r24, 0x81	; 129
-    11d6:	93 e0       	ldi	r25, 0x03	; 3
+    11d4:	86 ec       	ldi	r24, 0xC6	; 198
+    11d6:	94 e0       	ldi	r25, 0x04	; 4
     11d8:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 31;
     11dc:	1f e1       	ldi	r17, 0x1F	; 31
@@ -3357,8 +3357,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     11e8:	31 f4       	brne	.+12     	; 0x11f6 <vMenuOption+0x14c>
 			{
 				LCD_String("ON");//print the status on
-    11ea:	8e e7       	ldi	r24, 0x7E	; 126
-    11ec:	93 e0       	ldi	r25, 0x03	; 3
+    11ea:	83 ec       	ldi	r24, 0xC3	; 195
+    11ec:	94 e0       	ldi	r25, 0x04	; 4
     11ee:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues = 15;
     11f2:	1f e0       	ldi	r17, 0x0F	; 15
@@ -3367,8 +3367,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			else
 			{
 				LCD_String("OFF");//print the status off
-    11f6:	81 e8       	ldi	r24, 0x81	; 129
-    11f8:	93 e0       	ldi	r25, 0x03	; 3
+    11f6:	86 ec       	ldi	r24, 0xC6	; 198
+    11f8:	94 e0       	ldi	r25, 0x04	; 4
     11fa:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 				Statues= 15;
     11fe:	1f e0       	ldi	r17, 0x0F	; 15
@@ -3377,7 +3377,7 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 			
 			case SET_TEMPERATURE:
 			required_temperature = temperature;//store the temperature in required temperature
-    1202:	80 91 98 03 	lds	r24, 0x0398	; 0x800398 <temperature>
+    1202:	80 91 f0 04 	lds	r24, 0x04F0	; 0x8004f0 <temperature>
     1206:	90 e0       	ldi	r25, 0x00	; 0
     1208:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
     120c:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
@@ -3391,13 +3391,13 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     1214:	0e 94 42 0b 	call	0x1684	; 0x1684 <LCD_SetPos>
 		
 		LCD_String("1-On 2-Off 0-RET");//print the sub menu
-    1218:	85 e8       	ldi	r24, 0x85	; 133
-    121a:	93 e0       	ldi	r25, 0x03	; 3
+    1218:	8a ec       	ldi	r24, 0xCA	; 202
+    121a:	94 e0       	ldi	r25, 0x04	; 4
     121c:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
 
 		/*******************************************************************************/
 		if (login_mode == GUEST)
-    1220:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+    1220:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
     1224:	82 30       	cpi	r24, 0x02	; 2
     1226:	81 f5       	brne	.+96     	; 0x1288 <vMenuOption+0x1de>
 		{
@@ -3457,8 +3457,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 				LCD_Clear();//remove all previously printed characters on the LCD 
     1268:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 				LCD_String("Wrong input");//print error message
-    126c:	86 e6       	ldi	r24, 0x66	; 102
-    126e:	92 e0       	ldi	r25, 0x02	; 2
+    126c:	84 e2       	ldi	r24, 0x24	; 36
+    126e:	93 e0       	ldi	r25, 0x03	; 3
     1270:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     1274:	2f ef       	ldi	r18, 0xFF	; 255
     1276:	39 e6       	ldi	r19, 0x69	; 105
@@ -3478,14 +3478,14 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     1288:	81 30       	cpi	r24, 0x01	; 1
     128a:	79 f5       	brne	.+94     	; 0x12ea <vMenuOption+0x240>
 		{
-			Bluetooth_TransmaitString("1-On 2-Off 0-RET");
-    128c:	85 e8       	ldi	r24, 0x85	; 133
-    128e:	93 e0       	ldi	r25, 0x03	; 3
+			Bluetooth_TransmaitString("1-On 2-Off 0-RET\n\r");
+    128c:	8b ed       	ldi	r24, 0xDB	; 219
+    128e:	94 e0       	ldi	r25, 0x04	; 4
     1290:	0e 94 90 09 	call	0x1320	; 0x1320 <Bluetooth_TransmaitString>
 			rxdata = u8GetTX(login_mode);
-    1294:	80 91 9a 03 	lds	r24, 0x039A	; 0x80039a <login_mode>
+    1294:	80 91 f2 04 	lds	r24, 0x04F2	; 0x8004f2 <login_mode>
     1298:	0e 94 47 08 	call	0x108e	; 0x108e <u8GetTX>
-    129c:	80 93 99 03 	sts	0x0399, r24	; 0x800399 <rxdata>
+    129c:	80 93 f1 04 	sts	0x04F1, r24	; 0x8004f1 <rxdata>
 
 			if (rxdata == '1')
     12a0:	81 33       	cpi	r24, 0x31	; 49
@@ -3497,7 +3497,7 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     12a6:	81 2f       	mov	r24, r17
     12a8:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
 				value = rxdata;
-    12ac:	d0 91 99 03 	lds	r29, 0x0399	; 0x800399 <rxdata>
+    12ac:	d0 91 f1 04 	lds	r29, 0x04F1	; 0x8004f1 <rxdata>
     12b0:	1c c0       	rjmp	.+56     	; 0x12ea <vMenuOption+0x240>
 			}
 			else if (rxdata == '2')
@@ -3509,7 +3509,7 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
     12b8:	81 2f       	mov	r24, r17
     12ba:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
 				value = rxdata;
-    12be:	d0 91 99 03 	lds	r29, 0x0399	; 0x800399 <rxdata>
+    12be:	d0 91 f1 04 	lds	r29, 0x04F1	; 0x8004f1 <rxdata>
     12c2:	13 c0       	rjmp	.+38     	; 0x12ea <vMenuOption+0x240>
 			}else if (rxdata == '2')
 			{
@@ -3530,8 +3530,8 @@ void vMenuOption(const u8 u8SelectedRoom,const u8 u8LoginMode)
 				LCD_Clear();//remove all previously printed characters on the LCD 
     12cc:	0e 94 3e 0b 	call	0x167c	; 0x167c <LCD_Clear>
 				LCD_String("Wrong input");//print error message
-    12d0:	86 e6       	ldi	r24, 0x66	; 102
-    12d2:	92 e0       	ldi	r25, 0x02	; 2
+    12d0:	84 e2       	ldi	r24, 0x24	; 36
+    12d2:	93 e0       	ldi	r25, 0x03	; 3
     12d4:	0e 94 28 0b 	call	0x1650	; 0x1650 <LCD_String>
     12d8:	9f ef       	ldi	r25, 0xFF	; 255
     12da:	29 e6       	ldi	r18, 0x69	; 105
@@ -3588,43 +3588,20 @@ void SetPWMOutPut (u8 duty)
     1318:	08 95       	ret
 
 0000131a <Bluetooth_Init>:
-
-void Bluetooth_Init(UART_ConfigTypes * options){
-	UART_Init(options);
-}
-void Bluetooth_TransmaitChar(u8 data){
-	UART_TransmaitChar(data);
     131a:	0e 94 1f 0f 	call	0x1e3e	; 0x1e3e <UART_Init>
     131e:	08 95       	ret
 
 00001320 <Bluetooth_TransmaitString>:
-}
-void Bluetooth_TransmaitString(s8 * string){
-	UART_TransmaitString(string);
     1320:	0e 94 99 0f 	call	0x1f32	; 0x1f32 <UART_TransmaitString>
     1324:	08 95       	ret
 
 00001326 <Bluetooth_Receive>:
-}
-u8 Bluetooth_Receive(){
-	return UART_Receive();
     1326:	0e 94 af 0f 	call	0x1f5e	; 0x1f5e <UART_Receive>
     132a:	08 95       	ret
 
 0000132c <EEPROM_vReadBlockFromAddress>:
-// }
-
-void EEPROM_vReadBlockFromAddress(const u16 uiAddress, u8* dist,const u16 size)
-{
-	/* Wait for completion of previous write */
-	while (((EECR & (1 << EEWE))>>EEWE)==1)
     132c:	e1 99       	sbic	0x1c, 1	; 28
     132e:	fe cf       	rjmp	.-4      	; 0x132c <EEPROM_vReadBlockFromAddress>
-	;
-
-	u16 counter = 0;//the counter of bytes that are read
-
-	while (counter < size) //loop until move all bytes to the given array
     1330:	41 15       	cp	r20, r1
     1332:	51 05       	cpc	r21, r1
     1334:	91 f0       	breq	.+36     	; 0x135a <EEPROM_vReadBlockFromAddress+0x2e>
@@ -3638,36 +3615,17 @@ void EEPROM_vReadBlockFromAddress(const u16 uiAddress, u8* dist,const u16 size)
     1344:	9b 01       	movw	r18, r22
     1346:	2e 0f       	add	r18, r30
     1348:	3f 1f       	adc	r19, r31
-	{
-		/* Set up address register */
-		EEAR = uiAddress + counter;
     134a:	3f bb       	out	0x1f, r19	; 31
     134c:	2e bb       	out	0x1e, r18	; 30
-		/* Start EEPROM read by writing EERE */
-		EECR |= (1 << EERE);
     134e:	e0 9a       	sbi	0x1c, 0	; 28
-		/* move data from data register to the array */
-		*(dist + counter) = EEDR;
     1350:	9d b3       	in	r25, 0x1d	; 29
     1352:	91 93       	st	Z+, r25
-	while (((EECR & (1 << EEWE))>>EEWE)==1)
-	;
-
-	u16 counter = 0;//the counter of bytes that are read
-
-	while (counter < size) //loop until move all bytes to the given array
     1354:	e4 17       	cp	r30, r20
     1356:	f5 07       	cpc	r31, r21
     1358:	a9 f7       	brne	.-22     	; 0x1344 <EEPROM_vReadBlockFromAddress+0x18>
     135a:	08 95       	ret
 
 0000135c <EEPROM_vWriteBlockToAddress>:
-	}
-}
-void EEPROM_vWriteBlockToAddress(const u16 uiAddress, const u8* uiData,const u16 size)
-{
-	u16 counter = 0;//Bytes write counter
-	while (counter < size)
     135c:	41 15       	cp	r20, r1
     135e:	51 05       	cpc	r21, r1
     1360:	c9 f0       	breq	.+50     	; 0x1394 <EEPROM_vWriteBlockToAddress+0x38>
@@ -3678,113 +3636,50 @@ void EEPROM_vWriteBlockToAddress(const u16 uiAddress, const u8* uiData,const u16
     136a:	26 1b       	sub	r18, r22
     136c:	37 0b       	sbc	r19, r23
     136e:	b9 01       	movw	r22, r18
-	{
-		/* Wait for completion of previous write process*/
-		while (( (EECR & (1 << EEWE) ) >>EEWE ) == 1)
     1370:	e1 99       	sbic	0x1c, 1	; 28
     1372:	fe cf       	rjmp	.-4      	; 0x1370 <EEPROM_vWriteBlockToAddress+0x14>
     1374:	9b 01       	movw	r18, r22
     1376:	2e 0f       	add	r18, r30
     1378:	3f 1f       	adc	r19, r31
-		;
-		/* Set up address register */
-		EEAR = uiAddress + counter;
     137a:	3f bb       	out	0x1f, r19	; 31
     137c:	2e bb       	out	0x1e, r18	; 30
-
-		/* Read the byte in the address of EEAR */
-		EECR |= (1 << EERE);
     137e:	e0 9a       	sbi	0x1c, 0	; 28
-		if (EEDR != (*(uiData + counter)))//compare the value read to the value to be written
     1380:	2d b3       	in	r18, 0x1d	; 29
     1382:	91 91       	ld	r25, Z+
     1384:	29 17       	cp	r18, r25
     1386:	19 f0       	breq	.+6      	; 0x138e <EEPROM_vWriteBlockToAddress+0x32>
-		{//if they are not equal then write the data
-			EEDR = *(uiData + counter);//move the data to EEDR
     1388:	9d bb       	out	0x1d, r25	; 29
-
-			/* Write logical one to EEMWE */
-			EECR |= (1 << EEMWE);
     138a:	e2 9a       	sbi	0x1c, 2	; 28
-			/* Start EEPROM write by setting EEWE */
-			EECR |= (1 << EEWE);
     138c:	e1 9a       	sbi	0x1c, 1	; 28
-	}
-}
-void EEPROM_vWriteBlockToAddress(const u16 uiAddress, const u8* uiData,const u16 size)
-{
-	u16 counter = 0;//Bytes write counter
-	while (counter < size)
     138e:	e4 17       	cp	r30, r20
     1390:	f5 07       	cpc	r31, r21
     1392:	71 f7       	brne	.-36     	; 0x1370 <EEPROM_vWriteBlockToAddress+0x14>
     1394:	08 95       	ret
 
 00001396 <EEPROM_ui8ReadByteFromAddress>:
-}
-
-u8 EEPROM_ui8ReadByteFromAddress(const u16 u16Address)
-{
-	/* Wait for completion of previous write */
-	while (((EECR & (1 << EEWE))>>EEWE)==1)
     1396:	e1 99       	sbic	0x1c, 1	; 28
     1398:	fe cf       	rjmp	.-4      	; 0x1396 <EEPROM_ui8ReadByteFromAddress>
-	;
-	/* Set up address register */
-	EEAR = u16Address;
     139a:	9f bb       	out	0x1f, r25	; 31
     139c:	8e bb       	out	0x1e, r24	; 30
-	/* Start EEPROM read by writing EERE */
-	EECR |= (1 << EERE);
     139e:	e0 9a       	sbi	0x1c, 0	; 28
-	/* Return data from data register */
-	return EEDR;
     13a0:	8d b3       	in	r24, 0x1d	; 29
-}
     13a2:	08 95       	ret
 
 000013a4 <EEPROM_vWriteByteToAddress>:
-
-void EEPROM_vWriteByteToAddress(const u16 uiAddress, const u8 uiData)
-{
-
-	/* Wait for completion of previous write process*/
-	while ( ( (EECR & (1 << EEWE) ) >>EEWE ) == 1)
     13a4:	e1 99       	sbic	0x1c, 1	; 28
     13a6:	fe cf       	rjmp	.-4      	; 0x13a4 <EEPROM_vWriteByteToAddress>
-	;
-	/* Set up address register */
-	EEAR = uiAddress;
     13a8:	9f bb       	out	0x1f, r25	; 31
     13aa:	8e bb       	out	0x1e, r24	; 30
-
-	/* Read the byte in the address of EEAR */
-	EECR |= (1 << EERE);
     13ac:	e0 9a       	sbi	0x1c, 0	; 28
-	if (EEDR != uiData)//compare the value read to the value to be written
     13ae:	8d b3       	in	r24, 0x1d	; 29
     13b0:	86 17       	cp	r24, r22
     13b2:	19 f0       	breq	.+6      	; 0x13ba <EEPROM_vWriteByteToAddress+0x16>
-	{//if they are not equal then write the data
-		EEDR = uiData;//move the data to EEDR
     13b4:	6d bb       	out	0x1d, r22	; 29
-
-		/* Write logical one to EEMWE */
-		EECR |= (1 << EEMWE);
     13b6:	e2 9a       	sbi	0x1c, 2	; 28
-		/* Start EEPROM write by setting EEWE */
-		EECR |= (1 << EEWE);
     13b8:	e1 9a       	sbi	0x1c, 1	; 28
     13ba:	08 95       	ret
 
 000013bc <Keypad_Init>:
-*  Author: user
-*/
-#include "Keypad.h"
-#include "Keypad_Config.h"
-
-void Keypad_Init(){
     13bc:	ef 92       	push	r14
     13be:	ff 92       	push	r15
     13c0:	0f 93       	push	r16
@@ -3800,24 +3695,13 @@ void Keypad_Init(){
     13d4:	ff 2e       	mov	r15, r31
     13d6:	f0 2d       	mov	r31, r0
     13d8:	8e 01       	movw	r16, r28
-	//cols Input
-	for (u8 j=0;j<colsCount;j++)
-	{
-		DIO_ConfigChannel(KeypadCols[j],Input);
     13da:	60 e0       	ldi	r22, 0x00	; 0
     13dc:	89 91       	ld	r24, Y+
     13de:	0e 94 79 0c 	call	0x18f2	; 0x18f2 <DIO_ConfigChannel>
-		DIO_WriteChannel(KeypadCols[j],STD_High);//connect pullup res.
     13e2:	61 e0       	ldi	r22, 0x01	; 1
     13e4:	f8 01       	movw	r30, r16
     13e6:	80 81       	ld	r24, Z
     13e8:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
-#include "Keypad.h"
-#include "Keypad_Config.h"
-
-void Keypad_Init(){
-	//cols Input
-	for (u8 j=0;j<colsCount;j++)
     13ec:	ce 15       	cp	r28, r14
     13ee:	df 05       	cpc	r29, r15
     13f0:	99 f7       	brne	.-26     	; 0x13d8 <Keypad_Init+0x1c>
@@ -3830,33 +3714,16 @@ void Keypad_Init(){
     13fe:	ff 2e       	mov	r15, r31
     1400:	f0 2d       	mov	r31, r0
     1402:	8e 01       	movw	r16, r28
-		DIO_ConfigChannel(KeypadCols[j],Input);
-		DIO_WriteChannel(KeypadCols[j],STD_High);//connect pullup res.
-	}
-	//rows Output
-	for(u8 i=0;i<rowsCount;i++){
-		DIO_ConfigChannel(KeypadRows[i],Output);
     1404:	61 e0       	ldi	r22, 0x01	; 1
     1406:	89 91       	ld	r24, Y+
     1408:	0e 94 79 0c 	call	0x18f2	; 0x18f2 <DIO_ConfigChannel>
-		DIO_WriteChannel(KeypadRows[i],STD_High);
     140c:	61 e0       	ldi	r22, 0x01	; 1
     140e:	f8 01       	movw	r30, r16
     1410:	80 81       	ld	r24, Z
     1412:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
-	{
-		DIO_ConfigChannel(KeypadCols[j],Input);
-		DIO_WriteChannel(KeypadCols[j],STD_High);//connect pullup res.
-	}
-	//rows Output
-	for(u8 i=0;i<rowsCount;i++){
     1416:	ce 15       	cp	r28, r14
     1418:	df 05       	cpc	r29, r15
     141a:	99 f7       	brne	.-26     	; 0x1402 <Keypad_Init+0x46>
-		DIO_ConfigChannel(KeypadRows[i],Output);
-		DIO_WriteChannel(KeypadRows[i],STD_High);
-	}
-}
     141c:	df 91       	pop	r29
     141e:	cf 91       	pop	r28
     1420:	1f 91       	pop	r17
@@ -3866,8 +3733,6 @@ void Keypad_Init(){
     1428:	08 95       	ret
 
 0000142a <GetKey>:
-
-u8 GetKey(){
     142a:	6f 92       	push	r6
     142c:	7f 92       	push	r7
     142e:	8f 92       	push	r8
@@ -3886,9 +3751,6 @@ u8 GetKey(){
     1448:	10 e0       	ldi	r17, 0x00	; 0
     144a:	c1 2c       	mov	r12, r1
     144c:	d1 2c       	mov	r13, r1
-	for (u8 i=0;i<rowsCount;i++)
-	{
-		DIO_WriteChannel(KeypadRows[i],STD_Low);
     144e:	46 01       	movw	r8, r12
     1450:	58 01       	movw	r10, r16
     1452:	60 e0       	ldi	r22, 0x00	; 0
@@ -3899,16 +3761,11 @@ u8 GetKey(){
     145e:	d0 e0       	ldi	r29, 0x00	; 0
     1460:	61 2c       	mov	r6, r1
     1462:	71 2c       	mov	r7, r1
-		for (u8 j=0;j<colsCount;j++)
-		{
-			if (DIO_ReadChannel(KeypadCols[j]) == STD_Low)
     1464:	73 01       	movw	r14, r6
     1466:	89 91       	ld	r24, Y+
     1468:	0e 94 46 0c 	call	0x188c	; 0x188c <DIO_ReadChannel>
     146c:	81 11       	cpse	r24, r1
     146e:	14 c0       	rjmp	.+40     	; 0x1498 <GetKey+0x6e>
-			{
-				while(DIO_ReadChannel(KeypadCols[j]) == STD_Low);
     1470:	e3 01       	movw	r28, r6
     1472:	c4 58       	subi	r28, 0x84	; 132
     1474:	df 4f       	sbci	r29, 0xFF	; 255
@@ -3916,7 +3773,6 @@ u8 GetKey(){
     1478:	0e 94 46 0c 	call	0x188c	; 0x188c <DIO_ReadChannel>
     147c:	88 23       	and	r24, r24
     147e:	d9 f3       	breq	.-10     	; 0x1476 <GetKey+0x4c>
-				return Keypad[i][j];
     1480:	c4 01       	movw	r24, r8
     1482:	88 0f       	add	r24, r24
     1484:	99 1f       	adc	r25, r25
@@ -3932,24 +3788,12 @@ u8 GetKey(){
     1498:	ff ef       	ldi	r31, 0xFF	; 255
     149a:	6f 1a       	sub	r6, r31
     149c:	7f 0a       	sbc	r7, r31
-
-u8 GetKey(){
-	for (u8 i=0;i<rowsCount;i++)
-	{
-		DIO_WriteChannel(KeypadRows[i],STD_Low);
-		for (u8 j=0;j<colsCount;j++)
     149e:	84 e0       	ldi	r24, 0x04	; 4
     14a0:	68 16       	cp	r6, r24
     14a2:	71 04       	cpc	r7, r1
     14a4:	f9 f6       	brne	.-66     	; 0x1464 <GetKey+0x3a>
     14a6:	0f 5f       	subi	r16, 0xFF	; 255
     14a8:	1f 4f       	sbci	r17, 0xFF	; 255
-			{
-				while(DIO_ReadChannel(KeypadCols[j]) == STD_Low);
-				return Keypad[i][j];
-			}
-		}
-		DIO_WriteChannel(KeypadRows[i],STD_High);
     14aa:	61 e0       	ldi	r22, 0x01	; 1
     14ac:	f5 01       	movw	r30, r10
     14ae:	80 81       	ld	r24, Z
@@ -3957,22 +3801,10 @@ u8 GetKey(){
     14b4:	ff ef       	ldi	r31, 0xFF	; 255
     14b6:	cf 1a       	sub	r12, r31
     14b8:	df 0a       	sbc	r13, r31
-		DIO_WriteChannel(KeypadRows[i],STD_High);
-	}
-}
-
-u8 GetKey(){
-	for (u8 i=0;i<rowsCount;i++)
     14ba:	84 e0       	ldi	r24, 0x04	; 4
     14bc:	c8 16       	cp	r12, r24
     14be:	d1 04       	cpc	r13, r1
     14c0:	31 f6       	brne	.-116    	; 0x144e <GetKey+0x24>
-				return Keypad[i][j];
-			}
-		}
-		DIO_WriteChannel(KeypadRows[i],STD_High);
-	}
-	return STD_Low;
     14c2:	80 e0       	ldi	r24, 0x00	; 0
     14c4:	df 91       	pop	r29
     14c6:	cf 91       	pop	r28
@@ -3991,32 +3823,20 @@ u8 GetKey(){
     14e0:	08 95       	ret
 
 000014e2 <LCD_Cmd>:
-	LCD_Cmd(0x28);//function Set 4Bit & 2Line & 5*8
-	LCD_Cmd(0x06);//Entry Mode shift to right
-	LCD_Cmd(0x0F);//Display ON & Cursor & Blinking
-	_delay_ms(2);
-}
-void LCD_Cmd(u8 cmd){
     14e2:	cf 93       	push	r28
     14e4:	c8 2f       	mov	r28, r24
-	u8 portValue = STD_Low;
-	DIO_WriteChannel(LCD_RS,STD_Low);
     14e6:	60 e0       	ldi	r22, 0x00	; 0
     14e8:	89 e0       	ldi	r24, 0x09	; 9
     14ea:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
-	portValue = DIO_ReadPort(LCD_DataPort);
     14ee:	80 e0       	ldi	r24, 0x00	; 0
     14f0:	0e 94 fb 0c 	call	0x19f6	; 0x19f6 <DIO_ReadPort>
-	portValue = (portValue & 0x0F) | (cmd & 0xF0);
     14f4:	8f 70       	andi	r24, 0x0F	; 15
     14f6:	9c 2f       	mov	r25, r28
     14f8:	90 7f       	andi	r25, 0xF0	; 240
     14fa:	68 2f       	mov	r22, r24
     14fc:	69 2b       	or	r22, r25
-	DIO_WritePort(LCD_DataPort,portValue);
     14fe:	80 e0       	ldi	r24, 0x00	; 0
     1500:	0e 94 0d 0d 	call	0x1a1a	; 0x1a1a <DIO_WritePort>
-	DIO_WriteChannel(LCD_E,STD_Low);
     1504:	60 e0       	ldi	r22, 0x00	; 0
     1506:	88 e0       	ldi	r24, 0x08	; 8
     1508:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4032,8 +3852,6 @@ void LCD_Cmd(u8 cmd){
     1512:	f1 f7       	brne	.-4      	; 0x1510 <LCD_Cmd+0x2e>
     1514:	00 c0       	rjmp	.+0      	; 0x1516 <LCD_Cmd+0x34>
     1516:	00 00       	nop
-	_delay_us(100);
-	DIO_WriteChannel(LCD_E,STD_High);
     1518:	61 e0       	ldi	r22, 0x01	; 1
     151a:	88 e0       	ldi	r24, 0x08	; 8
     151c:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4049,13 +3867,8 @@ void LCD_Cmd(u8 cmd){
     1526:	f1 f7       	brne	.-4      	; 0x1524 <LCD_Cmd+0x42>
     1528:	00 c0       	rjmp	.+0      	; 0x152a <LCD_Cmd+0x48>
     152a:	00 00       	nop
-	
-	_delay_ms(5);
-	
-	portValue = DIO_ReadPort(LCD_DataPort);
     152c:	80 e0       	ldi	r24, 0x00	; 0
     152e:	0e 94 fb 0c 	call	0x19f6	; 0x19f6 <DIO_ReadPort>
-	portValue = (portValue & 0x0F) | (cmd<<4);
     1532:	8f 70       	andi	r24, 0x0F	; 15
     1534:	90 e1       	ldi	r25, 0x10	; 16
     1536:	c9 9f       	mul	r28, r25
@@ -4063,10 +3876,8 @@ void LCD_Cmd(u8 cmd){
     153a:	11 24       	eor	r1, r1
     153c:	68 2f       	mov	r22, r24
     153e:	62 2b       	or	r22, r18
-	DIO_WritePort(LCD_DataPort,portValue);
     1540:	80 e0       	ldi	r24, 0x00	; 0
     1542:	0e 94 0d 0d 	call	0x1a1a	; 0x1a1a <DIO_WritePort>
-	DIO_WriteChannel(LCD_E,STD_Low);
     1546:	60 e0       	ldi	r22, 0x00	; 0
     1548:	88 e0       	ldi	r24, 0x08	; 8
     154a:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4082,8 +3893,6 @@ void LCD_Cmd(u8 cmd){
     1554:	f1 f7       	brne	.-4      	; 0x1552 <LCD_Cmd+0x70>
     1556:	00 c0       	rjmp	.+0      	; 0x1558 <LCD_Cmd+0x76>
     1558:	00 00       	nop
-	_delay_us(100);
-	DIO_WriteChannel(LCD_E,STD_High);
     155a:	61 e0       	ldi	r22, 0x01	; 1
     155c:	88 e0       	ldi	r24, 0x08	; 8
     155e:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4099,22 +3908,13 @@ void LCD_Cmd(u8 cmd){
     1568:	f1 f7       	brne	.-4      	; 0x1566 <LCD_Cmd+0x84>
     156a:	00 c0       	rjmp	.+0      	; 0x156c <LCD_Cmd+0x8a>
     156c:	00 00       	nop
-	_delay_ms(2);
-}
     156e:	cf 91       	pop	r28
     1570:	08 95       	ret
 
 00001572 <LCD_Init>:
-*  Author: user
-*/
-#include "LCD.h"
-
-void LCD_Init(){
-	DIO_WriteChannel(LCD_RW,STD_Low);
     1572:	60 e0       	ldi	r22, 0x00	; 0
     1574:	8a e0       	ldi	r24, 0x0A	; 10
     1576:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
-	DIO_WriteChannel(LCD_E,STD_High);
     157a:	61 e0       	ldi	r22, 0x01	; 1
     157c:	88 e0       	ldi	r24, 0x08	; 8
     157e:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4127,20 +3927,14 @@ void LCD_Init(){
     158e:	e1 f7       	brne	.-8      	; 0x1588 <LCD_Init+0x16>
     1590:	00 c0       	rjmp	.+0      	; 0x1592 <LCD_Init+0x20>
     1592:	00 00       	nop
-	_delay_ms(20);
-	LCD_Cmd(0x33);
     1594:	83 e3       	ldi	r24, 0x33	; 51
     1596:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
-	LCD_Cmd(0x32);
     159a:	82 e3       	ldi	r24, 0x32	; 50
     159c:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
-	LCD_Cmd(0x28);//function Set 4Bit & 2Line & 5*8
     15a0:	88 e2       	ldi	r24, 0x28	; 40
     15a2:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
-	LCD_Cmd(0x06);//Entry Mode shift to right
     15a6:	86 e0       	ldi	r24, 0x06	; 6
     15a8:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
-	LCD_Cmd(0x0F);//Display ON & Cursor & Blinking
     15ac:	8f e0       	ldi	r24, 0x0F	; 15
     15ae:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
     15b2:	8f e3       	ldi	r24, 0x3F	; 63
@@ -4152,32 +3946,20 @@ void LCD_Init(){
     15be:	08 95       	ret
 
 000015c0 <LCD_Char>:
-	DIO_WriteChannel(LCD_E,STD_Low);
-	_delay_us(100);
-	DIO_WriteChannel(LCD_E,STD_High);
-	_delay_ms(2);
-}
-void LCD_Char(u8 data){
     15c0:	cf 93       	push	r28
     15c2:	c8 2f       	mov	r28, r24
-	u8 portValue = STD_Low;
-	DIO_WriteChannel(LCD_RS,STD_High);
     15c4:	61 e0       	ldi	r22, 0x01	; 1
     15c6:	89 e0       	ldi	r24, 0x09	; 9
     15c8:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
-	portValue = DIO_ReadPort(LCD_DataPort);
     15cc:	80 e0       	ldi	r24, 0x00	; 0
     15ce:	0e 94 fb 0c 	call	0x19f6	; 0x19f6 <DIO_ReadPort>
-	portValue = (portValue & 0x0F) | (data & 0xF0);
     15d2:	8f 70       	andi	r24, 0x0F	; 15
     15d4:	9c 2f       	mov	r25, r28
     15d6:	90 7f       	andi	r25, 0xF0	; 240
     15d8:	68 2f       	mov	r22, r24
     15da:	69 2b       	or	r22, r25
-	DIO_WritePort(LCD_DataPort,portValue);
     15dc:	80 e0       	ldi	r24, 0x00	; 0
     15de:	0e 94 0d 0d 	call	0x1a1a	; 0x1a1a <DIO_WritePort>
-	DIO_WriteChannel(LCD_E,STD_Low);
     15e2:	60 e0       	ldi	r22, 0x00	; 0
     15e4:	88 e0       	ldi	r24, 0x08	; 8
     15e6:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4193,8 +3975,6 @@ void LCD_Char(u8 data){
     15f0:	f1 f7       	brne	.-4      	; 0x15ee <LCD_Char+0x2e>
     15f2:	00 c0       	rjmp	.+0      	; 0x15f4 <LCD_Char+0x34>
     15f4:	00 00       	nop
-	_delay_us(100);
-	DIO_WriteChannel(LCD_E,STD_High);
     15f6:	61 e0       	ldi	r22, 0x01	; 1
     15f8:	88 e0       	ldi	r24, 0x08	; 8
     15fa:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4210,13 +3990,8 @@ void LCD_Char(u8 data){
     1604:	f1 f7       	brne	.-4      	; 0x1602 <LCD_Char+0x42>
     1606:	00 c0       	rjmp	.+0      	; 0x1608 <LCD_Char+0x48>
     1608:	00 00       	nop
-	
-	_delay_ms(5);
-	
-	portValue = DIO_ReadPort(LCD_DataPort);
     160a:	80 e0       	ldi	r24, 0x00	; 0
     160c:	0e 94 fb 0c 	call	0x19f6	; 0x19f6 <DIO_ReadPort>
-	portValue = (portValue & 0x0F) | (data<<4);
     1610:	8f 70       	andi	r24, 0x0F	; 15
     1612:	90 e1       	ldi	r25, 0x10	; 16
     1614:	c9 9f       	mul	r28, r25
@@ -4224,10 +3999,8 @@ void LCD_Char(u8 data){
     1618:	11 24       	eor	r1, r1
     161a:	68 2f       	mov	r22, r24
     161c:	62 2b       	or	r22, r18
-	DIO_WritePort(LCD_DataPort,portValue);
     161e:	80 e0       	ldi	r24, 0x00	; 0
     1620:	0e 94 0d 0d 	call	0x1a1a	; 0x1a1a <DIO_WritePort>
-	DIO_WriteChannel(LCD_E,STD_Low);
     1624:	60 e0       	ldi	r22, 0x00	; 0
     1626:	88 e0       	ldi	r24, 0x08	; 8
     1628:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4243,8 +4016,6 @@ void LCD_Char(u8 data){
     1632:	f1 f7       	brne	.-4      	; 0x1630 <LCD_Char+0x70>
     1634:	00 c0       	rjmp	.+0      	; 0x1636 <LCD_Char+0x76>
     1636:	00 00       	nop
-	_delay_us(100);
-	DIO_WriteChannel(LCD_E,STD_High);
     1638:	61 e0       	ldi	r22, 0x01	; 1
     163a:	88 e0       	ldi	r24, 0x08	; 8
     163c:	0e 94 c4 0b 	call	0x1788	; 0x1788 <DIO_WriteChannel>
@@ -4260,75 +4031,48 @@ void LCD_Char(u8 data){
     1646:	f1 f7       	brne	.-4      	; 0x1644 <LCD_Char+0x84>
     1648:	00 c0       	rjmp	.+0      	; 0x164a <LCD_Char+0x8a>
     164a:	00 00       	nop
-	_delay_ms(2);
-}
     164c:	cf 91       	pop	r28
     164e:	08 95       	ret
 
 00001650 <LCD_String>:
-void LCD_String(s8 * string){
     1650:	0f 93       	push	r16
     1652:	1f 93       	push	r17
     1654:	cf 93       	push	r28
     1656:	fc 01       	movw	r30, r24
-	u8 i = 0;
-	while(string[i] != '\0'){
     1658:	80 81       	ld	r24, Z
     165a:	88 23       	and	r24, r24
     165c:	59 f0       	breq	.+22     	; 0x1674 <LCD_String+0x24>
     165e:	8f 01       	movw	r16, r30
     1660:	c0 e0       	ldi	r28, 0x00	; 0
-		LCD_Char(string[i]);
     1662:	0e 94 e0 0a 	call	0x15c0	; 0x15c0 <LCD_Char>
-		i++;
     1666:	cf 5f       	subi	r28, 0xFF	; 255
-	DIO_WriteChannel(LCD_E,STD_High);
-	_delay_ms(2);
-}
-void LCD_String(s8 * string){
-	u8 i = 0;
-	while(string[i] != '\0'){
     1668:	f8 01       	movw	r30, r16
     166a:	ec 0f       	add	r30, r28
     166c:	f1 1d       	adc	r31, r1
     166e:	80 81       	ld	r24, Z
     1670:	81 11       	cpse	r24, r1
     1672:	f7 cf       	rjmp	.-18     	; 0x1662 <LCD_String+0x12>
-		LCD_Char(string[i]);
-		i++;
-	}
-}
     1674:	cf 91       	pop	r28
     1676:	1f 91       	pop	r17
     1678:	0f 91       	pop	r16
     167a:	08 95       	ret
 
 0000167c <LCD_Clear>:
-void LCD_Clear(){
-	LCD_Cmd(0x01);
     167c:	81 e0       	ldi	r24, 0x01	; 1
     167e:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
     1682:	08 95       	ret
 
 00001684 <LCD_SetPos>:
-}
-void LCD_SetPos(u8 line,u8 pos){
-	switch(line){
     1684:	81 30       	cpi	r24, 0x01	; 1
     1686:	19 f0       	breq	.+6      	; 0x168e <LCD_SetPos+0xa>
     1688:	82 30       	cpi	r24, 0x02	; 2
     168a:	39 f0       	breq	.+14     	; 0x169a <LCD_SetPos+0x16>
     168c:	08 95       	ret
-		case 1:
-		LCD_Cmd(0x80 | (pos & 0x0F));
     168e:	86 2f       	mov	r24, r22
     1690:	8f 70       	andi	r24, 0x0F	; 15
     1692:	80 68       	ori	r24, 0x80	; 128
     1694:	0e 94 71 0a 	call	0x14e2	; 0x14e2 <LCD_Cmd>
-		break;
     1698:	08 95       	ret
-		case 2:
-		LCD_Cmd(0xC0 | (pos & 0x0F));
     169a:	86 2f       	mov	r24, r22
     169c:	8f 70       	andi	r24, 0x0F	; 15
     169e:	80 6c       	ori	r24, 0xC0	; 192
@@ -4336,24 +4080,11 @@ void LCD_SetPos(u8 line,u8 pos){
     16a4:	08 95       	ret
 
 000016a6 <LM35_Init>:
- *  Author: user
- */ 
-#include "LM35.h"
-
-void LM35_Init(ADC_InitTypes * options){
-	ADC_Init(options);
     16a6:	0e 94 a9 0b 	call	0x1752	; 0x1752 <ADC_Init>
     16aa:	08 95       	ret
 
 000016ac <LM35_Read>:
-}
-u16 LM35_Read(ADC_ChannelTypes channelId){
-	u16 adcValue = 0;
-	u16 Temp = 0;
-	adcValue = ADC_Read(channelId);
     16ac:	0e 94 b6 0b 	call	0x176c	; 0x176c <ADC_Read>
-	Temp = (adcValue/4);
-	return Temp;
     16b0:	96 95       	lsr	r25
     16b2:	87 95       	ror	r24
     16b4:	96 95       	lsr	r25
@@ -4361,12 +4092,6 @@ u16 LM35_Read(ADC_ChannelTypes channelId){
     16b8:	08 95       	ret
 
 000016ba <ServoMotor>:
- *  Author: user
- */ 
-#include "ServoMotor.h"
-#include "Clock.h"
-
-void ServoMotor(float angle){
     16ba:	cf 92       	push	r12
     16bc:	df 92       	push	r13
     16be:	ef 92       	push	r14
@@ -4383,19 +4108,13 @@ void ServoMotor(float angle){
     16d4:	cd bf       	out	0x3d, r28	; 61
     16d6:	6b 01       	movw	r12, r22
     16d8:	7c 01       	movw	r14, r24
-	
-	DIO_ConfigChannel(DIO_ChannelD5,Output);
     16da:	61 e0       	ldi	r22, 0x01	; 1
     16dc:	8d e1       	ldi	r24, 0x1D	; 29
     16de:	0e 94 79 0c 	call	0x18f2	; 0x18f2 <DIO_ConfigChannel>
-	float OCR1AValue = (float)((angle-miniAngle) * ((float)(maxCount-miniCount)/(maxAngle-miniAngle)))+miniCount-1;
-	float ICR1Value = 4999;
-	Timer1_SetValue(ICR1DataReg,ICR1Value);
     16e2:	67 e8       	ldi	r22, 0x87	; 135
     16e4:	73 e1       	ldi	r23, 0x13	; 19
     16e6:	82 e0       	ldi	r24, 0x02	; 2
     16e8:	0e 94 9b 0e 	call	0x1d36	; 0x1d36 <Timer1_SetValue>
-	Timer1_SetValue(OCR1ADataReg,OCR1AValue);
     16ec:	2c e1       	ldi	r18, 0x1C	; 28
     16ee:	37 ec       	ldi	r19, 0xC7	; 199
     16f0:	41 eb       	ldi	r20, 0xB1	; 177
@@ -4416,8 +4135,6 @@ void ServoMotor(float angle){
     1714:	0e 94 20 12 	call	0x2440	; 0x2440 <__fixunssfsi>
     1718:	80 e0       	ldi	r24, 0x00	; 0
     171a:	0e 94 9b 0e 	call	0x1d36	; 0x1d36 <Timer1_SetValue>
-	
-	Timer1_InitTypes options = {PWM_Fast,Clock_1024,COM1A_Non_Inverting_PWM,COM1B_No_PWM,TOVInt_Disable,OC1AInt_Disable,OC1BInt_Disable,ICInt_Disable};
     171e:	88 e0       	ldi	r24, 0x08	; 8
     1720:	e4 ec       	ldi	r30, 0xC4	; 196
     1722:	f0 e0       	ldi	r31, 0x00	; 0
@@ -4427,11 +4144,9 @@ void ServoMotor(float angle){
     172a:	0d 92       	st	X+, r0
     172c:	8a 95       	dec	r24
     172e:	e1 f7       	brne	.-8      	; 0x1728 <ServoMotor+0x6e>
-	Timer1_Init(&options);
     1730:	ce 01       	movw	r24, r28
     1732:	01 96       	adiw	r24, 0x01	; 1
     1734:	0e 94 5a 0e 	call	0x1cb4	; 0x1cb4 <Timer1_Init>
-}
     1738:	28 96       	adiw	r28, 0x08	; 8
     173a:	0f b6       	in	r0, 0x3f	; 63
     173c:	f8 94       	cli
@@ -4447,61 +4162,37 @@ void ServoMotor(float angle){
     1750:	08 95       	ret
 
 00001752 <ADC_Init>:
- * Created: 10/7/2023 3:04:16 PM
- *  Author: user
- */ 
-#include "ADC.h"
-
-void ADC_Init(ADC_InitTypes * options){
     1752:	fc 01       	movw	r30, r24
-	adcRegisters->ADC_ADMUX_Reg = (options->adcVref)<<6;
     1754:	90 81       	ld	r25, Z
     1756:	92 95       	swap	r25
     1758:	99 0f       	add	r25, r25
     175a:	99 0f       	add	r25, r25
     175c:	90 7c       	andi	r25, 0xC0	; 192
     175e:	97 b9       	out	0x07, r25	; 7
-	adcRegisters->ADC_ADCSRA_Reg.AllRegister |= options->adcClock;
     1760:	96 b1       	in	r25, 0x06	; 6
     1762:	81 81       	ldd	r24, Z+1	; 0x01
     1764:	89 2b       	or	r24, r25
     1766:	86 b9       	out	0x06, r24	; 6
-	adcRegisters->ADC_ADCSRA_Reg.Bits.ADC_ADEN_Bit = 1;
     1768:	37 9a       	sbi	0x06, 7	; 6
     176a:	08 95       	ret
 
 0000176c <ADC_Read>:
-}
-u16 ADC_Read(ADC_ChannelTypes channelId){
-	u16 adcValue = 0;
-	adcRegisters->ADC_ADMUX_Reg = (adcRegisters->ADC_ADMUX_Reg & 0b11100000)|(channelId & 0b00011111);
     176c:	97 b1       	in	r25, 0x07	; 7
     176e:	90 7e       	andi	r25, 0xE0	; 224
     1770:	8f 71       	andi	r24, 0x1F	; 31
     1772:	89 2b       	or	r24, r25
     1774:	87 b9       	out	0x07, r24	; 7
-	adcRegisters->ADC_ADCSRA_Reg.Bits.ADC_ADSC_Bit = 1;//start conversion
     1776:	36 9a       	sbi	0x06, 6	; 6
-	while(adcRegisters->ADC_ADCSRA_Reg.Bits.ADC_ADIF_Bit == 0);//waiting the flag
     1778:	34 9b       	sbis	0x06, 4	; 6
     177a:	fe cf       	rjmp	.-4      	; 0x1778 <ADC_Read+0xc>
-	adcRegisters->ADC_ADCSRA_Reg.Bits.ADC_ADIF_Bit = 1;//Clear the Flag
     177c:	34 9a       	sbi	0x06, 4	; 6
-	adcValue = adcRegisters->ADC_ADCL_Reg | adcRegisters->ADC_ADCH_Reg<<8;
     177e:	84 b1       	in	r24, 0x04	; 4
     1780:	25 b1       	in	r18, 0x05	; 5
-	return adcValue;
     1782:	90 e0       	ldi	r25, 0x00	; 0
     1784:	92 2b       	or	r25, r18
     1786:	08 95       	ret
 
 00001788 <DIO_WriteChannel>:
-		break;
-		case DIO_PortC:
-		ToggleBit(PORTC_Reg,BitNo);
-		break;
-		case DIO_PortD:
-		ToggleBit(PORTD_Reg,BitNo);
     1788:	98 2f       	mov	r25, r24
     178a:	97 70       	andi	r25, 0x07	; 7
     178c:	86 95       	lsr	r24
@@ -4819,12 +4510,6 @@ u16 ADC_Read(ADC_ChannelTypes channelId){
     19f4:	08 95       	ret
 
 000019f6 <DIO_ReadPort>:
-		break;
-	}
-}
-u8 DIO_ReadPort(DIO_PortTypes portId){
-	u8 portValue = STD_Low;
-	switch(portId){
     19f6:	81 30       	cpi	r24, 0x01	; 1
     19f8:	41 f0       	breq	.+16     	; 0x1a0a <DIO_ReadPort+0x14>
     19fa:	28 f0       	brcs	.+10     	; 0x1a06 <DIO_ReadPort+0x10>
@@ -4833,44 +4518,18 @@ u8 DIO_ReadPort(DIO_PortTypes portId){
     1a00:	83 30       	cpi	r24, 0x03	; 3
     1a02:	39 f0       	breq	.+14     	; 0x1a12 <DIO_ReadPort+0x1c>
     1a04:	08 c0       	rjmp	.+16     	; 0x1a16 <DIO_ReadPort+0x20>
-		case DIO_PortA:
-		portValue = PORTA_Reg;
     1a06:	8b b3       	in	r24, 0x1b	; 27
-		break;
     1a08:	08 95       	ret
-		case DIO_PortB:
-		portValue = PORTB_Reg;
     1a0a:	88 b3       	in	r24, 0x18	; 24
-		break;
     1a0c:	08 95       	ret
-		case DIO_PortC:
-		portValue = PORTC_Reg;
     1a0e:	85 b3       	in	r24, 0x15	; 21
-		break;
     1a10:	08 95       	ret
-		case DIO_PortD:
-		portValue = PORTD_Reg;
     1a12:	82 b3       	in	r24, 0x12	; 18
-		break;
     1a14:	08 95       	ret
-		ToggleBit(PORTD_Reg,BitNo);
-		break;
-	}
-}
-u8 DIO_ReadPort(DIO_PortTypes portId){
-	u8 portValue = STD_Low;
     1a16:	80 e0       	ldi	r24, 0x00	; 0
-		case DIO_PortD:
-		portValue = PORTD_Reg;
-		break;
-	}
-	return portValue;
-}
     1a18:	08 95       	ret
 
 00001a1a <DIO_WritePort>:
-void DIO_WritePort(DIO_PortTypes portId,u8 portValue){
-	switch(portId){
     1a1a:	81 30       	cpi	r24, 0x01	; 1
     1a1c:	41 f0       	breq	.+16     	; 0x1a2e <DIO_WritePort+0x14>
     1a1e:	28 f0       	brcs	.+10     	; 0x1a2a <DIO_WritePort+0x10>
@@ -4879,58 +4538,23 @@ void DIO_WritePort(DIO_PortTypes portId,u8 portValue){
     1a24:	83 30       	cpi	r24, 0x03	; 3
     1a26:	39 f0       	breq	.+14     	; 0x1a36 <DIO_WritePort+0x1c>
     1a28:	08 95       	ret
-		case DIO_PortA:
-		PORTA_Reg = portValue;
     1a2a:	6b bb       	out	0x1b, r22	; 27
-		break;
     1a2c:	08 95       	ret
-		case DIO_PortB:
-		PORTB_Reg = portValue;
     1a2e:	68 bb       	out	0x18, r22	; 24
-		break;
     1a30:	08 95       	ret
-		case DIO_PortC:
-		PORTC_Reg = portValue;
     1a32:	65 bb       	out	0x15, r22	; 21
-		break;
     1a34:	08 95       	ret
-		case DIO_PortD:
-		PORTD_Reg = portValue;
     1a36:	62 bb       	out	0x12, r22	; 18
     1a38:	08 95       	ret
 
 00001a3a <DIO_Init>:
-	{Output,STD_High},
-	{Output,STD_High},
-	{Output,STD_High}
-};
-
-void DIO_Init(){
     1a3a:	e4 e8       	ldi	r30, 0x84	; 132
     1a3c:	f0 e0       	ldi	r31, 0x00	; 0
-	DIO_PortTypes Portx;
-	DIO_ChannelTypes BitNo;
-	DIO_ChannelTypes count = DIO_ChannelA0;
-	
-	for (count=DIO_ChannelA0;count<PINCOUNT;count++)
     1a3e:	80 e0       	ldi	r24, 0x00	; 0
-			{
-				SetBit(DDRB_Reg,BitNo);
-			}
-			else
-			{
-				ClearBit(DDRB_Reg,BitNo);
     1a40:	41 e0       	ldi	r20, 0x01	; 1
     1a42:	50 e0       	ldi	r21, 0x00	; 0
-	DIO_ChannelTypes count = DIO_ChannelA0;
-	
-	for (count=DIO_ChannelA0;count<PINCOUNT;count++)
-	{
-		Portx = count/8;
-		BitNo = count%8;
     1a44:	28 2f       	mov	r18, r24
     1a46:	27 70       	andi	r18, 0x07	; 7
-		switch(Portx){
     1a48:	98 2f       	mov	r25, r24
     1a4a:	96 95       	lsr	r25
     1a4c:	96 95       	lsr	r25
@@ -4944,13 +4568,9 @@ void DIO_Init(){
     1a5c:	09 f4       	brne	.+2      	; 0x1a60 <DIO_Init+0x26>
     1a5e:	4f c0       	rjmp	.+158    	; 0x1afe <DIO_Init+0xc4>
     1a60:	67 c0       	rjmp	.+206    	; 0x1b30 <DIO_Init+0xf6>
-			case DIO_PortA:
-			if (PinCfg[count].direction == Output)
     1a62:	90 81       	ld	r25, Z
     1a64:	91 30       	cpi	r25, 0x01	; 1
     1a66:	59 f4       	brne	.+22     	; 0x1a7e <DIO_Init+0x44>
-			{
-				SetBit(DDRA_Reg,BitNo);
     1a68:	9a b3       	in	r25, 0x1a	; 26
     1a6a:	ba 01       	movw	r22, r20
     1a6c:	02 c0       	rjmp	.+4      	; 0x1a72 <DIO_Init+0x38>
@@ -4962,10 +4582,6 @@ void DIO_Init(){
     1a78:	29 2b       	or	r18, r25
     1a7a:	2a bb       	out	0x1a, r18	; 26
     1a7c:	59 c0       	rjmp	.+178    	; 0x1b30 <DIO_Init+0xf6>
-			}
-			else
-			{
-				ClearBit(DDRA_Reg,BitNo);
     1a7e:	3a b3       	in	r19, 0x1a	; 26
     1a80:	ba 01       	movw	r22, r20
     1a82:	02 c0       	rjmp	.+4      	; 0x1a88 <DIO_Init+0x4e>
@@ -4978,16 +4594,9 @@ void DIO_Init(){
     1a90:	93 23       	and	r25, r19
     1a92:	9a bb       	out	0x1a, r25	; 26
     1a94:	4d c0       	rjmp	.+154    	; 0x1b30 <DIO_Init+0xf6>
-			}
-			break;
-			
-			case DIO_PortB:
-			if (PinCfg[count].direction == Output)
     1a96:	90 81       	ld	r25, Z
     1a98:	91 30       	cpi	r25, 0x01	; 1
     1a9a:	59 f4       	brne	.+22     	; 0x1ab2 <DIO_Init+0x78>
-			{
-				SetBit(DDRB_Reg,BitNo);
     1a9c:	97 b3       	in	r25, 0x17	; 23
     1a9e:	ba 01       	movw	r22, r20
     1aa0:	02 c0       	rjmp	.+4      	; 0x1aa6 <DIO_Init+0x6c>
@@ -4999,10 +4608,6 @@ void DIO_Init(){
     1aac:	29 2b       	or	r18, r25
     1aae:	27 bb       	out	0x17, r18	; 23
     1ab0:	3f c0       	rjmp	.+126    	; 0x1b30 <DIO_Init+0xf6>
-			}
-			else
-			{
-				ClearBit(DDRB_Reg,BitNo);
     1ab2:	37 b3       	in	r19, 0x17	; 23
     1ab4:	ba 01       	movw	r22, r20
     1ab6:	02 c0       	rjmp	.+4      	; 0x1abc <DIO_Init+0x82>
@@ -5015,16 +4620,9 @@ void DIO_Init(){
     1ac4:	93 23       	and	r25, r19
     1ac6:	97 bb       	out	0x17, r25	; 23
     1ac8:	33 c0       	rjmp	.+102    	; 0x1b30 <DIO_Init+0xf6>
-			}
-			break;
-			
-			case DIO_PortC:
-			if (PinCfg[count].direction == Output)
     1aca:	90 81       	ld	r25, Z
     1acc:	91 30       	cpi	r25, 0x01	; 1
     1ace:	59 f4       	brne	.+22     	; 0x1ae6 <DIO_Init+0xac>
-			{
-				SetBit(DDRC_Reg,BitNo);
     1ad0:	94 b3       	in	r25, 0x14	; 20
     1ad2:	ba 01       	movw	r22, r20
     1ad4:	02 c0       	rjmp	.+4      	; 0x1ada <DIO_Init+0xa0>
@@ -5036,10 +4634,6 @@ void DIO_Init(){
     1ae0:	29 2b       	or	r18, r25
     1ae2:	24 bb       	out	0x14, r18	; 20
     1ae4:	25 c0       	rjmp	.+74     	; 0x1b30 <DIO_Init+0xf6>
-			}
-			else
-			{
-				ClearBit(DDRC_Reg,BitNo);
     1ae6:	34 b3       	in	r19, 0x14	; 20
     1ae8:	ba 01       	movw	r22, r20
     1aea:	02 c0       	rjmp	.+4      	; 0x1af0 <DIO_Init+0xb6>
@@ -5052,16 +4646,9 @@ void DIO_Init(){
     1af8:	93 23       	and	r25, r19
     1afa:	94 bb       	out	0x14, r25	; 20
     1afc:	19 c0       	rjmp	.+50     	; 0x1b30 <DIO_Init+0xf6>
-			}
-			break;
-			
-			case DIO_PortD:
-			if (PinCfg[count].direction == Output)
     1afe:	90 81       	ld	r25, Z
     1b00:	91 30       	cpi	r25, 0x01	; 1
     1b02:	59 f4       	brne	.+22     	; 0x1b1a <DIO_Init+0xe0>
-			{
-				SetBit(DDRD_Reg,BitNo);
     1b04:	91 b3       	in	r25, 0x11	; 17
     1b06:	ba 01       	movw	r22, r20
     1b08:	02 c0       	rjmp	.+4      	; 0x1b0e <DIO_Init+0xd4>
@@ -5073,10 +4660,6 @@ void DIO_Init(){
     1b14:	29 2b       	or	r18, r25
     1b16:	21 bb       	out	0x11, r18	; 17
     1b18:	0b c0       	rjmp	.+22     	; 0x1b30 <DIO_Init+0xf6>
-			}
-			else
-			{
-				ClearBit(DDRD_Reg,BitNo);
     1b1a:	31 b3       	in	r19, 0x11	; 17
     1b1c:	ba 01       	movw	r22, r20
     1b1e:	02 c0       	rjmp	.+4      	; 0x1b24 <DIO_Init+0xea>
@@ -5088,31 +4671,14 @@ void DIO_Init(){
     1b2a:	90 95       	com	r25
     1b2c:	93 23       	and	r25, r19
     1b2e:	91 bb       	out	0x11, r25	; 17
-void DIO_Init(){
-	DIO_PortTypes Portx;
-	DIO_ChannelTypes BitNo;
-	DIO_ChannelTypes count = DIO_ChannelA0;
-	
-	for (count=DIO_ChannelA0;count<PINCOUNT;count++)
     1b30:	8f 5f       	subi	r24, 0xFF	; 255
     1b32:	32 96       	adiw	r30, 0x02	; 2
     1b34:	80 32       	cpi	r24, 0x20	; 32
     1b36:	09 f0       	breq	.+2      	; 0x1b3a <DIO_Init+0x100>
     1b38:	85 cf       	rjmp	.-246    	; 0x1a44 <DIO_Init+0xa>
-			}
-			break;
-		}
-	}
-	
     1b3a:	08 95       	ret
 
 00001b3c <Ext_Interrupt_Enable>:
-		break;
-		case Ext_INT1:
-		ClearBit(Ext_Int_GICR_Reg,7);
-		break;
-		case Ext_INT2:
-		ClearBit(Ext_Int_GICR_Reg,5);
     1b3c:	81 30       	cpi	r24, 0x01	; 1
     1b3e:	41 f0       	breq	.+16     	; 0x1b50 <Ext_Interrupt_Enable+0x14>
     1b40:	18 f0       	brcs	.+6      	; 0x1b48 <Ext_Interrupt_Enable+0xc>
@@ -5133,90 +4699,53 @@ void DIO_Init(){
     1b5e:	08 95       	ret
 
 00001b60 <Ext_Interrupt_Sncontrol>:
-		break;
-	}
-}
-void Ext_Interrupt_Sncontrol(Ext_Int_Types extIntId,Ext_Int_Sncontrol mode){
-	switch(extIntId){
     1b60:	81 30       	cpi	r24, 0x01	; 1
     1b62:	41 f0       	breq	.+16     	; 0x1b74 <Ext_Interrupt_Sncontrol+0x14>
     1b64:	18 f0       	brcs	.+6      	; 0x1b6c <Ext_Interrupt_Sncontrol+0xc>
     1b66:	82 30       	cpi	r24, 0x02	; 2
     1b68:	59 f0       	breq	.+22     	; 0x1b80 <Ext_Interrupt_Sncontrol+0x20>
     1b6a:	08 95       	ret
-		case Ext_INT0:
-		Ext_Int_MCUCR_Reg |= (mode<<0);
     1b6c:	85 b7       	in	r24, 0x35	; 53
     1b6e:	68 2b       	or	r22, r24
     1b70:	65 bf       	out	0x35, r22	; 53
-		break;
     1b72:	08 95       	ret
-		case Ext_INT1:
-		Ext_Int_MCUCR_Reg |= (mode<<2);
     1b74:	85 b7       	in	r24, 0x35	; 53
     1b76:	66 0f       	add	r22, r22
     1b78:	66 0f       	add	r22, r22
     1b7a:	68 2b       	or	r22, r24
     1b7c:	65 bf       	out	0x35, r22	; 53
-		break;
     1b7e:	08 95       	ret
-		case Ext_INT2:
-		if (mode == Falling_Edge)
     1b80:	62 30       	cpi	r22, 0x02	; 2
     1b82:	21 f4       	brne	.+8      	; 0x1b8c <Ext_Interrupt_Sncontrol+0x2c>
-		{
-			ClearBit(Ext_Int_MCUCSR_Reg,6);
     1b84:	84 b7       	in	r24, 0x34	; 52
     1b86:	8f 7b       	andi	r24, 0xBF	; 191
     1b88:	84 bf       	out	0x34, r24	; 52
     1b8a:	08 95       	ret
-		}
-		else if(mode == Rising_Edge){
     1b8c:	63 30       	cpi	r22, 0x03	; 3
     1b8e:	19 f4       	brne	.+6      	; 0x1b96 <Ext_Interrupt_Sncontrol+0x36>
-			SetBit(Ext_Int_MCUCSR_Reg,6);
     1b90:	84 b7       	in	r24, 0x34	; 52
     1b92:	80 64       	ori	r24, 0x40	; 64
     1b94:	84 bf       	out	0x34, r24	; 52
     1b96:	08 95       	ret
 
 00001b98 <Ext_Interrupt_SetCallBack>:
-		}
-		break;
-	}
-}
-void Ext_Interrupt_SetCallBack(Ext_Int_Types extIntId,void (*ExtIntCopyPtr)(void)){
-	switch(extIntId){
     1b98:	81 30       	cpi	r24, 0x01	; 1
     1b9a:	49 f0       	breq	.+18     	; 0x1bae <Ext_Interrupt_SetCallBack+0x16>
     1b9c:	18 f0       	brcs	.+6      	; 0x1ba4 <Ext_Interrupt_SetCallBack+0xc>
     1b9e:	82 30       	cpi	r24, 0x02	; 2
     1ba0:	59 f0       	breq	.+22     	; 0x1bb8 <Ext_Interrupt_SetCallBack+0x20>
     1ba2:	08 95       	ret
-		case Ext_INT0:
-		ExtInt0FunPtr  = ExtIntCopyPtr;
-    1ba4:	70 93 a1 03 	sts	0x03A1, r23	; 0x8003a1 <ExtInt0FunPtr+0x1>
-    1ba8:	60 93 a0 03 	sts	0x03A0, r22	; 0x8003a0 <ExtInt0FunPtr>
-		break;
+    1ba4:	70 93 f9 04 	sts	0x04F9, r23	; 0x8004f9 <ExtInt0FunPtr+0x1>
+    1ba8:	60 93 f8 04 	sts	0x04F8, r22	; 0x8004f8 <ExtInt0FunPtr>
     1bac:	08 95       	ret
-		case Ext_INT1:
-		ExtInt1FunPtr  = ExtIntCopyPtr;
-    1bae:	70 93 9f 03 	sts	0x039F, r23	; 0x80039f <ExtInt1FunPtr+0x1>
-    1bb2:	60 93 9e 03 	sts	0x039E, r22	; 0x80039e <ExtInt1FunPtr>
-		break;
+    1bae:	70 93 f7 04 	sts	0x04F7, r23	; 0x8004f7 <ExtInt1FunPtr+0x1>
+    1bb2:	60 93 f6 04 	sts	0x04F6, r22	; 0x8004f6 <ExtInt1FunPtr>
     1bb6:	08 95       	ret
-		case Ext_INT2:
-		ExtInt2FunPtr  = ExtIntCopyPtr;
-    1bb8:	70 93 9d 03 	sts	0x039D, r23	; 0x80039d <ExtInt2FunPtr+0x1>
-    1bbc:	60 93 9c 03 	sts	0x039C, r22	; 0x80039c <ExtInt2FunPtr>
+    1bb8:	70 93 f5 04 	sts	0x04F5, r23	; 0x8004f5 <ExtInt2FunPtr+0x1>
+    1bbc:	60 93 f4 04 	sts	0x04F4, r22	; 0x8004f4 <ExtInt2FunPtr>
     1bc0:	08 95       	ret
 
 00001bc2 <__vector_1>:
-		break;
-	}
-}
-
-ISR(INT0_vect){
     1bc2:	1f 92       	push	r1
     1bc4:	0f 92       	push	r0
     1bc6:	0f b6       	in	r0, 0x3f	; 63
@@ -5234,11 +4763,9 @@ ISR(INT0_vect){
     1bde:	bf 93       	push	r27
     1be0:	ef 93       	push	r30
     1be2:	ff 93       	push	r31
-	ExtInt0FunPtr();
-    1be4:	e0 91 a0 03 	lds	r30, 0x03A0	; 0x8003a0 <ExtInt0FunPtr>
-    1be8:	f0 91 a1 03 	lds	r31, 0x03A1	; 0x8003a1 <ExtInt0FunPtr+0x1>
+    1be4:	e0 91 f8 04 	lds	r30, 0x04F8	; 0x8004f8 <ExtInt0FunPtr>
+    1be8:	f0 91 f9 04 	lds	r31, 0x04F9	; 0x8004f9 <ExtInt0FunPtr+0x1>
     1bec:	09 95       	icall
-}
     1bee:	ff 91       	pop	r31
     1bf0:	ef 91       	pop	r30
     1bf2:	bf 91       	pop	r27
@@ -5258,8 +4785,6 @@ ISR(INT0_vect){
     1c0e:	18 95       	reti
 
 00001c10 <__vector_2>:
-
-ISR(INT1_vect){
     1c10:	1f 92       	push	r1
     1c12:	0f 92       	push	r0
     1c14:	0f b6       	in	r0, 0x3f	; 63
@@ -5277,11 +4802,9 @@ ISR(INT1_vect){
     1c2c:	bf 93       	push	r27
     1c2e:	ef 93       	push	r30
     1c30:	ff 93       	push	r31
-	ExtInt1FunPtr();
-    1c32:	e0 91 9e 03 	lds	r30, 0x039E	; 0x80039e <ExtInt1FunPtr>
-    1c36:	f0 91 9f 03 	lds	r31, 0x039F	; 0x80039f <ExtInt1FunPtr+0x1>
+    1c32:	e0 91 f6 04 	lds	r30, 0x04F6	; 0x8004f6 <ExtInt1FunPtr>
+    1c36:	f0 91 f7 04 	lds	r31, 0x04F7	; 0x8004f7 <ExtInt1FunPtr+0x1>
     1c3a:	09 95       	icall
-}
     1c3c:	ff 91       	pop	r31
     1c3e:	ef 91       	pop	r30
     1c40:	bf 91       	pop	r27
@@ -5301,8 +4824,6 @@ ISR(INT1_vect){
     1c5c:	18 95       	reti
 
 00001c5e <__vector_3>:
-
-ISR(INT2_vect){
     1c5e:	1f 92       	push	r1
     1c60:	0f 92       	push	r0
     1c62:	0f b6       	in	r0, 0x3f	; 63
@@ -5320,9 +4841,8 @@ ISR(INT2_vect){
     1c7a:	bf 93       	push	r27
     1c7c:	ef 93       	push	r30
     1c7e:	ff 93       	push	r31
-	ExtInt2FunPtr();
-    1c80:	e0 91 9c 03 	lds	r30, 0x039C	; 0x80039c <ExtInt2FunPtr>
-    1c84:	f0 91 9d 03 	lds	r31, 0x039D	; 0x80039d <ExtInt2FunPtr+0x1>
+    1c80:	e0 91 f4 04 	lds	r30, 0x04F4	; 0x8004f4 <ExtInt2FunPtr>
+    1c84:	f0 91 f5 04 	lds	r31, 0x04F5	; 0x8004f5 <ExtInt2FunPtr+0x1>
     1c88:	09 95       	icall
     1c8a:	ff 91       	pop	r31
     1c8c:	ef 91       	pop	r30
@@ -5343,24 +4863,12 @@ ISR(INT2_vect){
     1caa:	18 95       	reti
 
 00001cac <EnableAllInterrupts>:
- *  Author: user
- */ 
-#include "GINT.h"
-
-void EnableAllInterrupts(){
-	SetBit(GINT_SREG_Reg,GINT_SREG_IBit);
     1cac:	8f b7       	in	r24, 0x3f	; 63
     1cae:	80 68       	ori	r24, 0x80	; 128
     1cb0:	8f bf       	out	0x3f, r24	; 63
     1cb2:	08 95       	ret
 
 00001cb4 <Timer1_Init>:
-		break;
-		case OC1BInt:
-		OC1BIntFunPtr = IntCopyFunPtr;
-		break;
-		case ICInt:
-		ICIntFunPtr = IntCopyFunPtr;
     1cb4:	fc 01       	movw	r30, r24
     1cb6:	9f b5       	in	r25, 0x2f	; 47
     1cb8:	80 81       	ld	r24, Z
@@ -5428,41 +4936,23 @@ void EnableAllInterrupts(){
     1d34:	08 95       	ret
 
 00001d36 <Timer1_SetValue>:
-		break;
-	}
-}
-void Timer1_SetValue(Timer1_DataRegTypes dataRegister,u16 dataValue){
-	switch(dataRegister){
     1d36:	81 30       	cpi	r24, 0x01	; 1
     1d38:	39 f0       	breq	.+14     	; 0x1d48 <Timer1_SetValue+0x12>
     1d3a:	18 f0       	brcs	.+6      	; 0x1d42 <Timer1_SetValue+0xc>
     1d3c:	82 30       	cpi	r24, 0x02	; 2
     1d3e:	39 f0       	breq	.+14     	; 0x1d4e <Timer1_SetValue+0x18>
     1d40:	08 95       	ret
-		case OCR1ADataReg:
-		Timer1->OCR1A_Reg = dataValue;
     1d42:	7b bd       	out	0x2b, r23	; 43
     1d44:	6a bd       	out	0x2a, r22	; 42
-		break;
     1d46:	08 95       	ret
-		case OCR1BDataReg:
-		Timer1->OCR1B_Reg = dataValue;
     1d48:	79 bd       	out	0x29, r23	; 41
     1d4a:	68 bd       	out	0x28, r22	; 40
-		break;
     1d4c:	08 95       	ret
-		case ICR1DataReg:
-		Timer1->ICR1_Reg = dataValue;
     1d4e:	77 bd       	out	0x27, r23	; 39
     1d50:	66 bd       	out	0x26, r22	; 38
     1d52:	08 95       	ret
 
 00001d54 <__vector_9>:
-		break;
-	}
-}
-
-ISR(TIMER1_OVF_vect){
     1d54:	1f 92       	push	r1
     1d56:	0f 92       	push	r0
     1d58:	0f b6       	in	r0, 0x3f	; 63
@@ -5480,11 +4970,9 @@ ISR(TIMER1_OVF_vect){
     1d70:	bf 93       	push	r27
     1d72:	ef 93       	push	r30
     1d74:	ff 93       	push	r31
-	TOVIntFunPtr();
-    1d76:	e0 91 a6 03 	lds	r30, 0x03A6	; 0x8003a6 <TOVIntFunPtr>
-    1d7a:	f0 91 a7 03 	lds	r31, 0x03A7	; 0x8003a7 <TOVIntFunPtr+0x1>
+    1d76:	e0 91 fe 04 	lds	r30, 0x04FE	; 0x8004fe <TOVIntFunPtr>
+    1d7a:	f0 91 ff 04 	lds	r31, 0x04FF	; 0x8004ff <TOVIntFunPtr+0x1>
     1d7e:	09 95       	icall
-}
     1d80:	ff 91       	pop	r31
     1d82:	ef 91       	pop	r30
     1d84:	bf 91       	pop	r27
@@ -5504,12 +4992,6 @@ ISR(TIMER1_OVF_vect){
     1da0:	18 95       	reti
 
 00001da2 <__vector_8>:
-
-//ISR(TIMER1_COMPA_vect){
-//	OC1AIntFunPtr();
-//}
-
-ISR(TIMER1_COMPB_vect){
     1da2:	1f 92       	push	r1
     1da4:	0f 92       	push	r0
     1da6:	0f b6       	in	r0, 0x3f	; 63
@@ -5527,11 +5009,9 @@ ISR(TIMER1_COMPB_vect){
     1dbe:	bf 93       	push	r27
     1dc0:	ef 93       	push	r30
     1dc2:	ff 93       	push	r31
-	OC1BIntFunPtr();
-    1dc4:	e0 91 a4 03 	lds	r30, 0x03A4	; 0x8003a4 <OC1BIntFunPtr>
-    1dc8:	f0 91 a5 03 	lds	r31, 0x03A5	; 0x8003a5 <OC1BIntFunPtr+0x1>
+    1dc4:	e0 91 fc 04 	lds	r30, 0x04FC	; 0x8004fc <OC1BIntFunPtr>
+    1dc8:	f0 91 fd 04 	lds	r31, 0x04FD	; 0x8004fd <OC1BIntFunPtr+0x1>
     1dcc:	09 95       	icall
-}
     1dce:	ff 91       	pop	r31
     1dd0:	ef 91       	pop	r30
     1dd2:	bf 91       	pop	r27
@@ -5551,8 +5031,6 @@ ISR(TIMER1_COMPB_vect){
     1dee:	18 95       	reti
 
 00001df0 <__vector_6>:
-
-ISR(TIMER1_CAPT_vect){
     1df0:	1f 92       	push	r1
     1df2:	0f 92       	push	r0
     1df4:	0f b6       	in	r0, 0x3f	; 63
@@ -5570,11 +5048,9 @@ ISR(TIMER1_CAPT_vect){
     1e0c:	bf 93       	push	r27
     1e0e:	ef 93       	push	r30
     1e10:	ff 93       	push	r31
-	ICIntFunPtr();
-    1e12:	e0 91 a2 03 	lds	r30, 0x03A2	; 0x8003a2 <ICIntFunPtr>
-    1e16:	f0 91 a3 03 	lds	r31, 0x03A3	; 0x8003a3 <ICIntFunPtr+0x1>
+    1e12:	e0 91 fa 04 	lds	r30, 0x04FA	; 0x8004fa <ICIntFunPtr>
+    1e16:	f0 91 fb 04 	lds	r31, 0x04FB	; 0x8004fb <ICIntFunPtr+0x1>
     1e1a:	09 95       	icall
-}
     1e1c:	ff 91       	pop	r31
     1e1e:	ef 91       	pop	r30
     1e20:	bf 91       	pop	r27
@@ -5594,24 +5070,13 @@ ISR(TIMER1_CAPT_vect){
     1e3c:	18 95       	reti
 
 00001e3e <UART_Init>:
-* Created: 10/21/2023 3:30:25 PM
-*  Author: user
-*/
-#include "UART.h"
-
-void UART_Init(UART_ConfigTypes * options){
     1e3e:	cf 93       	push	r28
     1e40:	df 93       	push	r29
     1e42:	ec 01       	movw	r28, r24
-	u16 MyUBRR = 0;
-	if (options->doupleSpeedStatus == DoupleSpeed_Enable)
     1e44:	8a 81       	ldd	r24, Y+2	; 0x02
     1e46:	81 30       	cpi	r24, 0x01	; 1
     1e48:	e9 f4       	brne	.+58     	; 0x1e84 <UART_Init+0x46>
-	{
-		UART->UCSRA_Reg.Bits.U2X_Bit = 1;
     1e4a:	59 9a       	sbi	0x0b, 1	; 11
-		MyUBRR = (F_CPU/(8UL*options->baudRate))-1;
     1e4c:	28 81       	ld	r18, Y
     1e4e:	39 81       	ldd	r19, Y+1	; 0x01
     1e50:	c9 01       	movw	r24, r18
@@ -5639,12 +5104,7 @@ void UART_Init(UART_ConfigTypes * options){
     1e7e:	21 50       	subi	r18, 0x01	; 1
     1e80:	31 09       	sbc	r19, r1
     1e82:	20 c0       	rjmp	.+64     	; 0x1ec4 <UART_Init+0x86>
-	}
-	else
-	{
-		UART->UCSRA_Reg.Bits.U2X_Bit = 0;
     1e84:	59 98       	cbi	0x0b, 1	; 11
-		MyUBRR = (F_CPU/(16UL*options->baudRate))-1;
     1e86:	28 81       	ld	r18, Y
     1e88:	39 81       	ldd	r19, Y+1	; 0x01
     1e8a:	c9 01       	movw	r24, r18
@@ -5675,36 +5135,21 @@ void UART_Init(UART_ConfigTypes * options){
     1ebc:	0e 94 0d 13 	call	0x261a	; 0x261a <__udivmodsi4>
     1ec0:	21 50       	subi	r18, 0x01	; 1
     1ec2:	31 09       	sbc	r19, r1
-	}
-	UART->UBRRL_Reg = MyUBRR;
     1ec4:	29 b9       	out	0x09, r18	; 9
-	UART->UCSRC_UBRRH_Reg.AllRegister = MyUBRR>>8;
     1ec6:	30 bd       	out	0x20, r19	; 32
-	
-	if (options->characterSizeStatus == CharacterSize_9)
     1ec8:	9b 81       	ldd	r25, Y+3	; 0x03
     1eca:	97 30       	cpi	r25, 0x07	; 7
     1ecc:	29 f4       	brne	.+10     	; 0x1ed8 <UART_Init+0x9a>
-	{
-		UART->UCSRB_Reg.Bits.UCSZ2_Bit = 1;
     1ece:	52 9a       	sbi	0x0a, 2	; 10
-		UART->UCSRC_UBRRH_Reg.AllRegister |= UCSRC_SelectEnable | (3<<1);
     1ed0:	80 b5       	in	r24, 0x20	; 32
     1ed2:	86 68       	ori	r24, 0x86	; 134
     1ed4:	80 bd       	out	0x20, r24	; 32
     1ed6:	05 c0       	rjmp	.+10     	; 0x1ee2 <UART_Init+0xa4>
-	}
-	else
-	{
-		UART->UCSRC_UBRRH_Reg.AllRegister |= UCSRC_SelectEnable | options->characterSizeStatus<<1;
     1ed8:	80 b5       	in	r24, 0x20	; 32
     1eda:	99 0f       	add	r25, r25
     1edc:	80 68       	ori	r24, 0x80	; 128
     1ede:	89 2b       	or	r24, r25
     1ee0:	80 bd       	out	0x20, r24	; 32
-	}
-	
-	UART->UCSRC_UBRRH_Reg.AllRegister |= UCSRC_SelectEnable | options->parityStatus<<4;
     1ee2:	20 b5       	in	r18, 0x20	; 32
     1ee4:	9d 81       	ldd	r25, Y+5	; 0x05
     1ee6:	30 e1       	ldi	r19, 0x10	; 16
@@ -5715,7 +5160,6 @@ void UART_Init(UART_ConfigTypes * options){
     1ef0:	90 68       	ori	r25, 0x80	; 128
     1ef2:	89 2b       	or	r24, r25
     1ef4:	80 bd       	out	0x20, r24	; 32
-	UART->UCSRC_UBRRH_Reg.AllRegister |= UCSRC_SelectEnable | options->stopBitsStatus<<3;
     1ef6:	80 b5       	in	r24, 0x20	; 32
     1ef8:	9c 81       	ldd	r25, Y+4	; 0x04
     1efa:	99 0f       	add	r25, r25
@@ -5724,7 +5168,6 @@ void UART_Init(UART_ConfigTypes * options){
     1f00:	80 68       	ori	r24, 0x80	; 128
     1f02:	89 2b       	or	r24, r25
     1f04:	80 bd       	out	0x20, r24	; 32
-	UART->UCSRB_Reg.AllRegister |= options->txStatus<<3;
     1f06:	9a b1       	in	r25, 0x0a	; 10
     1f08:	8e 81       	ldd	r24, Y+6	; 0x06
     1f0a:	88 0f       	add	r24, r24
@@ -5732,7 +5175,6 @@ void UART_Init(UART_ConfigTypes * options){
     1f0e:	88 0f       	add	r24, r24
     1f10:	89 2b       	or	r24, r25
     1f12:	8a b9       	out	0x0a, r24	; 10
-	UART->UCSRB_Reg.AllRegister |= options->rxStatus<<4;
     1f14:	2a b1       	in	r18, 0x0a	; 10
     1f16:	9f 81       	ldd	r25, Y+7	; 0x07
     1f18:	30 e1       	ldi	r19, 0x10	; 16
@@ -5741,94 +5183,65 @@ void UART_Init(UART_ConfigTypes * options){
     1f1e:	11 24       	eor	r1, r1
     1f20:	82 2b       	or	r24, r18
     1f22:	8a b9       	out	0x0a, r24	; 10
-}
     1f24:	df 91       	pop	r29
     1f26:	cf 91       	pop	r28
     1f28:	08 95       	ret
 
 00001f2a <UART_TransmaitChar>:
-void UART_TransmaitChar(u8 data){
-	while (UART->UCSRA_Reg.Bits.UDRE_Bit == 0);
     1f2a:	5d 9b       	sbis	0x0b, 5	; 11
     1f2c:	fe cf       	rjmp	.-4      	; 0x1f2a <UART_TransmaitChar>
-	UART->UDR_Reg = data;
     1f2e:	8c b9       	out	0x0c, r24	; 12
     1f30:	08 95       	ret
 
 00001f32 <UART_TransmaitString>:
-}
-void UART_TransmaitString(s8 * string){
     1f32:	0f 93       	push	r16
     1f34:	1f 93       	push	r17
     1f36:	cf 93       	push	r28
     1f38:	fc 01       	movw	r30, r24
-	u8 i=0;
-	while(string[i] != '\0'){
     1f3a:	80 81       	ld	r24, Z
     1f3c:	88 23       	and	r24, r24
     1f3e:	59 f0       	breq	.+22     	; 0x1f56 <UART_TransmaitString+0x24>
     1f40:	8f 01       	movw	r16, r30
     1f42:	c0 e0       	ldi	r28, 0x00	; 0
-		UART_TransmaitChar(string[i]);
     1f44:	0e 94 95 0f 	call	0x1f2a	; 0x1f2a <UART_TransmaitChar>
-		i++;
     1f48:	cf 5f       	subi	r28, 0xFF	; 255
-	while (UART->UCSRA_Reg.Bits.UDRE_Bit == 0);
-	UART->UDR_Reg = data;
-}
-void UART_TransmaitString(s8 * string){
-	u8 i=0;
-	while(string[i] != '\0'){
     1f4a:	f8 01       	movw	r30, r16
     1f4c:	ec 0f       	add	r30, r28
     1f4e:	f1 1d       	adc	r31, r1
     1f50:	80 81       	ld	r24, Z
     1f52:	81 11       	cpse	r24, r1
     1f54:	f7 cf       	rjmp	.-18     	; 0x1f44 <UART_TransmaitString+0x12>
-		UART_TransmaitChar(string[i]);
-		i++;
-	}
-}
     1f56:	cf 91       	pop	r28
     1f58:	1f 91       	pop	r17
     1f5a:	0f 91       	pop	r16
     1f5c:	08 95       	ret
 
 00001f5e <UART_Receive>:
-u8 UART_Receive(){
-	while(UART->UCSRA_Reg.Bits.RXC_Bit == 0);
     1f5e:	5f 9b       	sbis	0x0b, 7	; 11
     1f60:	fe cf       	rjmp	.-4      	; 0x1f5e <UART_Receive>
-	return UART->UDR_Reg;
     1f62:	8c b1       	in	r24, 0x0c	; 12
     1f64:	08 95       	ret
 
 00001f66 <prvResetNextTaskUnblockTime>:
-    }
-    taskEXIT_CRITICAL();
-    xYieldOccurred = xTaskResumeAll();
-
-    return xYieldOccurred;
-}
-    1f66:	e0 91 b4 03 	lds	r30, 0x03B4	; 0x8003b4 <pxDelayedTaskList>
-    1f6a:	f0 91 b5 03 	lds	r31, 0x03B5	; 0x8003b5 <pxDelayedTaskList+0x1>
+    1f66:	e0 91 0c 05 	lds	r30, 0x050C	; 0x80050c <pxDelayedTaskList>
+    1f6a:	f0 91 0d 05 	lds	r31, 0x050D	; 0x80050d <pxDelayedTaskList+0x1>
     1f6e:	80 81       	ld	r24, Z
     1f70:	81 11       	cpse	r24, r1
     1f72:	07 c0       	rjmp	.+14     	; 0x1f82 <prvResetNextTaskUnblockTime+0x1c>
     1f74:	8f ef       	ldi	r24, 0xFF	; 255
     1f76:	9f ef       	ldi	r25, 0xFF	; 255
-    1f78:	90 93 aa 03 	sts	0x03AA, r25	; 0x8003aa <xNextTaskUnblockTime+0x1>
-    1f7c:	80 93 a9 03 	sts	0x03A9, r24	; 0x8003a9 <xNextTaskUnblockTime>
+    1f78:	90 93 02 05 	sts	0x0502, r25	; 0x800502 <xNextTaskUnblockTime+0x1>
+    1f7c:	80 93 01 05 	sts	0x0501, r24	; 0x800501 <xNextTaskUnblockTime>
     1f80:	08 95       	ret
-    1f82:	e0 91 b4 03 	lds	r30, 0x03B4	; 0x8003b4 <pxDelayedTaskList>
-    1f86:	f0 91 b5 03 	lds	r31, 0x03B5	; 0x8003b5 <pxDelayedTaskList+0x1>
+    1f82:	e0 91 0c 05 	lds	r30, 0x050C	; 0x80050c <pxDelayedTaskList>
+    1f86:	f0 91 0d 05 	lds	r31, 0x050D	; 0x80050d <pxDelayedTaskList+0x1>
     1f8a:	05 80       	ldd	r0, Z+5	; 0x05
     1f8c:	f6 81       	ldd	r31, Z+6	; 0x06
     1f8e:	e0 2d       	mov	r30, r0
     1f90:	80 81       	ld	r24, Z
     1f92:	91 81       	ldd	r25, Z+1	; 0x01
-    1f94:	90 93 aa 03 	sts	0x03AA, r25	; 0x8003aa <xNextTaskUnblockTime+0x1>
-    1f98:	80 93 a9 03 	sts	0x03A9, r24	; 0x8003a9 <xNextTaskUnblockTime>
+    1f94:	90 93 02 05 	sts	0x0502, r25	; 0x800502 <xNextTaskUnblockTime+0x1>
+    1f98:	80 93 01 05 	sts	0x0501, r24	; 0x800501 <xNextTaskUnblockTime>
     1f9c:	08 95       	ret
 
 00001f9e <xTaskIncrementTick>:
@@ -5838,34 +5251,34 @@ u8 UART_Receive(){
     1fa4:	1f 93       	push	r17
     1fa6:	cf 93       	push	r28
     1fa8:	df 93       	push	r29
-    1faa:	80 91 a8 03 	lds	r24, 0x03A8	; 0x8003a8 <uxSchedulerSuspended>
+    1faa:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <uxSchedulerSuspended>
     1fae:	81 11       	cpse	r24, r1
     1fb0:	04 c1       	rjmp	.+520    	; 0x21ba <xTaskIncrementTick+0x21c>
-    1fb2:	c0 91 b0 03 	lds	r28, 0x03B0	; 0x8003b0 <xTickCount>
-    1fb6:	d0 91 b1 03 	lds	r29, 0x03B1	; 0x8003b1 <xTickCount+0x1>
+    1fb2:	c0 91 08 05 	lds	r28, 0x0508	; 0x800508 <xTickCount>
+    1fb6:	d0 91 09 05 	lds	r29, 0x0509	; 0x800509 <xTickCount+0x1>
     1fba:	7e 01       	movw	r14, r28
     1fbc:	8f ef       	ldi	r24, 0xFF	; 255
     1fbe:	e8 1a       	sub	r14, r24
     1fc0:	f8 0a       	sbc	r15, r24
-    1fc2:	f0 92 b1 03 	sts	0x03B1, r15	; 0x8003b1 <xTickCount+0x1>
-    1fc6:	e0 92 b0 03 	sts	0x03B0, r14	; 0x8003b0 <xTickCount>
+    1fc2:	f0 92 09 05 	sts	0x0509, r15	; 0x800509 <xTickCount+0x1>
+    1fc6:	e0 92 08 05 	sts	0x0508, r14	; 0x800508 <xTickCount>
     1fca:	e1 14       	cp	r14, r1
     1fcc:	f1 04       	cpc	r15, r1
     1fce:	b9 f4       	brne	.+46     	; 0x1ffe <xTaskIncrementTick+0x60>
-    1fd0:	80 91 b4 03 	lds	r24, 0x03B4	; 0x8003b4 <pxDelayedTaskList>
-    1fd4:	90 91 b5 03 	lds	r25, 0x03B5	; 0x8003b5 <pxDelayedTaskList+0x1>
-    1fd8:	20 91 b2 03 	lds	r18, 0x03B2	; 0x8003b2 <pxOverflowDelayedTaskList>
-    1fdc:	30 91 b3 03 	lds	r19, 0x03B3	; 0x8003b3 <pxOverflowDelayedTaskList+0x1>
-    1fe0:	30 93 b5 03 	sts	0x03B5, r19	; 0x8003b5 <pxDelayedTaskList+0x1>
-    1fe4:	20 93 b4 03 	sts	0x03B4, r18	; 0x8003b4 <pxDelayedTaskList>
-    1fe8:	90 93 b3 03 	sts	0x03B3, r25	; 0x8003b3 <pxOverflowDelayedTaskList+0x1>
-    1fec:	80 93 b2 03 	sts	0x03B2, r24	; 0x8003b2 <pxOverflowDelayedTaskList>
-    1ff0:	80 91 ab 03 	lds	r24, 0x03AB	; 0x8003ab <xNumOfOverflows>
+    1fd0:	80 91 0c 05 	lds	r24, 0x050C	; 0x80050c <pxDelayedTaskList>
+    1fd4:	90 91 0d 05 	lds	r25, 0x050D	; 0x80050d <pxDelayedTaskList+0x1>
+    1fd8:	20 91 0a 05 	lds	r18, 0x050A	; 0x80050a <pxOverflowDelayedTaskList>
+    1fdc:	30 91 0b 05 	lds	r19, 0x050B	; 0x80050b <pxOverflowDelayedTaskList+0x1>
+    1fe0:	30 93 0d 05 	sts	0x050D, r19	; 0x80050d <pxDelayedTaskList+0x1>
+    1fe4:	20 93 0c 05 	sts	0x050C, r18	; 0x80050c <pxDelayedTaskList>
+    1fe8:	90 93 0b 05 	sts	0x050B, r25	; 0x80050b <pxOverflowDelayedTaskList+0x1>
+    1fec:	80 93 0a 05 	sts	0x050A, r24	; 0x80050a <pxOverflowDelayedTaskList>
+    1ff0:	80 91 03 05 	lds	r24, 0x0503	; 0x800503 <xNumOfOverflows>
     1ff4:	8f 5f       	subi	r24, 0xFF	; 255
-    1ff6:	80 93 ab 03 	sts	0x03AB, r24	; 0x8003ab <xNumOfOverflows>
+    1ff6:	80 93 03 05 	sts	0x0503, r24	; 0x800503 <xNumOfOverflows>
     1ffa:	0e 94 b3 0f 	call	0x1f66	; 0x1f66 <prvResetNextTaskUnblockTime>
-    1ffe:	80 91 a9 03 	lds	r24, 0x03A9	; 0x8003a9 <xNextTaskUnblockTime>
-    2002:	90 91 aa 03 	lds	r25, 0x03AA	; 0x8003aa <xNextTaskUnblockTime+0x1>
+    1ffe:	80 91 01 05 	lds	r24, 0x0501	; 0x800501 <xNextTaskUnblockTime>
+    2002:	90 91 02 05 	lds	r25, 0x0502	; 0x800502 <xNextTaskUnblockTime+0x1>
     2006:	e8 16       	cp	r14, r24
     2008:	f9 06       	cpc	r15, r25
     200a:	10 f4       	brcc	.+4      	; 0x2010 <xTaskIncrementTick+0x72>
@@ -5873,18 +5286,18 @@ u8 UART_Receive(){
     200e:	b9 c0       	rjmp	.+370    	; 0x2182 <xTaskIncrementTick+0x1e4>
     2010:	80 e0       	ldi	r24, 0x00	; 0
     2012:	61 e0       	ldi	r22, 0x01	; 1
-    2014:	e0 91 b4 03 	lds	r30, 0x03B4	; 0x8003b4 <pxDelayedTaskList>
-    2018:	f0 91 b5 03 	lds	r31, 0x03B5	; 0x8003b5 <pxDelayedTaskList+0x1>
+    2014:	e0 91 0c 05 	lds	r30, 0x050C	; 0x80050c <pxDelayedTaskList>
+    2018:	f0 91 0d 05 	lds	r31, 0x050D	; 0x80050d <pxDelayedTaskList+0x1>
     201c:	90 81       	ld	r25, Z
     201e:	91 11       	cpse	r25, r1
     2020:	07 c0       	rjmp	.+14     	; 0x2030 <xTaskIncrementTick+0x92>
     2022:	2f ef       	ldi	r18, 0xFF	; 255
     2024:	3f ef       	ldi	r19, 0xFF	; 255
-    2026:	30 93 aa 03 	sts	0x03AA, r19	; 0x8003aa <xNextTaskUnblockTime+0x1>
-    202a:	20 93 a9 03 	sts	0x03A9, r18	; 0x8003a9 <xNextTaskUnblockTime>
+    2026:	30 93 02 05 	sts	0x0502, r19	; 0x800502 <xNextTaskUnblockTime+0x1>
+    202a:	20 93 01 05 	sts	0x0501, r18	; 0x800501 <xNextTaskUnblockTime>
     202e:	a9 c0       	rjmp	.+338    	; 0x2182 <xTaskIncrementTick+0x1e4>
-    2030:	e0 91 b4 03 	lds	r30, 0x03B4	; 0x8003b4 <pxDelayedTaskList>
-    2034:	f0 91 b5 03 	lds	r31, 0x03B5	; 0x8003b5 <pxDelayedTaskList+0x1>
+    2030:	e0 91 0c 05 	lds	r30, 0x050C	; 0x80050c <pxDelayedTaskList>
+    2034:	f0 91 0d 05 	lds	r31, 0x050D	; 0x80050d <pxDelayedTaskList+0x1>
     2038:	05 80       	ldd	r0, Z+5	; 0x05
     203a:	f6 81       	ldd	r31, Z+6	; 0x06
     203c:	e0 2d       	mov	r30, r0
@@ -5896,8 +5309,8 @@ u8 UART_Receive(){
     2048:	e2 16       	cp	r14, r18
     204a:	f3 06       	cpc	r15, r19
     204c:	28 f4       	brcc	.+10     	; 0x2058 <xTaskIncrementTick+0xba>
-    204e:	30 93 aa 03 	sts	0x03AA, r19	; 0x8003aa <xNextTaskUnblockTime+0x1>
-    2052:	20 93 a9 03 	sts	0x03A9, r18	; 0x8003a9 <xNextTaskUnblockTime>
+    204e:	30 93 02 05 	sts	0x0502, r19	; 0x800502 <xNextTaskUnblockTime+0x1>
+    2052:	20 93 01 05 	sts	0x0501, r18	; 0x800501 <xNextTaskUnblockTime>
     2056:	95 c0       	rjmp	.+298    	; 0x2182 <xTaskIncrementTick+0x1e4>
     2058:	a2 85       	ldd	r26, Z+10	; 0x0a
     205a:	b3 85       	ldd	r27, Z+11	; 0x0b
@@ -5976,10 +5389,10 @@ u8 UART_Receive(){
     20ec:	91 50       	subi	r25, 0x01	; 1
     20ee:	9c 93       	st	X, r25
     20f0:	26 89       	ldd	r18, Z+22	; 0x16
-    20f2:	90 91 af 03 	lds	r25, 0x03AF	; 0x8003af <uxTopReadyPriority>
+    20f2:	90 91 07 05 	lds	r25, 0x0507	; 0x800507 <uxTopReadyPriority>
     20f6:	92 17       	cp	r25, r18
     20f8:	10 f4       	brcc	.+4      	; 0x20fe <xTaskIncrementTick+0x160>
-    20fa:	20 93 af 03 	sts	0x03AF, r18	; 0x8003af <uxTopReadyPriority>
+    20fa:	20 93 07 05 	sts	0x0507, r18	; 0x800507 <uxTopReadyPriority>
     20fe:	30 e0       	ldi	r19, 0x00	; 0
     2100:	d9 01       	movw	r26, r18
     2102:	aa 0f       	add	r26, r26
@@ -5991,8 +5404,8 @@ u8 UART_Receive(){
     210e:	2a 0f       	add	r18, r26
     2110:	3b 1f       	adc	r19, r27
     2112:	d9 01       	movw	r26, r18
-    2114:	aa 54       	subi	r26, 0x4A	; 74
-    2116:	bc 4f       	sbci	r27, 0xFC	; 252
+    2114:	a2 5f       	subi	r26, 0xF2	; 242
+    2116:	ba 4f       	sbci	r27, 0xFA	; 250
     2118:	11 96       	adiw	r26, 0x01	; 1
     211a:	0d 90       	ld	r0, X+
     211c:	bc 91       	ld	r27, X
@@ -6027,15 +5440,15 @@ u8 UART_Receive(){
     2156:	33 1f       	adc	r19, r19
     2158:	a2 0f       	add	r26, r18
     215a:	b3 1f       	adc	r27, r19
-    215c:	aa 54       	subi	r26, 0x4A	; 74
-    215e:	bc 4f       	sbci	r27, 0xFC	; 252
+    215c:	a2 5f       	subi	r26, 0xF2	; 242
+    215e:	ba 4f       	sbci	r27, 0xFA	; 250
     2160:	b3 87       	std	Z+11, r27	; 0x0b
     2162:	a2 87       	std	Z+10, r26	; 0x0a
     2164:	9c 91       	ld	r25, X
     2166:	9f 5f       	subi	r25, 0xFF	; 255
     2168:	9c 93       	st	X, r25
-    216a:	a0 91 da 03 	lds	r26, 0x03DA	; 0x8003da <pxCurrentTCB>
-    216e:	b0 91 db 03 	lds	r27, 0x03DB	; 0x8003db <pxCurrentTCB+0x1>
+    216a:	a0 91 32 05 	lds	r26, 0x0532	; 0x800532 <pxCurrentTCB>
+    216e:	b0 91 33 05 	lds	r27, 0x0533	; 0x800533 <pxCurrentTCB+0x1>
     2172:	26 89       	ldd	r18, Z+22	; 0x16
     2174:	56 96       	adiw	r26, 0x16	; 22
     2176:	9c 91       	ld	r25, X
@@ -6044,8 +5457,8 @@ u8 UART_Receive(){
     217c:	4b cf       	rjmp	.-362    	; 0x2014 <xTaskIncrementTick+0x76>
     217e:	86 2f       	mov	r24, r22
     2180:	49 cf       	rjmp	.-366    	; 0x2014 <xTaskIncrementTick+0x76>
-    2182:	e0 91 da 03 	lds	r30, 0x03DA	; 0x8003da <pxCurrentTCB>
-    2186:	f0 91 db 03 	lds	r31, 0x03DB	; 0x8003db <pxCurrentTCB+0x1>
+    2182:	e0 91 32 05 	lds	r30, 0x0532	; 0x800532 <pxCurrentTCB>
+    2186:	f0 91 33 05 	lds	r31, 0x0533	; 0x800533 <pxCurrentTCB+0x1>
     218a:	26 89       	ldd	r18, Z+22	; 0x16
     218c:	30 e0       	ldi	r19, 0x00	; 0
     218e:	f9 01       	movw	r30, r18
@@ -6058,22 +5471,22 @@ u8 UART_Receive(){
     219c:	2e 0f       	add	r18, r30
     219e:	3f 1f       	adc	r19, r31
     21a0:	f9 01       	movw	r30, r18
-    21a2:	ea 54       	subi	r30, 0x4A	; 74
-    21a4:	fc 4f       	sbci	r31, 0xFC	; 252
+    21a2:	e2 5f       	subi	r30, 0xF2	; 242
+    21a4:	fa 4f       	sbci	r31, 0xFA	; 250
     21a6:	90 81       	ld	r25, Z
     21a8:	92 30       	cpi	r25, 0x02	; 2
     21aa:	08 f0       	brcs	.+2      	; 0x21ae <xTaskIncrementTick+0x210>
     21ac:	81 e0       	ldi	r24, 0x01	; 1
-    21ae:	90 91 ac 03 	lds	r25, 0x03AC	; 0x8003ac <xYieldPending>
+    21ae:	90 91 04 05 	lds	r25, 0x0504	; 0x800504 <xYieldPending>
     21b2:	99 23       	and	r25, r25
     21b4:	61 f0       	breq	.+24     	; 0x21ce <xTaskIncrementTick+0x230>
     21b6:	81 e0       	ldi	r24, 0x01	; 1
     21b8:	0a c0       	rjmp	.+20     	; 0x21ce <xTaskIncrementTick+0x230>
-    21ba:	80 91 ad 03 	lds	r24, 0x03AD	; 0x8003ad <xPendedTicks>
-    21be:	90 91 ae 03 	lds	r25, 0x03AE	; 0x8003ae <xPendedTicks+0x1>
+    21ba:	80 91 05 05 	lds	r24, 0x0505	; 0x800505 <xPendedTicks>
+    21be:	90 91 06 05 	lds	r25, 0x0506	; 0x800506 <xPendedTicks+0x1>
     21c2:	01 96       	adiw	r24, 0x01	; 1
-    21c4:	90 93 ae 03 	sts	0x03AE, r25	; 0x8003ae <xPendedTicks+0x1>
-    21c8:	80 93 ad 03 	sts	0x03AD, r24	; 0x8003ad <xPendedTicks>
+    21c4:	90 93 06 05 	sts	0x0506, r25	; 0x800506 <xPendedTicks+0x1>
+    21c8:	80 93 05 05 	sts	0x0505, r24	; 0x800505 <xPendedTicks>
     21cc:	80 e0       	ldi	r24, 0x00	; 0
     21ce:	df 91       	pop	r29
     21d0:	cf 91       	pop	r28
@@ -6084,34 +5497,14 @@ u8 UART_Receive(){
     21da:	08 95       	ret
 
 000021dc <vTaskSwitchContext>:
-#endif /* configUSE_APPLICATION_TASK_TAG */
-/*-----------------------------------------------------------*/
-
-void vTaskSwitchContext( void )
-{
-    if( uxSchedulerSuspended != ( UBaseType_t ) pdFALSE )
-    21dc:	80 91 a8 03 	lds	r24, 0x03A8	; 0x8003a8 <uxSchedulerSuspended>
+    21dc:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <uxSchedulerSuspended>
     21e0:	88 23       	and	r24, r24
     21e2:	21 f0       	breq	.+8      	; 0x21ec <vTaskSwitchContext+0x10>
-    {
-        /* The scheduler is currently suspended - do not allow a context
-         * switch. */
-        xYieldPending = pdTRUE;
     21e4:	81 e0       	ldi	r24, 0x01	; 1
-    21e6:	80 93 ac 03 	sts	0x03AC, r24	; 0x8003ac <xYieldPending>
+    21e6:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <xYieldPending>
     21ea:	08 95       	ret
-    }
-    else
-    {
-        xYieldPending = pdFALSE;
-    21ec:	10 92 ac 03 	sts	0x03AC, r1	; 0x8003ac <xYieldPending>
-        }
-        #endif
-
-        /* Select a new task to run using either the generic C or port
-         * optimised asm code. */
-        taskSELECT_HIGHEST_PRIORITY_TASK(); /*lint !e9079 void * is used as this macro is used with timers and co-routines too.  Alignment is known to be fine as the type of the pointer stored and retrieved is the same. */
-    21f0:	20 91 af 03 	lds	r18, 0x03AF	; 0x8003af <uxTopReadyPriority>
+    21ec:	10 92 04 05 	sts	0x0504, r1	; 0x800504 <xYieldPending>
+    21f0:	20 91 07 05 	lds	r18, 0x0507	; 0x800507 <uxTopReadyPriority>
     21f4:	82 2f       	mov	r24, r18
     21f6:	90 e0       	ldi	r25, 0x00	; 0
     21f8:	fc 01       	movw	r30, r24
@@ -6123,8 +5516,8 @@ void vTaskSwitchContext( void )
     2204:	ff 1f       	adc	r31, r31
     2206:	e8 0f       	add	r30, r24
     2208:	f9 1f       	adc	r31, r25
-    220a:	ea 54       	subi	r30, 0x4A	; 74
-    220c:	fc 4f       	sbci	r31, 0xFC	; 252
+    220a:	e2 5f       	subi	r30, 0xF2	; 242
+    220c:	fa 4f       	sbci	r31, 0xFA	; 250
     220e:	30 81       	ld	r19, Z
     2210:	31 11       	cpse	r19, r1
     2212:	11 c0       	rjmp	.+34     	; 0x2236 <vTaskSwitchContext+0x5a>
@@ -6140,8 +5533,8 @@ void vTaskSwitchContext( void )
     2226:	ff 1f       	adc	r31, r31
     2228:	e8 0f       	add	r30, r24
     222a:	f9 1f       	adc	r31, r25
-    222c:	ea 54       	subi	r30, 0x4A	; 74
-    222e:	fc 4f       	sbci	r31, 0xFC	; 252
+    222c:	e2 5f       	subi	r30, 0xF2	; 242
+    222e:	fa 4f       	sbci	r31, 0xFA	; 250
     2230:	30 81       	ld	r19, Z
     2232:	33 23       	and	r19, r19
     2234:	79 f3       	breq	.-34     	; 0x2214 <vTaskSwitchContext+0x38>
@@ -6155,8 +5548,8 @@ void vTaskSwitchContext( void )
     2244:	48 0f       	add	r20, r24
     2246:	59 1f       	adc	r21, r25
     2248:	da 01       	movw	r26, r20
-    224a:	aa 54       	subi	r26, 0x4A	; 74
-    224c:	bc 4f       	sbci	r27, 0xFC	; 252
+    224a:	a2 5f       	subi	r26, 0xF2	; 242
+    224c:	ba 4f       	sbci	r27, 0xFA	; 250
     224e:	11 96       	adiw	r26, 0x01	; 1
     2250:	ed 91       	ld	r30, X+
     2252:	fc 91       	ld	r31, X
@@ -6168,8 +5561,8 @@ void vTaskSwitchContext( void )
     225e:	fc 93       	st	X, r31
     2260:	ee 93       	st	-X, r30
     2262:	11 97       	sbiw	r26, 0x01	; 1
-    2264:	47 54       	subi	r20, 0x47	; 71
-    2266:	5c 4f       	sbci	r21, 0xFC	; 252
+    2264:	4f 5e       	subi	r20, 0xEF	; 239
+    2266:	5a 4f       	sbci	r21, 0xFA	; 250
     2268:	e4 17       	cp	r30, r20
     226a:	f5 07       	cpc	r31, r21
     226c:	29 f4       	brne	.+10     	; 0x2278 <vTaskSwitchContext+0x9c>
@@ -6188,25 +5581,19 @@ void vTaskSwitchContext( void )
     2286:	8e 0f       	add	r24, r30
     2288:	9f 1f       	adc	r25, r31
     228a:	fc 01       	movw	r30, r24
-    228c:	ea 54       	subi	r30, 0x4A	; 74
-    228e:	fc 4f       	sbci	r31, 0xFC	; 252
+    228c:	e2 5f       	subi	r30, 0xF2	; 242
+    228e:	fa 4f       	sbci	r31, 0xFA	; 250
     2290:	01 80       	ldd	r0, Z+1	; 0x01
     2292:	f2 81       	ldd	r31, Z+2	; 0x02
     2294:	e0 2d       	mov	r30, r0
     2296:	86 81       	ldd	r24, Z+6	; 0x06
     2298:	97 81       	ldd	r25, Z+7	; 0x07
-    229a:	90 93 db 03 	sts	0x03DB, r25	; 0x8003db <pxCurrentTCB+0x1>
-    229e:	80 93 da 03 	sts	0x03DA, r24	; 0x8003da <pxCurrentTCB>
-    22a2:	20 93 af 03 	sts	0x03AF, r18	; 0x8003af <uxTopReadyPriority>
+    229a:	90 93 33 05 	sts	0x0533, r25	; 0x800533 <pxCurrentTCB+0x1>
+    229e:	80 93 32 05 	sts	0x0532, r24	; 0x800532 <pxCurrentTCB>
+    22a2:	20 93 07 05 	sts	0x0507, r18	; 0x800507 <uxTopReadyPriority>
     22a6:	08 95       	ret
 
 000022a8 <vPortYieldFromTick>:
- * call comes from the tick ISR.
- */
-void vPortYieldFromTick( void ) __attribute__ ( ( naked ) );
-void vPortYieldFromTick( void )
-{
-	portSAVE_CONTEXT();
     22a8:	0f 92       	push	r0
     22aa:	0f b6       	in	r0, 0x3f	; 63
     22ac:	f8 94       	cli
@@ -6243,22 +5630,17 @@ void vPortYieldFromTick( void )
     22ea:	df 93       	push	r29
     22ec:	ef 93       	push	r30
     22ee:	ff 93       	push	r31
-    22f0:	a0 91 da 03 	lds	r26, 0x03DA	; 0x8003da <pxCurrentTCB>
-    22f4:	b0 91 db 03 	lds	r27, 0x03DB	; 0x8003db <pxCurrentTCB+0x1>
+    22f0:	a0 91 32 05 	lds	r26, 0x0532	; 0x800532 <pxCurrentTCB>
+    22f4:	b0 91 33 05 	lds	r27, 0x0533	; 0x800533 <pxCurrentTCB+0x1>
     22f8:	0d b6       	in	r0, 0x3d	; 61
     22fa:	0d 92       	st	X+, r0
     22fc:	0e b6       	in	r0, 0x3e	; 62
     22fe:	0d 92       	st	X+, r0
-	if( xTaskIncrementTick() != pdFALSE )
     2300:	0e 94 cf 0f 	call	0x1f9e	; 0x1f9e <xTaskIncrementTick>
     2304:	81 11       	cpse	r24, r1
-	{
-		vTaskSwitchContext();
     2306:	0e 94 ee 10 	call	0x21dc	; 0x21dc <vTaskSwitchContext>
-	}
-	portRESTORE_CONTEXT();
-    230a:	a0 91 da 03 	lds	r26, 0x03DA	; 0x8003da <pxCurrentTCB>
-    230e:	b0 91 db 03 	lds	r27, 0x03DB	; 0x8003db <pxCurrentTCB+0x1>
+    230a:	a0 91 32 05 	lds	r26, 0x0532	; 0x800532 <pxCurrentTCB>
+    230e:	b0 91 33 05 	lds	r27, 0x0533	; 0x800533 <pxCurrentTCB+0x1>
     2312:	cd 91       	ld	r28, X+
     2314:	cd bf       	out	0x3d, r28	; 61
     2316:	dd 91       	ld	r29, X+
@@ -6297,19 +5679,10 @@ void vPortYieldFromTick( void )
     2358:	0f 90       	pop	r0
     235a:	0f be       	out	0x3f, r0	; 63
     235c:	0f 90       	pop	r0
-
-	asm volatile ( "ret" );
     235e:	08 95       	ret
 
 00002360 <__vector_7>:
-	 * count is incremented after the context is saved.
-	 */
-	void TIMER1_COMPA_vect( void ) __attribute__ ( ( signal, naked ) );
-	void TIMER1_COMPA_vect( void )
-	{
-		vPortYieldFromTick();
     2360:	0e 94 54 11 	call	0x22a8	; 0x22a8 <vPortYieldFromTick>
-		asm volatile ( "reti" );
     2364:	18 95       	reti
 
 00002366 <__subsf3>:
